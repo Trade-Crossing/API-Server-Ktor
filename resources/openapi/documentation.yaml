@@ -1,0 +1,8 @@
+openapi: "3.0.3"
+info:
+  title: "trade_crossing_ktor API"
+  description: "trade_crossing_ktor API"
+  version: "1.0.0"
+servers:
+- url: "https://trade_crossing_ktor"
+paths: {}
