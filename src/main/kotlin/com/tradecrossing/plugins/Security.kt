@@ -16,7 +16,6 @@ private val httpClient = HttpClient(CIO) {
 }
 
 fun Application.configureSecurity() {
-  val jwtSecret: String = environment.config.property("jwt.secret").getString()
 
   install(Authentication) {
     oauth("google") {

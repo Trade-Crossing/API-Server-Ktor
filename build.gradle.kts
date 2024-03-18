@@ -1,12 +1,12 @@
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
-
 val exposed_version: String by project
 plugins {
   kotlin("jvm") version "1.9.22"
   id("io.ktor.plugin") version "2.3.8"
   id("org.jetbrains.kotlin.plugin.serialization") version "1.9.22"
+  id("com.google.devtools.ksp") version "1.9.23-1.0.19"
 }
 
 group = "com.tradecrossing"
@@ -68,13 +68,14 @@ dependencies {
   // DI
   implementation(platform("io.insert-koin:koin-bom:3.5.3"))
   implementation("io.insert-koin:koin-core")
+  implementation("io.insert-koin:koin-annotations-bom:1.3.1")
+
 
   // Database driver
   implementation("org.postgresql:postgresql:42.7.3")
 
   // logging
   implementation("ch.qos.logback:logback-classic:$logback_version")
-  implementation("io.ktor:ktor-client-cio-jvm:2.3.8")
 
   // test
   testImplementation("io.ktor:ktor-server-tests-jvm")
