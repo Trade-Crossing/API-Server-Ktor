@@ -1,4 +1,4 @@
-package com.tradecrossing.plugins
+package com.tradecrossing.system.plugins
 
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
@@ -15,7 +15,7 @@ private val httpClient = HttpClient(CIO) {
   }
 }
 
-fun Application.configureSecurity() {
+fun Application.configureOAuth() {
 
   install(Authentication) {
     oauth("google") {

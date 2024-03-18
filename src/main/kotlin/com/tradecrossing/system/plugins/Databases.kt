@@ -1,4 +1,4 @@
-package com.tradecrossing.plugins
+package com.tradecrossing.system.plugins
 
 import io.ktor.server.config.*
 import org.jetbrains.exposed.sql.Database

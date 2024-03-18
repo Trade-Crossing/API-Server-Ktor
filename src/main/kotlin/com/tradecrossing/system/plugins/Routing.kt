@@ -1,4 +1,4 @@
-package com.tradecrossing.plugins
+package com.tradecrossing.system.plugins
 
 import com.tradecrossing.api.oauth.oauth
 import io.ktor.server.application.*
@@ -16,11 +16,19 @@ fun Application.configureRouting() {
   routing {
     openAPI(path = "openapi")
     swaggerUI(path = "swagger-ui")
-
     // oauth routes
     route("oauth") {
       oauth()
     }
+
+    // auth routes
+    route("auth") {
+
+    }
+
+    // user routes
+
+    // trade routes
   }
 
 }

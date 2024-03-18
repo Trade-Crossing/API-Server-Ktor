@@ -1,10 +1,10 @@
-package com.tradecrossing.plugins
+package com.tradecrossing.system.plugins
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.JWTVerificationException
 import com.tradecrossing.dto.response.TokenResponse
-import com.tradecrossing.exceptions.UnauthorizedException
+import com.tradecrossing.system.exceptions.UnauthorizedException
 import com.tradecrossing.types.TokenType
 import com.tradecrossing.utils.toDate
 import io.ktor.server.application.*

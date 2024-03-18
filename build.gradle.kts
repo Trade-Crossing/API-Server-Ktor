@@ -3,9 +3,9 @@ val kotlin_version: String by project
 val logback_version: String by project
 val exposed_version: String by project
 plugins {
-  kotlin("jvm") version "1.9.22"
+  kotlin("jvm") version "1.9.23"
   id("io.ktor.plugin") version "2.3.8"
-  id("org.jetbrains.kotlin.plugin.serialization") version "1.9.22"
+  id("org.jetbrains.kotlin.plugin.serialization") version "1.9.23"
   id("com.google.devtools.ksp") version "1.9.23-1.0.19"
 }
 
@@ -66,9 +66,12 @@ dependencies {
     implementation("org.jetbrains.exposed:$it:$exposed_version")
   }
   // DI
-  implementation(platform("io.insert-koin:koin-bom:3.5.3"))
-  implementation("io.insert-koin:koin-core")
-  implementation("io.insert-koin:koin-annotations-bom:1.3.1")
+  // Koin for Ktor
+  implementation("io.insert-koin:koin-ktor:3.5.3")
+  runtimeOnly("io.insert-koin:koin-core:3.5.3")
+  // SLF4J Logger
+  implementation("io.insert-koin:koin-logger-slf4j:3.5.3")
+  runtimeOnly("io.insert-koin:koin-annotations:1.3.1")
 
 
   // Database driver
@@ -86,3 +89,5 @@ dependencies {
 application {
   applicationDefaultJvmArgs = listOf("-Dio.ktor.development=true")
 }
+
+//
