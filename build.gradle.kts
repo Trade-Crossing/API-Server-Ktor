@@ -35,15 +35,15 @@ dependencies {
     "swagger-jvm",
     "content-negotiation-jvm",
     "serialization-kotlinx-json-jvm",
-    "server-netty-jvm",
-    "server-config-yaml"
+    "netty-jvm",
+    "config-yaml"
   ).forEach {
     implementation("io.ktor:ktor-server-$it")
   }
 
   listOf(
     "serialization-kotlinx-protobuf",
-    "serialization-kotlinx-json-jvm"
+    "serialization-kotlinx-json"
   ).forEach {
     implementation("io.ktor:ktor-$it:$ktor_version")
   }
