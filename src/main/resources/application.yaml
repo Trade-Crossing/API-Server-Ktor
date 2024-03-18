@@ -5,7 +5,22 @@ ktor:
       - com.tradecrossing.ApplicationKt.module
   deployment:
     port: 8080
+    watch: [ src ]
+    rootPath: /api
 jwt:
-  domain: "https://jwt-provider-domain/"
-  audience: "jwt-audience"
-  realm: "ktor sample app"
+  secret: $JWT_SECRET
+
+oauth2:
+  kakao:
+    rest-api-key: $KAKAO_REST_API_KEY
+    client-secret: $KAKAO_SECRET_KEY
+    redirect-url: $KAKAO_REDIRECT_URI
+  google:
+    client-id: $GOOGLE_CLIENT_ID
+    client-secret: $GOOGLE_SECRET_KEY
+    redirect-url: $GOOGLE_REDIRECT_URI
+
+database:
+  url: "$DEV_DB_HOST:jdbc:postgresql://postgresql.orb.local:5432/trade_crossing"
+
+mode: "$MODE:local"

@@ -25,6 +25,7 @@ repositories {
 
 dependencies {
 
+  // Ktor
   listOf(
     "core-jvm",
     "auth-jvm",
@@ -36,11 +37,13 @@ dependencies {
     "content-negotiation-jvm",
     "serialization-kotlinx-json-jvm",
     "netty-jvm",
-    "config-yaml"
+    "config-yaml",
+    "cors"
   ).forEach {
     implementation("io.ktor:ktor-server-$it")
   }
 
+  // Serialization
   listOf(
     "serialization-kotlinx-protobuf",
     "serialization-kotlinx-json"
@@ -53,14 +56,15 @@ dependencies {
   implementation("io.ktor:ktor-client-apache-jvm")
   implementation("io.ktor:ktor-server-openapi")
 
-  // database
-  implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
-  implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
-
+  // Exposed ORM
   listOf("exposed-core", "exposed-dao", "exposed-jdbc", "exposed-java-time").forEach {
     implementation("org.jetbrains.exposed:exposed-$it:$exposed_version")
   }
+  // DI
+  implementation(platform("io.insert-koin:koin-bom:3.5.3"))
+  implementation("io.insert-koin:koin-core")
 
+  // Database driver
   implementation("org.postgresql:postgresql:42.2")
 
   // logging
