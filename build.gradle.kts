@@ -37,7 +37,8 @@ dependencies {
     "content-negotiation-jvm",
     "netty-jvm",
     "config-yaml",
-    "cors"
+    "cors",
+    "openapi"
   ).forEach {
     implementation("io.ktor:ktor-server-$it")
   }
@@ -52,8 +53,8 @@ dependencies {
 
   // Ktor Client
   implementation("io.ktor:ktor-client-core-jvm")
-  implementation("io.ktor:ktor-client-apache-jvm")
-  implementation("io.ktor:ktor-server-openapi")
+  implementation("io.ktor:ktor-client-cio-jvm")
+  implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
 
   // Exposed ORM
   listOf(
@@ -73,6 +74,7 @@ dependencies {
 
   // logging
   implementation("ch.qos.logback:logback-classic:$logback_version")
+  implementation("io.ktor:ktor-client-cio-jvm:2.3.8")
 
   // test
   testImplementation("io.ktor:ktor-server-tests-jvm")
