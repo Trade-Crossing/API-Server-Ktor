@@ -35,7 +35,6 @@ dependencies {
     "status-pages-jvm",
     "swagger-jvm",
     "content-negotiation-jvm",
-    "serialization-kotlinx-json-jvm",
     "netty-jvm",
     "config-yaml",
     "cors"
@@ -57,15 +56,20 @@ dependencies {
   implementation("io.ktor:ktor-server-openapi")
 
   // Exposed ORM
-  listOf("exposed-core", "exposed-dao", "exposed-jdbc", "exposed-java-time").forEach {
-    implementation("org.jetbrains.exposed:exposed-$it:$exposed_version")
+  listOf(
+    "exposed-core",
+    "exposed-dao",
+    "exposed-jdbc",
+    "exposed-java-time",
+  ).forEach {
+    implementation("org.jetbrains.exposed:$it:$exposed_version")
   }
   // DI
   implementation(platform("io.insert-koin:koin-bom:3.5.3"))
   implementation("io.insert-koin:koin-core")
 
   // Database driver
-  implementation("org.postgresql:postgresql:42.2")
+  implementation("org.postgresql:postgresql:42.7.3")
 
   // logging
   implementation("ch.qos.logback:logback-classic:$logback_version")
