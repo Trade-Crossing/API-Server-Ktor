@@ -24,5 +24,3 @@ database:
   url: $DEV_DB_HOST
   username: $DEV_USER
   password: $DEV_PW
-
-mode: "$MODE:local"

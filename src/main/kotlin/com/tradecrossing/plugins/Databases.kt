@@ -11,7 +11,7 @@ object DatabaseFactory {
   private lateinit var database: Database
 
   fun init(config: ApplicationConfig) {
-    val mode = config.propertyOrNull("mode")?.getString() ?: "local"
+    val mode = System.getenv("MODE")
 
     val url: String?
     val username: String?

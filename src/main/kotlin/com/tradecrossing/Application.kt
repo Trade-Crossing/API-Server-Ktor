@@ -1,14 +1,12 @@
 package com.tradecrossing
 
-import com.tradecrossing.plugins.configureRouting
-import com.tradecrossing.plugins.configureSecurity
-import com.tradecrossing.plugins.configureSerialization
-import com.tradecrossing.plugins.configureStatusPages
+import com.tradecrossing.plugins.*
 import io.ktor.server.application.*
 
 fun main(args: Array<String>) = io.ktor.server.netty.EngineMain.main(args)
 
 fun Application.module() {
+  DatabaseFactory.init(environment.config)
   configureSecurity()
   configureSerialization()
   configureRouting()
