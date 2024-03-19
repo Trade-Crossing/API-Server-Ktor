@@ -41,8 +41,7 @@ dependencies {
     "openapi",
     "request-validation"
   ).forEach {
-    implementation("io.ktor:ktor-server-$it")
-
+    implementation("io.ktor:ktor-server-$it:$ktor_version")
   }
 
   // Serialization

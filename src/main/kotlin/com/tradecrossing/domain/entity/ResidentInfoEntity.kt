@@ -1,0 +1,22 @@
+package com.tradecrossing.domain.entity
+
+import com.tradecrossing.domain.tables.ResidentInfoTable
+import org.jetbrains.exposed.dao.Entity
+import org.jetbrains.exposed.dao.EntityClass
+import org.jetbrains.exposed.dao.id.EntityID
+import java.util.*
+
+class ResidentInfoEntity(id: EntityID<UUID>) : Entity<UUID>(id) {
+  companion object : EntityClass<UUID, ResidentInfoEntity>(ResidentInfoTable)
+
+  var defaultProfile by ResidentInfoTable.defaultProfile
+  var introduction by ResidentInfoTable.introduction
+  var islandName by ResidentInfoTable.islandName
+  var profilePic by ResidentInfoTable.profilePic
+  var username by ResidentInfoTable.username
+  val resident by ResidentEntity referencedOn ResidentInfoTable.id
+
+  override fun toString(): String {
+    return "ResidentInfoEntity(id=$id, defaultProfile=$defaultProfile, introduction=$introduction, islandName=$islandName, profilePic=$profilePic, username=$username)"
+  }
+}

@@ -40,7 +40,7 @@ fun Application.generateJwtToken(userId: UUID): TokenResponse {
   return TokenResponse(accessToken, refreshToken)
 }
 
-fun Route.authenticate(tokenType: TokenType, route: Route.() -> Unit): Route {
+fun Route.withAuth(tokenType: TokenType, route: Route.() -> Unit): Route {
   val child = createChild(AuthRouter(tokenType)).apply {
     install(JwtAuthPlugin) { this.tokenType = tokenType }
     route()

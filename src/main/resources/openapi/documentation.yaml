@@ -6,6 +6,9 @@ info:
 servers:
 - url: "https://trade_crossing_ktor"
 paths:
+  /oauth/google:
+    get:
+      description: ""
   /oauth/google/callback:
     get:
       description: ""
@@ -16,7 +19,7 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/OAuthResponse"
-  /oauth/google/login:
+  /oauth/kakao:
     get:
       description: ""
   /oauth/kakao/callback:
@@ -29,9 +32,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/OAuthResponse"
-  /oauth/kakao/login:
-    get:
-      description: ""
 components:
   schemas:
     OAuthResponse:

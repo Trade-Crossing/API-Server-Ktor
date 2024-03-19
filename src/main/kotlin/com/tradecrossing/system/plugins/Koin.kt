@@ -1,5 +1,7 @@
 package com.tradecrossing.system.plugins
 
+import com.tradecrossing.repository.ResidentRepository
+import com.tradecrossing.service.AuthService
 import com.tradecrossing.service.OAuthService
 import io.ktor.server.application.*
 import org.koin.core.logger.Level.DEBUG
@@ -12,8 +14,13 @@ fun Application.configureKoin() {
     slf4jLogger(level = DEBUG)
     val services = module {
       single { OAuthService() }
+      single { AuthService(get()) }
     }
-    
-    modules(services)
+
+    val repositories = module {
+      single { ResidentRepository() }
+    }
+
+    modules(services, repositories)
   }
 }
