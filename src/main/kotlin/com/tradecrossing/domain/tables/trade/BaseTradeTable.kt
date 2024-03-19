@@ -5,7 +5,7 @@ import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.sql.javatime.datetime
 import java.time.LocalDateTime
 
-open class BaseTradeTable(override val tableName: String) : LongIdTable(tableName, "id") {
+open class BaseTradeTable(tableName: String) : LongIdTable(tableName, "id") {
 
   val resident = reference("resident", ResidentTable.id)
   val closed = bool("closed").default(false)
