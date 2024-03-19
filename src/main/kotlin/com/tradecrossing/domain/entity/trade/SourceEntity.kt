@@ -9,4 +9,5 @@ class SourceEntity(id: EntityID<Long>) : LongEntity(id) {
   companion object : LongEntityClass<SourceEntity>(SourceTable)
 
   var name by SourceTable.name
+  var krName by SourceTable.krName
 }

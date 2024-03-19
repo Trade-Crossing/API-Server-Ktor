@@ -10,6 +10,7 @@ class ItemCategoryEntity(id: EntityID<Int>) : IntEntity(id) {
   companion object : IntEntityClass<ItemCategoryEntity>(ItemCategoryTable)
 
   var name by ItemCategoryTable.name
+  var krName by ItemCategoryTable.krName
 
   override fun toString(): String {
     return "ItemCategoryEntity(id=$id, name=$name)"

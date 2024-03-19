@@ -1,12 +1,13 @@
 package com.tradecrossing.domain.entity.trade
 
-import com.tradecrossing.domain.entity.resident.ResidentEntity
+import com.tradecrossing.domain.entity.resident.ResidentInfoEntity
 import com.tradecrossing.domain.tables.trade.ItemTradeTable
+import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import java.time.LocalDateTime
 
 class ItemTradeEntity(id: EntityID<Long>) : BaseTradeEntity(id) {
-  override val resident: ResidentEntity by ResidentEntity referencedOn ItemTradeTable.resident
+  override val resident: ResidentInfoEntity by ResidentInfoEntity referencedOn ItemTradeTable.resident
   override var closed: Boolean by ItemTradeTable.closed
   override var bellPrice: Int? by ItemTradeTable.bellPrice
   override var milePrice: Int? by ItemTradeTable.milePrice
@@ -20,6 +21,8 @@ class ItemTradeEntity(id: EntityID<Long>) : BaseTradeEntity(id) {
   var nameKr by ItemTradeTable.itemNameKr
   var quantity by ItemTradeTable.quantity
   var variationId by ItemTradeTable.variationId
+
+  companion object : LongEntityClass<ItemTradeEntity>(ItemTradeTable)
 
   override fun toString(): String {
     return "ItemTradeEntity(" +
