@@ -5,8 +5,9 @@ ktor:
       - com.tradecrossing.ApplicationKt.module
   deployment:
     port: 8080
-    watch: [ src ]
     rootPath: /api
+    watch:
+      - build/classes
 jwt:
   secret: $JWT_SECRET
 

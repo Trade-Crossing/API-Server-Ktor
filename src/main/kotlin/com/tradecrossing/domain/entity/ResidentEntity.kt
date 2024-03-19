@@ -15,4 +15,8 @@ class ResidentEntity(id: EntityID<UUID>) : UUIDEntity(id) {
   var providerId by ResidentTable.providerId
   var registered by ResidentTable.registered
 
+
+  override fun toString(): String {
+    return "ResidentEntity(email='$email', provider=$provider, providerId='$providerId', registered=$registered)"
+  }
 }
