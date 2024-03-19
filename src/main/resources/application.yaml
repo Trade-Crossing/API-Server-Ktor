@@ -7,7 +7,7 @@ ktor:
     port: 8080
     rootPath: /api
     watch:
-      - build/classes
+      - classes
 jwt:
   secret: $JWT_SECRET
 

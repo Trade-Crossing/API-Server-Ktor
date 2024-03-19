@@ -9,6 +9,13 @@ paths:
   /oauth/google/callback:
     get:
       description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/OAuthResponse"
   /oauth/google/login:
     get:
       description: ""
@@ -21,7 +28,24 @@ paths:
           content:
             '*/*':
               schema:
-                type: "object"
+                $ref: "#/components/schemas/OAuthResponse"
   /oauth/kakao/login:
     get:
       description: ""
+components:
+  schemas:
+    OAuthResponse:
+      type: "object"
+      properties:
+        registered:
+          type: "boolean"
+        profilePic:
+          type: "string"
+        accessToken:
+          type: "string"
+        refreshToken:
+          type: "string"
+      required:
+      - "profilePic"
+      - "accessToken"
+      - "refreshToken"

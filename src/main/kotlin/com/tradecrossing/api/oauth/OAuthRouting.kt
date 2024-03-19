@@ -6,6 +6,7 @@ import com.tradecrossing.dto.response.oauth.OAuthResponse
 import com.tradecrossing.service.OAuthService
 import com.tradecrossing.system.plugins.generateJwtToken
 import com.tradecrossing.types.OAuthProvider
+import io.github.smiley4.ktorswaggerui.dsl.OpenApiRoute
 import io.github.smiley4.ktorswaggerui.dsl.get
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -20,9 +21,9 @@ fun Route.oauth() {
 
   route("google") {
     authenticate("google") {
-      get("/login") {}
+      get("", google) {}
 
-      get("/callback", {}) {
+      get("/callback", googleCallBack) {
         val principal: OAuthAccessTokenResponse.OAuth2? = call.principal()
         val accessToken = principal?.accessToken!!
         val result = service.getGoogleUserInfo(accessToken)
@@ -37,9 +38,9 @@ fun Route.oauth() {
 
   route("kakao") {
     authenticate("kakao") {
-      get("/login") {}
+      get("", kakao) {}
 
-      get("/callback") {
+      get("/callback", kakaoCallBack) {
         val principal: OAuthAccessTokenResponse.OAuth2? = call.principal()
         val accessToken = principal?.accessToken!!
         val result = service.getKakaoUserInfo(accessToken)
@@ -53,6 +54,39 @@ fun Route.oauth() {
         )
         call.respond(HttpStatusCode.OK, response)
       }
+    }
+  }
+}
+
+
+private val google: OpenApiRoute.() -> Unit = {
+  tags = listOf("OAuth")
+  summary = "Google OAuth2 실행하는 API"
+}
+
+private val googleCallBack: OpenApiRoute.() -> Unit = {
+  tags = listOf("OAuth")
+  summary = "Google OAuth 콜백"
+  response {
+    HttpStatusCode.OK to {
+      body<OAuthResponse>()
+      description = "성공"
+    }
+  }
+}
+
+private val kakao: OpenApiRoute.() -> Unit = {
+  tags = listOf("OAuth")
+  summary = "Kakao OAuth 실행하는 API"
+}
+
+private val kakaoCallBack: OpenApiRoute.() -> Unit = {
+  tags = listOf("OAuth")
+  summary = "Kakao OAuth 콜백"
+  response {
+    HttpStatusCode.OK to {
+      body<OAuthResponse>()
+      description = "성공"
     }
   }
 }

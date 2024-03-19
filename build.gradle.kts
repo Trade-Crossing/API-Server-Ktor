@@ -33,7 +33,7 @@ dependencies {
     "host-common-jvm",
     "resources",
     "status-pages-jvm",
-    "swagger-jvm",
+    "swagger",
     "content-negotiation-jvm",
     "netty-jvm",
     "config-yaml",
@@ -72,10 +72,10 @@ dependencies {
   // Koin for Ktor
   implementation("io.insert-koin:koin-ktor:3.5.3")
   runtimeOnly("io.insert-koin:koin-core:3.5.3")
+
   // SLF4J Logger
   implementation("io.insert-koin:koin-logger-slf4j:3.5.3")
   runtimeOnly("io.insert-koin:koin-annotations:1.3.1")
-
 
   // Database driver
   implementation("org.postgresql:postgresql:42.7.3")
@@ -85,6 +85,8 @@ dependencies {
 
   // Swagger
   implementation("io.github.smiley4:ktor-swagger-ui:2.7.5")
+  implementation("io.swagger.core.v3:swagger-annotations:2.2.20")
+
 
   // test
   testImplementation("io.ktor:ktor-server-tests-jvm")
