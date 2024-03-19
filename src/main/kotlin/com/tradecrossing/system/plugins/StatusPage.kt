@@ -1,6 +1,6 @@
-package com.tradecrossing.plugins
+package com.tradecrossing.system.plugins
 
-import com.tradecrossing.exceptions.UnauthorizedException
+import com.tradecrossing.system.exceptions.UnauthorizedException
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.statuspages.*

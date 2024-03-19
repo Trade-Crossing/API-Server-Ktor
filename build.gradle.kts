@@ -38,9 +38,11 @@ dependencies {
     "netty-jvm",
     "config-yaml",
     "cors",
-    "openapi"
+    "openapi",
+    "request-validation"
   ).forEach {
     implementation("io.ktor:ktor-server-$it")
+
   }
 
   // Serialization
@@ -79,6 +81,9 @@ dependencies {
 
   // logging
   implementation("ch.qos.logback:logback-classic:$logback_version")
+
+  // Swagger
+  implementation("io.github.smiley4:ktor-swagger-ui:2.7.5")
 
   // test
   testImplementation("io.ktor:ktor-server-tests-jvm")
