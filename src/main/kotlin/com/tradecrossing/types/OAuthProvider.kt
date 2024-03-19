@@ -1,5 +1,5 @@
 package com.tradecrossing.types
 
 enum class OAuthProvider {
-  KAKAO, GOOGLE, APPLE
+  kakao, google, apple
 }
