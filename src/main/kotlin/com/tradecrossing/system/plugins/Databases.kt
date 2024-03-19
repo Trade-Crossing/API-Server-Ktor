@@ -1,9 +1,13 @@
 package com.tradecrossing.system.plugins
 
+import com.tradecrossing.domain.tables.ResidentTable
 import io.ktor.server.config.*
+import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.sql.transactions.transaction
 
 object DatabaseFactory {
 
@@ -38,7 +42,13 @@ object DatabaseFactory {
 
       else -> throw IllegalArgumentException("Unknown mode: $mode")
     }
+
+    transaction {
+      SchemaUtils.createStatements(
+        ResidentTable
+      )
+    }
   }
 
-  suspend fun <T> dbQuery(block: Transaction.() -> T): T = newSuspendedTransaction { block() }
+  suspend fun <T> dbQuery(block: Transaction.() -> T): T = newSuspendedTransaction(Dispatchers.IO, database) { block() }
 }
