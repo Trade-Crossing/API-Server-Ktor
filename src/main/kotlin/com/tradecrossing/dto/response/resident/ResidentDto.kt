@@ -1,6 +1,6 @@
 package com.tradecrossing.dto.response.resident
 
-import com.tradecrossing.domain.entity.ResidentEntity
+import com.tradecrossing.domain.entity.resident.ResidentEntity
 import com.tradecrossing.types.UUIDSerializer
 import kotlinx.serialization.Serializable
 import java.util.*

@@ -1,7 +1,7 @@
 package com.tradecrossing.repository
 
-import com.tradecrossing.domain.entity.ResidentEntity
-import com.tradecrossing.domain.entity.ResidentInfoEntity
+import com.tradecrossing.domain.entity.resident.ResidentEntity
+import com.tradecrossing.domain.entity.resident.ResidentInfoEntity
 import java.util.*
 
 class ResidentRepository {
@@ -9,5 +9,5 @@ class ResidentRepository {
 
   fun findResidentInfoById(id: UUID): ResidentInfoEntity? = ResidentInfoEntity.findById(id)
 
-  
+
 }

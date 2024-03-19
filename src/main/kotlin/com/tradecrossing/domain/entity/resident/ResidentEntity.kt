@@ -1,4 +1,4 @@
-package com.tradecrossing.domain.entity
+package com.tradecrossing.domain.entity.resident
 
 import com.tradecrossing.domain.tables.resident.ResidentTable
 import org.jetbrains.exposed.dao.UUIDEntity

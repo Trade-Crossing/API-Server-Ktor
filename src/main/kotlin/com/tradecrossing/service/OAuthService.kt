@@ -1,6 +1,6 @@
 package com.tradecrossing.service
 
-import com.tradecrossing.domain.entity.ResidentEntity
+import com.tradecrossing.domain.entity.resident.ResidentEntity
 import com.tradecrossing.domain.tables.resident.ResidentTable
 import com.tradecrossing.dto.request.oauth.MobileLoginRequest
 import com.tradecrossing.dto.response.oauth.GoogleResponse
