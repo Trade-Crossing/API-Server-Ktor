@@ -16,15 +16,10 @@ fun Application.configureRouting() {
     //openAPI(path = "openapi")
     //swaggerUI(path = "swagger-ui")
     // oauth routes
-    route("oauth") {
-      oauth()
-    }
-
+    oauth()
     // auth routes
     auth()
-
     // user routes
-
     // trade routes
 
   }
