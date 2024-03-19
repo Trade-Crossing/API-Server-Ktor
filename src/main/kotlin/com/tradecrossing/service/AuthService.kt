@@ -3,6 +3,7 @@ package com.tradecrossing.service
 import com.tradecrossing.domain.entity.ResidentInfoEntity
 import com.tradecrossing.domain.tables.ResidentInfoTable
 import com.tradecrossing.dto.request.auth.RegisterRequest
+import com.tradecrossing.dto.response.resident.ResidentInfoDto
 import com.tradecrossing.repository.ResidentRepository
 import com.tradecrossing.system.exceptions.ConfictException
 import com.tradecrossing.system.plugins.DatabaseFactory.dbQuery
@@ -10,7 +11,6 @@ import io.ktor.server.plugins.*
 import java.util.*
 
 class AuthService(private val residentRepository: ResidentRepository) {
-
 
   suspend fun registerUser(id: UUID, request: RegisterRequest) {
     dbQuery {
@@ -35,5 +35,12 @@ class AuthService(private val residentRepository: ResidentRepository) {
         throw ConfictException("이미 등록된 유저입니다.")
       }
     }
+  }
+
+  suspend fun getResidentInfo(id: UUID) = dbQuery {
+    val residentInfo =
+      ResidentInfoEntity.findById(id) ?: throw NotFoundException("존재하지 않는 유저입니다.")
+
+    ResidentInfoDto(residentInfo)
   }
 }

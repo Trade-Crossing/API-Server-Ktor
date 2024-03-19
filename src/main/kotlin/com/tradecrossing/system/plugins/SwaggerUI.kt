@@ -49,7 +49,7 @@ fun Application.configureSwaggerUI() {
       description = "개발 서버"
     }
 
-    securityScheme("Jwt Token") {
+    securityScheme("Jwt") {
       type = AuthType.HTTP
       location = AuthKeyLocation.HEADER
       bearerFormat = "jwt"
@@ -57,8 +57,11 @@ fun Application.configureSwaggerUI() {
       description = "JWT 인증 토큰"
     }
 
-    tag("OAuth") {
-      description = "OAuth 인증 관련 API"
-    }
+
+    // OAuth 태그
+    tag("OAuth") { description = "OAuth 인증 관련 API" }
+
+    // Auth 태그
+    tag("Auth") { description = "인증 관련 API" }
   }
 }
