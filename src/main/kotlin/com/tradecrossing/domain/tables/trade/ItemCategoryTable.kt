@@ -4,4 +4,5 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 
 object ItemCategoryTable : IntIdTable("item_category", "id") {
   val name = varchar("name", 255)
+  val krName = varchar("kr_name", 255)
 }
