@@ -2,6 +2,7 @@ package com.tradecrossing.service
 
 import com.tradecrossing.domain.entity.ResidentEntity
 import com.tradecrossing.domain.tables.ResidentTable
+import com.tradecrossing.dto.request.oauth.MobileLoginRequest
 import com.tradecrossing.dto.response.oauth.GoogleResponse
 import com.tradecrossing.dto.response.oauth.KakaoResponse
 import com.tradecrossing.dto.response.resident.ResidentDto
@@ -13,6 +14,7 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.server.plugins.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNamingStrategy
@@ -67,6 +69,18 @@ class OAuthService {
       }
 
       ResidentDto(resident)
+    }
+  }
+
+  suspend fun mobileLogin(request: MobileLoginRequest): ResidentDto {
+    return dbQuery {
+      val resident = ResidentEntity.find {
+        (ResidentTable.providerId eq request.providerId) and
+            (ResidentTable.provider eq request.provider) and
+            (ResidentTable.email eq request.email)
+      }.firstOrNull() ?: throw NotFoundException("등록되지 않은 사용자입니다.")
+
+      return@dbQuery ResidentDto(resident)
     }
   }
 }

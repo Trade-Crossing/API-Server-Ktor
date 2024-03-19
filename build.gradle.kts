@@ -89,6 +89,7 @@ dependencies {
 
   // test
   testImplementation("io.ktor:ktor-server-tests-jvm")
+  testImplementation("io.ktor:ktor-server-test-host-jvm:2.3.8")
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }
 

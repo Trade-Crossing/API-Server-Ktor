@@ -4,6 +4,10 @@ import io.ktor.resources.*
 
 @Resource("/oauth")
 class OAuthResource {
+
+  @Resource("/mobile")
+  class Mobile(val parent: OAuthResource = OAuthResource())
+
   @Resource("/google")
   class Google(val parent: OAuthResource = OAuthResource()) {
 
@@ -17,5 +21,6 @@ class OAuthResource {
     @Resource("/callback")
     class CallBack(val parent: Kakao = Kakao())
   }
+
 }
 

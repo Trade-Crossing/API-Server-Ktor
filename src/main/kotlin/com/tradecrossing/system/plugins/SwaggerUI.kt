@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalSerializationApi::class)
+
 package com.tradecrossing.system.plugins
 
 import io.github.smiley4.ktorswaggerui.SwaggerUI
@@ -5,6 +7,10 @@ import io.github.smiley4.ktorswaggerui.data.AuthKeyLocation
 import io.github.smiley4.ktorswaggerui.data.AuthScheme
 import io.github.smiley4.ktorswaggerui.data.AuthType
 import io.ktor.server.application.*
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonNamingStrategy
+import kotlinx.serialization.serializer
 
 
 fun Application.configureSwaggerUI() {
@@ -17,6 +23,18 @@ fun Application.configureSwaggerUI() {
 
     swagger {
       swaggerUrl = "swagger-ui"
+    }
+
+    encoding {
+      exampleEncoder { type, example ->
+        val json = Json {
+          prettyPrint = true
+          encodeDefaults = true
+          namingStrategy = JsonNamingStrategy.SnakeCase
+        }
+
+        json.encodeToString(serializer(type!!), example)
+      }
     }
 
     // 로컬 서버

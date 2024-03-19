@@ -6,6 +6,7 @@ import com.tradecrossing.system.exceptions.UnauthorizedException
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.*
+import io.ktor.server.plugins.requestvalidation.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
 
@@ -17,13 +18,19 @@ fun Application.configureStatusPages() {
       call.respond(HttpStatusCode.Unauthorized, ErrorResponse("unauthorized", e.message ?: "Unauthorized"))
     }
 
+    // 404
     exception<NotFoundException> { call, e ->
       call.respond(HttpStatusCode.NotFound, ErrorResponse("not_found", e.message ?: "Not Found"))
     }
 
+    // 409
     exception<ConfictException> { call, e ->
       call.respond(HttpStatusCode.Conflict, ErrorResponse("conflict", e.message ?: "Conflict"))
     }
 
+    // Request Validation
+    exception<RequestValidationException> { call, e ->
+      call.respond(HttpStatusCode.BadRequest, ErrorResponse("bad_request", e.message ?: "Bad Request"))
+    }
   }
 }

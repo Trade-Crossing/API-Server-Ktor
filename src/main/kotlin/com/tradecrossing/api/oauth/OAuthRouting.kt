@@ -1,14 +1,18 @@
 package com.tradecrossing.api.oauth
 
+import com.tradecrossing.dto.request.oauth.MobileLoginRequest
+import com.tradecrossing.dto.response.ErrorResponse
 import com.tradecrossing.dto.response.oauth.OAuthResponse
 import com.tradecrossing.service.OAuthService
 import com.tradecrossing.system.plugins.generateJwtToken
 import com.tradecrossing.types.OAuthProvider
 import io.github.smiley4.ktorswaggerui.dsl.OpenApiRoute
 import io.github.smiley4.ktorswaggerui.dsl.resources.get
+import io.github.smiley4.ktorswaggerui.dsl.resources.post
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.java.KoinJavaComponent.inject
@@ -31,8 +35,6 @@ fun Route.oauth() {
     }
   }
 
-
-
   authenticate("kakao") {
     get<OAuthResource.Kakao>(kakao) {}
 
@@ -50,7 +52,15 @@ fun Route.oauth() {
       )
       call.respond(HttpStatusCode.OK, response)
     }
+  }
 
+  post<OAuthResource.Mobile>(mobile) {
+    val body = call.receive<MobileLoginRequest>()
+    val resident = service.mobileLogin(body)
+    val token = application.generateJwtToken(resident.id)
+    val response = OAuthResponse(resident.registered, null, token.accessToken, token.refreshToken)
+
+    call.respond(HttpStatusCode.OK, response)
   }
 }
 
@@ -83,6 +93,28 @@ private val kakaoCallBack: OpenApiRoute.() -> Unit = {
     HttpStatusCode.OK to {
       body<OAuthResponse>()
       description = "성공"
+    }
+  }
+}
+
+private val mobile: OpenApiRoute.() -> Unit = {
+  tags = listOf("OAuth")
+  summary = "모바일 로그인"
+  request {
+    body<MobileLoginRequest> {
+      example("1", MobileLoginRequest("12345", "email@email.com", provider = OAuthProvider.google))
+      example("2", MobileLoginRequest("12345", "email@email.com", provider = OAuthProvider.kakao))
+    }
+  }
+  response {
+    HttpStatusCode.OK to {
+      body<OAuthResponse>()
+      description = "성공"
+    }
+
+    HttpStatusCode.NotFound to {
+      body<ErrorResponse>()
+      description = "등록되지 않은 사용자입니다."
     }
   }
 }
