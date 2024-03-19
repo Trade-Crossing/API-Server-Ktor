@@ -16,6 +16,10 @@ class ItemTradeEntity(id: EntityID<Long>) : BaseTradeEntity(id) {
   var tradeType by ItemTradeTable.tradeType
   val category by ItemCategoryEntity referencedOn ItemTradeTable.itemCategory
   val source by SourceEntity referencedOn ItemTradeTable.itemSource
+  var name by ItemTradeTable.itemName
+  var nameKr by ItemTradeTable.itemNameKr
+  var quantity by ItemTradeTable.quantity
+  var variationId by ItemTradeTable.variationId
 
   override fun toString(): String {
     return "ItemTradeEntity(" +
