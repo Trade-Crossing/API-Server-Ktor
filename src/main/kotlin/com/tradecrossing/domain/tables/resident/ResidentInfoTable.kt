@@ -1,4 +1,4 @@
-package com.tradecrossing.domain.tables
+package com.tradecrossing.domain.tables.resident
 
 import com.tradecrossing.types.DefaultProfile
 import org.jetbrains.exposed.dao.id.EntityID

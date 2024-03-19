@@ -1,7 +1,7 @@
 package com.tradecrossing.service
 
 import com.tradecrossing.domain.entity.ResidentInfoEntity
-import com.tradecrossing.domain.tables.ResidentInfoTable
+import com.tradecrossing.domain.tables.resident.ResidentInfoTable
 import com.tradecrossing.dto.request.auth.RegisterRequest
 import com.tradecrossing.dto.response.resident.ResidentInfoDto
 import com.tradecrossing.repository.ResidentRepository

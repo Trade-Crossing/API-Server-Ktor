@@ -1,6 +1,6 @@
 package com.tradecrossing.domain.entity
 
-import com.tradecrossing.domain.tables.ResidentInfoTable
+import com.tradecrossing.domain.tables.resident.ResidentInfoTable
 import org.jetbrains.exposed.dao.Entity
 import org.jetbrains.exposed.dao.EntityClass
 import org.jetbrains.exposed.dao.id.EntityID

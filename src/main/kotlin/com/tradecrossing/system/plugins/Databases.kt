@@ -1,6 +1,6 @@
 package com.tradecrossing.system.plugins
 
-import com.tradecrossing.domain.tables.ResidentTable
+import com.tradecrossing.domain.tables.resident.ResidentTable
 import io.ktor.server.config.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
