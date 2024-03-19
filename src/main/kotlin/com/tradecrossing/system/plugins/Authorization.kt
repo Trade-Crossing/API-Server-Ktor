@@ -16,7 +16,7 @@ import java.time.LocalDateTime
 import java.util.*
 
 
-internal val log = Log4J2LoggerFactory.getInstance("JwtAuthPlugin")
+private val log = Log4J2LoggerFactory.getInstance("JwtAuthPlugin")
 
 fun Application.generateJwtToken(userId: UUID): TokenResponse {
   val secret = environment.config.property("jwt.secret").getString()

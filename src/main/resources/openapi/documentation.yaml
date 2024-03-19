@@ -15,6 +15,13 @@ paths:
   /oauth/kakao/callback:
     get:
       description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
   /oauth/kakao/login:
     get:
       description: ""
