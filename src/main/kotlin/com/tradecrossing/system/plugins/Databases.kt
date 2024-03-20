@@ -25,7 +25,7 @@ object DatabaseFactory {
 
     when (mode) {
       "local" -> {
-        url = "jdbc:postgresql://postgresql.orb.local:5432/trade_crossing"
+        url = "jdbc:postgresql://localhost:5432/trade_crossing"
         username = "postgres"
         password = "postgres"
         database = Database.connect(url, driver, username, password)

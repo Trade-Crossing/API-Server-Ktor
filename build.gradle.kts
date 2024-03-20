@@ -39,7 +39,8 @@ dependencies {
     "config-yaml",
     "cors",
     "openapi",
-    "request-validation"
+    "request-validation",
+    "call-logging"
   ).forEach {
     implementation("io.ktor:ktor-server-$it:$ktor_version")
   }
