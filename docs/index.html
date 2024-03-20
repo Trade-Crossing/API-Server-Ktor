@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Application API</title>
+  <title>trade_crossing_ktor API</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta charset="UTF-8" />
@@ -689,6 +689,24 @@
   <script>
     // Script section to load models into a JS Var
     var defs = {}
+            defs["OAuthResponse"] = {
+  "required" : [ "accessToken", "profilePic", "refreshToken" ],
+  "type" : "object",
+  "properties" : {
+    "registered" : {
+      "type" : "boolean"
+    },
+    "profilePic" : {
+      "type" : "string"
+    },
+    "accessToken" : {
+      "type" : "string"
+    },
+    "refreshToken" : {
+      "type" : "string"
+    }
+  }
+};
   </script>
 
   <div class="container-fluid">
@@ -706,8 +724,17 @@
             <li class="nav-fixed nav-header active" data-group="_"><a href="#api-_">API Summary</a></li>
 
                   <li class="nav-header" data-group="Default"><a href="#api-Default">API Methods - Default</a></li>
-                    <li data-group="Default" data-name="rootGet" class="">
-                      <a href="#api-Default-rootGet">rootGet</a>
+                    <li data-group="Default" data-name="oauthGoogleCallbackGet" class="">
+                      <a href="#api-Default-oauthGoogleCallbackGet">oauthGoogleCallbackGet</a>
+                    </li>
+                    <li data-group="Default" data-name="oauthGoogleGet" class="">
+                      <a href="#api-Default-oauthGoogleGet">oauthGoogleGet</a>
+                    </li>
+                    <li data-group="Default" data-name="oauthKakaoCallbackGet" class="">
+                      <a href="#api-Default-oauthKakaoCallbackGet">oauthKakaoCallbackGet</a>
+                    </li>
+                    <li data-group="Default" data-name="oauthKakaoGet" class="">
+                      <a href="#api-Default-oauthKakaoGet">oauthKakaoGet</a>
                     </li>
           </ul>
         </nav>
@@ -715,7 +742,7 @@
       <div id="content">
         <div id="project">
           <div class="pull-left">
-            <h1>Application API</h1>
+            <h1>trade_crossing_ktor API</h1>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -724,49 +751,49 @@
             <h2 id="welcome-to-apidoc">API and SDK Documentation</h2>
               <div class="app-desc">Version: 1.0.0</div>
             <hr>
-            <div>Application API</div>
+            <div>trade_crossing_ktor API</div>
           </div>
         </div>
         <div id="sections">
                 <section id="api-Default">
                   <h1>Default</h1>
-                    <div id="api-Default-rootGet">
-                      <article id="api-Default-rootGet-0" data-group="User" data-name="rootGet" data-version="0">
+                    <div id="api-Default-oauthGoogleCallbackGet">
+                      <article id="api-Default-oauthGoogleCallbackGet-0" data-group="User" data-name="oauthGoogleCallbackGet" data-version="0">
                         <div class="pull-left">
-                          <h1>rootGet</h1>
+                          <h1>oauthGoogleCallbackGet</h1>
                           <p></p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
                         <p></p>
-                        <p class="marked">Hello World!</p>
+                        <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/oauth/google/callback</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-rootGet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-rootGet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-rootGet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-rootGet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-rootGet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-rootGet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-rootGet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-rootGet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-rootGet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-rootGet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-rootGet-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-Default-oauthGoogleCallbackGet-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-oauthGoogleCallbackGet-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-oauthGoogleCallbackGet-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-oauthGoogleCallbackGet-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-oauthGoogleCallbackGet-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-oauthGoogleCallbackGet-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-oauthGoogleCallbackGet-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-oauthGoogleCallbackGet-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-oauthGoogleCallbackGet-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-oauthGoogleCallbackGet-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-oauthGoogleCallbackGet-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-rootGet-0-curl">
+                          <div class="tab-pane active" id="examples-Default-oauthGoogleCallbackGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
--H "Accept: text/plain"\
-"http://0.0.0.0:8080/"</code></pre>
+-H "Accept: */*"\
+"https://trade_crossing_ktor/oauth/google/callback"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Default-rootGet-0-java">
+                          <div class="tab-pane" id="examples-Default-oauthGoogleCallbackGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
@@ -781,17 +808,17 @@ public class DefaultApiExample {
         
         DefaultApi apiInstance = new DefaultApi();
         try {
-            'String' result = apiInstance.rootGet();
+            OAuthResponse result = apiInstance.oauthGoogleCallbackGet();
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#rootGet");
+            System.err.println("Exception when calling DefaultApi#oauthGoogleCallbackGet");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Default-rootGet-0-android">
+                          <div class="tab-pane" id="examples-Default-oauthGoogleCallbackGet-0-android">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
 
 public class DefaultApiExample {
@@ -799,25 +826,25 @@ public class DefaultApiExample {
     public static void main(String[] args) {
         DefaultApi apiInstance = new DefaultApi();
         try {
-            'String' result = apiInstance.rootGet();
+            OAuthResponse result = apiInstance.oauthGoogleCallbackGet();
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#rootGet");
+            System.err.println("Exception when calling DefaultApi#oauthGoogleCallbackGet");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Default-rootGet-0-groovy">
+  <div class="tab-pane" id="examples-Default-oauthGoogleCallbackGet-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Default-rootGet-0-objc">
+                            <div class="tab-pane" id="examples-Default-oauthGoogleCallbackGet-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">
 DefaultApi *apiInstance = [[DefaultApi alloc] init];
 
-[apiInstance rootGetWithCompletionHandler: 
-              ^('String' output, NSError* error) {
+[apiInstance oauthGoogleCallbackGetWithCompletionHandler: 
+              ^(OAuthResponse output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -828,10 +855,10 @@ DefaultApi *apiInstance = [[DefaultApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-rootGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var ApplicationApi = require('application_api');
+                            <div class="tab-pane" id="examples-Default-oauthGoogleCallbackGet-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var TradeCrossingKtorApi = require('trade_crossing_ktor_api');
 
-var api = new ApplicationApi.DefaultApi()
+var api = new TradeCrossingKtorApi.DefaultApi()
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -839,14 +866,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.rootGet(callback);
+api.oauthGoogleCallbackGet(callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Default-rootGet-0-angular">
+                            <!--<div class="tab-pane" id="examples-Default-oauthGoogleCallbackGet-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Default-rootGet-0-csharp">
+                            <div class="tab-pane" id="examples-Default-oauthGoogleCallbackGet-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -855,7 +882,7 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class rootGetExample
+    public class oauthGoogleCallbackGetExample
     {
         public void main()
         {
@@ -864,12 +891,12 @@ namespace Example
 
             try
             {
-                'String' result = apiInstance.rootGet();
+                OAuthResponse result = apiInstance.oauthGoogleCallbackGet();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling DefaultApi.rootGet: " + e.Message );
+                Debug.Print("Exception when calling DefaultApi.oauthGoogleCallbackGet: " + e.Message );
             }
         }
     }
@@ -877,22 +904,22 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-rootGet-0-php">
+                            <div class="tab-pane" id="examples-Default-oauthGoogleCallbackGet-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiDefaultApi();
 
 try {
-    $result = $api_instance->rootGet();
+    $result = $api_instance->oauthGoogleCallbackGet();
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->rootGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DefaultApi->oauthGoogleCallbackGet: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-rootGet-0-perl">
+                            <div class="tab-pane" id="examples-Default-oauthGoogleCallbackGet-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::DefaultApi;
@@ -900,15 +927,15 @@ use WWW::SwaggerClient::DefaultApi;
 my $api_instance = WWW::SwaggerClient::DefaultApi->new();
 
 eval { 
-    my $result = $api_instance->rootGet();
+    my $result = $api_instance->oauthGoogleCallbackGet();
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling DefaultApi->rootGet: $@\n";
+    warn "Exception when calling DefaultApi->oauthGoogleCallbackGet: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-rootGet-0-python">
+                            <div class="tab-pane" id="examples-Default-oauthGoogleCallbackGet-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
@@ -919,10 +946,10 @@ from pprint import pprint
 api_instance = swagger_client.DefaultApi()
 
 try: 
-    api_response = api_instance.root_get()
+    api_response = api_instance.oauth_google_callback_get()
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling DefaultApi->rootGet: %s\n" % e)</code></pre>
+    print("Exception when calling DefaultApi->oauthGoogleCallbackGet: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -938,33 +965,27 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-rootGet-200-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-oauthGoogleCallbackGet-200-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-rootGet-200-schema">
-                                  <div id='responses-rootGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-oauthGoogleCallbackGet-200-schema">
+                                  <div id='responses-oauthGoogleCallbackGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
   "description" : "OK",
   "content" : {
-    "text/plain" : {
+    "*/*" : {
       "schema" : {
-        "type" : "string",
-        "x-content-type" : "text/plain"
-      },
-      "examples" : {
-        "Example#1" : {
-          "value" : "Hello World!"
-        }
+        "$ref" : "#/components/schemas/OAuthResponse"
       }
     }
   }
 };
-                                        var schema = schemaWrapper.content["text/plain"].schema;
+                                        var schema = schemaWrapper.content["*/*"].schema;
                                         if (schema.$ref != null) {
                                           schema = defsParser.$refs.get(schema.$ref);
                                         } else {
@@ -977,17 +998,666 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-rootGet-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-rootGet-200-schema-200');
+                                        $('#responses-oauthGoogleCallbackGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-oauthGoogleCallbackGet-200-schema-200');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-rootGet-200-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-oauthGoogleCallbackGet-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Default-oauthGoogleGet">
+                      <article id="api-Default-oauthGoogleGet-0" data-group="User" data-name="oauthGoogleGet" data-version="0">
+                        <div class="pull-left">
+                          <h1>oauthGoogleGet</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/oauth/google</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Default-oauthGoogleGet-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-oauthGoogleGet-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-oauthGoogleGet-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-oauthGoogleGet-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-oauthGoogleGet-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-oauthGoogleGet-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-oauthGoogleGet-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-oauthGoogleGet-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-oauthGoogleGet-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-oauthGoogleGet-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-oauthGoogleGet-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Default-oauthGoogleGet-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+"https://trade_crossing_ktor/oauth/google"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Default-oauthGoogleGet-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.DefaultApi;
+
+import java.io.File;
+import java.util.*;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        
+        DefaultApi apiInstance = new DefaultApi();
+        try {
+            apiInstance.oauthGoogleGet();
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#oauthGoogleGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-oauthGoogleGet-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        DefaultApi apiInstance = new DefaultApi();
+        try {
+            apiInstance.oauthGoogleGet();
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#oauthGoogleGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Default-oauthGoogleGet-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Default-oauthGoogleGet-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">
+DefaultApi *apiInstance = [[DefaultApi alloc] init];
+
+[apiInstance oauthGoogleGetWithCompletionHandler: 
+              ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-oauthGoogleGet-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var TradeCrossingKtorApi = require('trade_crossing_ktor_api');
+
+var api = new TradeCrossingKtorApi.DefaultApi()
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.oauthGoogleGet(callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Default-oauthGoogleGet-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Default-oauthGoogleGet-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class oauthGoogleGetExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new DefaultApi();
+
+            try
+            {
+                apiInstance.oauthGoogleGet();
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.oauthGoogleGet: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-oauthGoogleGet-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiDefaultApi();
+
+try {
+    $api_instance->oauthGoogleGet();
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->oauthGoogleGet: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-oauthGoogleGet-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::DefaultApi;
+
+my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+
+eval { 
+    $api_instance->oauthGoogleGet();
+};
+if ($@) {
+    warn "Exception when calling DefaultApi->oauthGoogleGet: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-oauthGoogleGet-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.DefaultApi()
+
+try: 
+    api_instance.oauth_google_get()
+except ApiException as e:
+    print("Exception when calling DefaultApi->oauthGoogleGet: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+
+                          <h2>Responses</h2>
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Default-oauthKakaoCallbackGet">
+                      <article id="api-Default-oauthKakaoCallbackGet-0" data-group="User" data-name="oauthKakaoCallbackGet" data-version="0">
+                        <div class="pull-left">
+                          <h1>oauthKakaoCallbackGet</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/oauth/kakao/callback</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Default-oauthKakaoCallbackGet-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-oauthKakaoCallbackGet-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-oauthKakaoCallbackGet-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-oauthKakaoCallbackGet-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-oauthKakaoCallbackGet-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-oauthKakaoCallbackGet-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-oauthKakaoCallbackGet-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-oauthKakaoCallbackGet-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-oauthKakaoCallbackGet-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-oauthKakaoCallbackGet-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-oauthKakaoCallbackGet-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Default-oauthKakaoCallbackGet-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: */*"\
+"https://trade_crossing_ktor/oauth/kakao/callback"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Default-oauthKakaoCallbackGet-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.DefaultApi;
+
+import java.io.File;
+import java.util.*;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        
+        DefaultApi apiInstance = new DefaultApi();
+        try {
+            OAuthResponse result = apiInstance.oauthKakaoCallbackGet();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#oauthKakaoCallbackGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-oauthKakaoCallbackGet-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        DefaultApi apiInstance = new DefaultApi();
+        try {
+            OAuthResponse result = apiInstance.oauthKakaoCallbackGet();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#oauthKakaoCallbackGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Default-oauthKakaoCallbackGet-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Default-oauthKakaoCallbackGet-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">
+DefaultApi *apiInstance = [[DefaultApi alloc] init];
+
+[apiInstance oauthKakaoCallbackGetWithCompletionHandler: 
+              ^(OAuthResponse output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-oauthKakaoCallbackGet-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var TradeCrossingKtorApi = require('trade_crossing_ktor_api');
+
+var api = new TradeCrossingKtorApi.DefaultApi()
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.oauthKakaoCallbackGet(callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Default-oauthKakaoCallbackGet-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Default-oauthKakaoCallbackGet-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class oauthKakaoCallbackGetExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new DefaultApi();
+
+            try
+            {
+                OAuthResponse result = apiInstance.oauthKakaoCallbackGet();
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.oauthKakaoCallbackGet: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-oauthKakaoCallbackGet-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiDefaultApi();
+
+try {
+    $result = $api_instance->oauthKakaoCallbackGet();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->oauthKakaoCallbackGet: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-oauthKakaoCallbackGet-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::DefaultApi;
+
+my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+
+eval { 
+    my $result = $api_instance->oauthKakaoCallbackGet();
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling DefaultApi->oauthKakaoCallbackGet: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-oauthKakaoCallbackGet-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.DefaultApi()
+
+try: 
+    api_response = api_instance.oauth_kakao_callback_get()
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->oauthKakaoCallbackGet: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - OK </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-oauthKakaoCallbackGet-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-oauthKakaoCallbackGet-200-schema">
+                                  <div id='responses-oauthKakaoCallbackGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "OK",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/OAuthResponse"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["*/*"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-oauthKakaoCallbackGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-oauthKakaoCallbackGet-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-oauthKakaoCallbackGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Default-oauthKakaoGet">
+                      <article id="api-Default-oauthKakaoGet-0" data-group="User" data-name="oauthKakaoGet" data-version="0">
+                        <div class="pull-left">
+                          <h1>oauthKakaoGet</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/oauth/kakao</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Default-oauthKakaoGet-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-oauthKakaoGet-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-oauthKakaoGet-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-oauthKakaoGet-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-oauthKakaoGet-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-oauthKakaoGet-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-oauthKakaoGet-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-oauthKakaoGet-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-oauthKakaoGet-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-oauthKakaoGet-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-oauthKakaoGet-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Default-oauthKakaoGet-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+"https://trade_crossing_ktor/oauth/kakao"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Default-oauthKakaoGet-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.DefaultApi;
+
+import java.io.File;
+import java.util.*;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        
+        DefaultApi apiInstance = new DefaultApi();
+        try {
+            apiInstance.oauthKakaoGet();
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#oauthKakaoGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-oauthKakaoGet-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        DefaultApi apiInstance = new DefaultApi();
+        try {
+            apiInstance.oauthKakaoGet();
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#oauthKakaoGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Default-oauthKakaoGet-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Default-oauthKakaoGet-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">
+DefaultApi *apiInstance = [[DefaultApi alloc] init];
+
+[apiInstance oauthKakaoGetWithCompletionHandler: 
+              ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-oauthKakaoGet-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var TradeCrossingKtorApi = require('trade_crossing_ktor_api');
+
+var api = new TradeCrossingKtorApi.DefaultApi()
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.oauthKakaoGet(callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Default-oauthKakaoGet-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Default-oauthKakaoGet-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class oauthKakaoGetExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new DefaultApi();
+
+            try
+            {
+                apiInstance.oauthKakaoGet();
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.oauthKakaoGet: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-oauthKakaoGet-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiDefaultApi();
+
+try {
+    $api_instance->oauthKakaoGet();
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->oauthKakaoGet: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-oauthKakaoGet-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::DefaultApi;
+
+my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+
+eval { 
+    $api_instance->oauthKakaoGet();
+};
+if ($@) {
+    warn "Exception when calling DefaultApi->oauthKakaoGet: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-oauthKakaoGet-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.DefaultApi()
+
+try: 
+    api_instance.oauth_kakao_get()
+except ApiException as e:
+    print("Exception when calling DefaultApi->oauthKakaoGet: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+
+                          <h2>Responses</h2>
                         </article>
                       </div>
                       <hr>

@@ -21,6 +21,8 @@ fun Route.oauth() {
   val service by inject<OAuthService>(OAuthService::class.java)
 
   authenticate("google") {
+
+    // Google OAuth2 실행하는 API
     get<OAuthResource.Google>(google) {}
 
     get<OAuthResource.Google.CallBack>(googleCallBack) {

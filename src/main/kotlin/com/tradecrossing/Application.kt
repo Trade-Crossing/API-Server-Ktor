@@ -10,7 +10,7 @@ fun Application.module() {
   configureKoin()
   configureOAuth()
   configureSerialization()
-  configureSwaggerUI()
+  //configureSwaggerUI()
   configureStatusPages()
   configureRouting()
 }
