@@ -1,14 +1,15 @@
 package com.tradecrossing.api.trade
 
-import com.tradecrossing.domain.tables.trade.ItemTradeTable.ItemTradeType
+import com.tradecrossing.domain.tables.trade.ItemTradeTable
 import com.tradecrossing.types.TradeCurrency
 import io.ktor.resources.*
 
 @Resource("/items")
-data class ItemTrades(
+class ItemTrades(
   val cursor: Long = 0,
   val size: Int = 10,
-  val tradeType: ItemTradeType = ItemTradeType.sell,
+  val name: String? = null,
+  val tradeType: ItemTradeTable.ItemTradeType = ItemTradeTable.ItemTradeType.sell,
   val variationId: String? = null,
   val isClosed: Boolean = false,
   val currency: TradeCurrency = TradeCurrency.all,
@@ -16,6 +17,6 @@ data class ItemTrades(
   val maxPrice: Int = Int.MAX_VALUE,
 ) {
 
-  @Resource("{id}")
-  data class Id(val trades: ItemTrades = ItemTrades(), val id: Long)
+  @Resource("/{id}")
+  class Id(val trades: ItemTrades = ItemTrades(), val id: Long)
 }

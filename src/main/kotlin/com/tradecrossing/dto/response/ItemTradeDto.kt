@@ -21,7 +21,6 @@ data class ItemTradeDto(
   val category: CategoryDto,
   val source: SourceDto,
   val name: String,
-  val nameKr: String,
   val quantity: Int,
   val variationId: String?
 ) {
@@ -38,7 +37,6 @@ data class ItemTradeDto(
     category = CategoryDto(itemTrade.category),
     source = SourceDto(itemTrade.source),
     name = itemTrade.name,
-    nameKr = itemTrade.nameKr,
     quantity = itemTrade.quantity,
     variationId = itemTrade.variationId
   )

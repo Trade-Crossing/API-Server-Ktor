@@ -1,15 +1,26 @@
 package com.tradecrossing.api.trade
 
+import com.tradecrossing.dto.request.trade.TradeQuery.ItemTradeQuery
+import com.tradecrossing.service.TradeService
 import com.tradecrossing.system.plugins.withAuth
 import com.tradecrossing.types.TokenType
-import io.github.smiley4.ktorswaggerui.dsl.resources.delete
-import io.github.smiley4.ktorswaggerui.dsl.resources.get
-import io.github.smiley4.ktorswaggerui.dsl.resources.patch
-import io.github.smiley4.ktorswaggerui.dsl.resources.post
+import io.ktor.http.*
+import io.ktor.server.application.*
+import io.ktor.server.resources.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.server.routing.patch
+import io.ktor.server.routing.post
+import org.koin.ktor.ext.inject
 
 fun Route.itemTrades() {
-  get<ItemTrades> { query -> }
+  val tradeService by inject<TradeService>()
+  get<ItemTrades> { query ->
+    val queryParam = ItemTradeQuery(query)
+    val response = tradeService.findItemTradeList(queryParam, query.cursor, query.size)
+
+    call.respond(HttpStatusCode.OK, response)
+  }
   get<ItemTrades.Id> { trade -> }
 
   withAuth(TokenType.ACCESS) {

@@ -1,7 +1,6 @@
 package com.tradecrossing.service
 
 import com.tradecrossing.domain.entity.resident.ResidentInfoEntity
-import com.tradecrossing.domain.tables.resident.ResidentInfoTable
 import com.tradecrossing.dto.request.auth.RegisterRequest
 import com.tradecrossing.dto.response.resident.ResidentInfoDto
 import com.tradecrossing.repository.ResidentRepository
@@ -16,11 +15,7 @@ class AuthService(private val residentRepository: ResidentRepository) {
     dbQuery {
       residentRepository.findbyId(id) ?: throw NotFoundException("존재하지 않는 유저입니다.")
 
-      var residentInfo = ResidentInfoTable.select(ResidentInfoTable.columns).where {
-        ResidentInfoTable.id eq id
-      }.singleOrNull()?.let {
-        ResidentInfoEntity.wrapRow(it)
-      }
+      var residentInfo = ResidentInfoEntity.findById(id)
 
       if (residentInfo == null) {
         residentInfo = ResidentInfoEntity.new(id) {

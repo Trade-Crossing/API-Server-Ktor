@@ -11,6 +11,6 @@ fun Application.module() {
   configureOAuth()
   configureSerialization()
   configureSwaggerUI()
-  configureRouting()
   configureStatusPages()
+  configureRouting()
 }
