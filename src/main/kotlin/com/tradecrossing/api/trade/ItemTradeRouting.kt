@@ -16,12 +16,17 @@ import org.koin.ktor.ext.inject
 fun Route.itemTrades() {
   val tradeService by inject<TradeService>()
   get<ItemTrades> { query ->
+    //require(query.name != null) { "이름은 필수입니다." }
     val queryParam = ItemTradeQuery(query)
     val response = tradeService.findItemTradeList(queryParam, query.cursor, query.size)
 
     call.respond(HttpStatusCode.OK, response)
   }
-  get<ItemTrades.Id> { trade -> }
+  get<ItemTrades.Id> { trade ->
+    val response = tradeService.findItemTradeById(trade.id)
+    
+    call.respond(HttpStatusCode.OK, response)
+  }
 
   withAuth(TokenType.ACCESS) {
     post<ItemTrades> { }

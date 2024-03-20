@@ -30,5 +30,9 @@ sealed class TradeQuery(
           queryParam.minPrice,
           queryParam.maxPrice
         )
+
+    init {
+      require(minPrice >= 0) { "최고 금액은 0 이상이여야 합니다." }
+    }
   }
 }
