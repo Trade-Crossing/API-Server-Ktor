@@ -3,6 +3,7 @@ package com.tradecrossing.system.plugins
 import com.tradecrossing.api.auth.auth
 import com.tradecrossing.api.oauth.oauth
 import com.tradecrossing.api.trade.itemTrades
+import com.tradecrossing.api.trade.villagerRouting
 import io.ktor.server.application.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.resources.*
@@ -24,6 +25,7 @@ fun Application.configureRouting() {
     // trade routes
     route("/trades") {
       itemTrades()
+      villagerRouting()
     }
   }
 
