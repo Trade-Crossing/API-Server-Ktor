@@ -22,6 +22,6 @@ oauth2:
     redirect-url: $GOOGLE_REDIRECT_URI
 
 database:
-  url: $DEV_DB_HOST
+  url: "$DEV_DB_HOST:jdbc:postgresql://localhost:5432/trade_crossing"
   username: $DEV_USER
   password: $DEV_PW

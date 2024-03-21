@@ -18,7 +18,9 @@ class VillageTradeResource {
     val purity: VillagerPurity,
     val currency: TradeCurrency,
     val price: Int? = null,
-    val isClosed: Boolean = false
+    val isClosed: Boolean = false,
+    val cursor: Long = 0,
+    val size: Int = 10
   )
 
   @Resource("")

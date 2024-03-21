@@ -43,6 +43,7 @@ sealed class TradeQuery(
     val name: String,
     val purity: VillagerPurity,
     val tradeType: VillagerTradeType,
+    val category: String,
     override val closed: Boolean,
     override val currency: TradeCurrency,
     override val minPrice: Int = 0,
@@ -57,6 +58,7 @@ sealed class TradeQuery(
           queryParam.name,
           queryParam.purity,
           queryParam.tradeType,
+          queryParam.category,
           queryParam.isClosed,
           queryParam.currency,
           queryParam.price ?: 0
