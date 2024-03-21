@@ -22,7 +22,7 @@ class ItemTrades(
 ) {
 
   companion object {
-    val doc: OpenApiRoute.() -> Unit = {
+    val get: OpenApiRoute.() -> Unit = {
       summary = "아이템 거래 목록 조회"
       description = "아이템 거래 목록을 조회합니다."
       tags = listOf("Trades", "ItemTrades")
@@ -85,8 +85,50 @@ class ItemTrades(
         }
       }
     }
+    val post: OpenApiRoute.() -> Unit = {
+      tags = listOf("Trades", "ItemTrades")
+      securitySchemeName = "Jwt"
+    }
   }
 
   @Resource("/{id}")
-  class Id(val trades: ItemTrades = ItemTrades(), val id: Long)
+  class Id(val trades: ItemTrades = ItemTrades(), val id: Long) {
+    companion object {
+      val get: OpenApiRoute.() -> Unit = {
+        summary = "아이템 거래 조회"
+        description = "아이템 거래를 조회합니다."
+        tags = listOf("Trades", "ItemTrades")
+
+        request {
+          pathParameter<Long>("id") {
+            description = "아이템 거래 id"
+            required = true
+            example = 1
+          }
+        }
+
+        response {
+          HttpStatusCode.OK to {
+            body<ItemTradeDto>()
+          }
+          HttpStatusCode.NotFound to {
+            body<ErrorResponse> {
+              example("error", ErrorResponse("not_found", "아이템 거래가 존재하지 않습니다."))
+            }
+          }
+        }
+      }
+
+      val patch: OpenApiRoute.() -> Unit = {
+        tags = listOf("Trades", "ItemTrades")
+        securitySchemeName = "Jwt"
+
+
+      }
+      val delete: OpenApiRoute.() -> Unit = {
+        tags = listOf("Trades", "ItemTrades")
+        securitySchemeName = "Jwt"
+      }
+    }
+  }
 }

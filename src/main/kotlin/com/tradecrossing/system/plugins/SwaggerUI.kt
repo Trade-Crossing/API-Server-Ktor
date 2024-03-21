@@ -59,12 +59,15 @@ fun Application.configureSwaggerUI() {
     }
 
     ignoredRouteSelectors = setOf(AuthRouter::class)
-    defaultSecuritySchemeNames = listOf("Jwt")
 
     // OAuth 태그
     tag("OAuth") { description = "OAuth 인증 관련 API" }
 
     // Auth 태그
     tag("Auth") { description = "인증 관련 API" }
+
+    // Trade 태그
+    tag("Trade") { description = "거래 관련 API" }
+    tag("ItemTrade") { description = "아이템 거래 관련 API" }
   }
 }
