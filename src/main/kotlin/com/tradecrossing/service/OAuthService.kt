@@ -14,7 +14,6 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
-import io.ktor.server.plugins.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNamingStrategy
@@ -74,11 +73,19 @@ class OAuthService {
 
   suspend fun mobileLogin(request: MobileLoginRequest): ResidentDto {
     return dbQuery {
-      val resident = ResidentEntity.find {
+      var resident = ResidentEntity.find {
         (ResidentTable.providerId eq request.providerId) and
             (ResidentTable.provider eq request.provider) and
             (ResidentTable.email eq request.email)
-      }.firstOrNull() ?: throw NotFoundException("등록되지 않은 사용자입니다.")
+      }.firstOrNull()
+
+      if (resident == null) {
+        resident = ResidentEntity.new {
+          this.email = request.email
+          this.provider = request.provider
+          this.providerId = request.providerId
+        }
+      }
 
       return@dbQuery ResidentDto(resident)
     }
