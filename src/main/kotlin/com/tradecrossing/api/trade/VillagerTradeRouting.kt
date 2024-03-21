@@ -16,16 +16,16 @@ import org.koin.ktor.ext.inject
 fun Route.villagerRouting() {
   val tradeService by inject<TradeService>()
 
-  get<VillageTradeResource.List>(VillageTradeResource.list) { queryParam ->
+  get<VillagerTradeResource.List>(VillagerTradeResource.list) { queryParam ->
     val query = TradeQuery.VillagerTradeQuery(queryParam)
     val response = tradeService.findVillagerTradeList(query, queryParam.cursor, queryParam.size)
-    call.respondText("List, query: $query")
+    call.respondText("List, query: $response")
   }
-  get<VillageTradeResource.Id>(VillageTradeResource.detail) {}
+  get<VillagerTradeResource.Id>(VillagerTradeResource.detail) {}
 
   withAuth(TokenType.ACCESS) {
-    post<VillageTradeResource.Create>(VillageTradeResource.create) {}
-    patch<VillageTradeResource.Id>(VillageTradeResource.update) {}
-    delete<VillageTradeResource.Id>(VillageTradeResource.delete) {}
+    post<VillagerTradeResource.Create>(VillagerTradeResource.create) {}
+    patch<VillagerTradeResource.Id>(VillagerTradeResource.update) {}
+    delete<VillagerTradeResource.Id>(VillagerTradeResource.delete) {}
   }
 }

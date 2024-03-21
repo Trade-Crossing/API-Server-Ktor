@@ -1,7 +1,7 @@
 package com.tradecrossing.dto.request.trade
 
 import com.tradecrossing.api.trade.ItemTrades
-import com.tradecrossing.api.trade.VillageTradeResource
+import com.tradecrossing.api.trade.VillagerTradeResource
 import com.tradecrossing.domain.tables.trade.ItemTradeTable.ItemTradeType
 import com.tradecrossing.domain.tables.trade.VillagerTradeTable.VillagerPurity
 import com.tradecrossing.domain.tables.trade.VillagerTradeTable.VillagerTradeType
@@ -53,7 +53,7 @@ sealed class TradeQuery(
       require(minPrice >= 0) { "최고 금액은 0 이상이여야 합니다." }
     }
 
-    constructor(queryParam: VillageTradeResource.List) :
+    constructor(queryParam: VillagerTradeResource.List) :
         this(
           queryParam.name,
           queryParam.purity,

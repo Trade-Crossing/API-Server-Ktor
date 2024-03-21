@@ -10,7 +10,8 @@ import com.tradecrossing.domain.tables.trade.*
 import com.tradecrossing.dto.request.trade.ItemTradeRequest
 import com.tradecrossing.dto.request.trade.TradeQuery.ItemTradeQuery
 import com.tradecrossing.dto.request.trade.TradeQuery.VillagerTradeQuery
-import com.tradecrossing.dto.response.ItemTradeDto
+import com.tradecrossing.dto.response.trade.ItemTradeDto
+import com.tradecrossing.dto.response.trade.VillageTradeDto
 import com.tradecrossing.system.plugins.DatabaseFactory.dbQuery
 import com.tradecrossing.types.TradeCurrency
 import io.ktor.server.plugins.*
@@ -140,6 +141,10 @@ class TradeService {
             (VillagerCategoryTable.name eq query.category) and
             (VillagerTradeTable.closed eq query.closed) and
             priceFilter
-      }.limit(size).map { VillagerTradeEntity.wrapRow(it) }.toList()
+      }.limit(size)
+      .map { VillageTradeDto(VillagerTradeEntity.wrapRow(it)) }
+      .toList()
+
+    tradeList
   }
 }

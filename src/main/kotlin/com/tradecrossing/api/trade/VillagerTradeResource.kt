@@ -7,11 +7,11 @@ import io.github.smiley4.ktorswaggerui.dsl.OpenApiRoute
 import io.ktor.resources.*
 
 @Resource("/villagers")
-class VillageTradeResource {
+class VillagerTradeResource {
 
   @Resource("")
   class List(
-    val parent: VillageTradeResource = VillageTradeResource(),
+    val parent: VillagerTradeResource = VillagerTradeResource(),
     val name: String,
     val tradeType: VillagerTradeType,
     val category: String,
@@ -24,10 +24,10 @@ class VillageTradeResource {
   )
 
   @Resource("")
-  class Create(val parent: VillageTradeResource = VillageTradeResource())
+  class Create(val parent: VillagerTradeResource = VillagerTradeResource())
 
   @Resource("/{id}")
-  class Id(val parent: VillageTradeResource = VillageTradeResource(), val id: Int)
+  class Id(val parent: VillagerTradeResource = VillagerTradeResource(), val id: Int)
 
   companion object {
     val list: OpenApiRoute.() -> Unit = {}

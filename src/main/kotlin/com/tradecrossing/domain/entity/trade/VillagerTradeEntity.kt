@@ -12,7 +12,7 @@ class VillagerTradeEntity(id: EntityID<Long>) : BaseTradeEntity(id) {
   var name by VillagerTradeTable.name
   var tradeType by VillagerTradeTable.tradeType
   var purity by VillagerTradeTable.purity
-  var category by VillagerTradeTable.category
+  var category by VillagerCategoryEntity referencedOn VillagerTradeTable.category
   var gender by VillagerTradeTable.gender
   override var resident: ResidentInfoEntity by ResidentInfoEntity referencedOn VillagerTradeTable.resident
   override var closed: Boolean by VillagerTradeTable.closed
