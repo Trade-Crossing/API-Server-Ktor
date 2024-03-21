@@ -1,4 +1,4 @@
-package com.tradecrossing.dto.response
+package com.tradecrossing.dto.response.trade
 
 import com.tradecrossing.domain.entity.trade.ItemTradeEntity
 import com.tradecrossing.domain.tables.trade.ItemTradeTable.ItemTradeType
