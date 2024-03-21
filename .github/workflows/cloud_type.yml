@@ -1,0 +1,51 @@
+name: Deploy to cloudtype
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Connect deploy key
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: trade-crossing-server/trade-crossing-server
+          stage: main
+          yaml: >
+            name: api-server
+
+            app: java@21
+
+            options:
+              ports: 8080
+              start: java -jar -Dspring.profiles.active=dev build/libs/trade-crossing-0.0.1.jar
+              env:
+                - name: KAKAO_REST_API_KEY
+                  value: ${{secrets.KAKAO_REST_API_KEY}}
+                - name: KAKAO_SECRET_KEY
+                  value: ${{secrets.KAKAO_SECRET_KEY}}
+                - name: GOOGLE_CLIENT_ID
+                  value: ${{secrets.GOOGLE_CLIENT_ID}}
+                - name: GOOGLE_SECRET_KEY
+                  value: ${{secrets.GOOGLE_SECRET_KEY}}
+                - name: JWT_SECRET
+                  value: ${{secrets.JWT_SECRET}}
+                - name: DEV_DB_HOST
+                  value: ${{secrets.DEV_DB_HOST}}
+                - name: KAKAO_REDIRECT_URI
+                  value: https://port-0-api-server-jvvy2bllywbm4f.sel5.cloudtype.app/api/oauth/kakao
+                - name: GOOGLE_REDIRECT_URI
+                  value: https://port-0-api-server-jvvy2bllywbm4f.sel5.cloudtype.app/api/oauth/google
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}

@@ -64,10 +64,11 @@ fun Application.configureSwaggerUI() {
     tag("OAuth") { description = "OAuth 인증 관련 API" }
 
     // Auth 태그
-    tag("Auth") { description = "인증 관련 API" }
+    tag("인증/유저") { description = "인증 관련 API" }
 
     // Trade 태그
-    tag("Trade") { description = "거래 관련 API" }
-    tag("ItemTrade") { description = "아이템 거래 관련 API" }
+    tag("거래") { description = "거래 관련 API" }
+    tag("아이템 거래") { description = "아이템 거래 관련 API" }
+    tag("주민 거래") { description = "주민 거래 관련 API" }
   }
 }

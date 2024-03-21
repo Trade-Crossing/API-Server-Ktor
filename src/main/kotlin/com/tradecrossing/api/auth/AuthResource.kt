@@ -15,7 +15,7 @@ class AuthResource {
   class Info(val parent: AuthResource = AuthResource()) {
     companion object {
       val get: OpenApiRoute.() -> Unit = {
-        tags = listOf("Auth")
+        tags = listOf("인증/유저")
         summary = "회원정보"
         description = "회원정보를 가져옵니다."
         securitySchemeName = "Jwt"
@@ -49,7 +49,7 @@ class AuthResource {
   class Register(val parent: AuthResource = AuthResource()) {
     companion object {
       val post: OpenApiRoute.() -> Unit = {
-        tags = listOf("Auth")
+        tags = listOf("인증/유저")
         summary = "회원가입"
         description = "회원가입을 합니다."
         request {

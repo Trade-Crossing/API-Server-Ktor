@@ -26,7 +26,7 @@ class ItemTrades(
     val get: OpenApiRoute.() -> Unit = {
       summary = "아이템 거래 목록 조회"
       description = "아이템 거래 목록을 조회합니다."
-      tags = listOf("Trades", "ItemTrades")
+      tags = listOf("거래", "아이템 거래")
       request {
         queryParameter<Long>("cursor") {
           description = "조회를 시작할 id 값"
@@ -87,7 +87,7 @@ class ItemTrades(
       }
     }
     val post: OpenApiRoute.() -> Unit = {
-      tags = listOf("Trades", "ItemTrades")
+      tags = listOf("거래", "아이템 거래")
       securitySchemeNames = listOf("Jwt")
       summary = "아이템 거래 생성"
       description = "아이템 거래를 생성합니다."
@@ -142,7 +142,7 @@ class ItemTrades(
       val get: OpenApiRoute.() -> Unit = {
         summary = "아이템 거래 조회"
         description = "아이템 거래를 조회합니다."
-        tags = listOf("Trades", "ItemTrades")
+        tags = listOf("거래", "아이템 거래")
 
         request {
           pathParameter<Long>("id") {
@@ -165,7 +165,7 @@ class ItemTrades(
       }
 
       val patch: OpenApiRoute.() -> Unit = {
-        tags = listOf("Trades", "ItemTrades")
+        tags = listOf("거래", "아이템 거래")
         securitySchemeNames = listOf("Jwt")
         request {
           headerParameter<String>("Authorization") {
@@ -176,7 +176,7 @@ class ItemTrades(
         }
       }
       val delete: OpenApiRoute.() -> Unit = {
-        tags = listOf("Trades", "ItemTrades")
+        tags = listOf("거래", "아이템 거래")
         securitySchemeName = "Jwt"
         request {
           headerParameter<String>("Authorization") {
