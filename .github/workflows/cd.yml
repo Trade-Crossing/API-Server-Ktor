@@ -1,0 +1,53 @@
+name: Deploy to cloudtype
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Connect deploy key
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: trade-crossing-server/trade-crossing-server
+          stage: main
+          yaml: >
+            name: api-server-ktor
+
+            app: java@21
+
+            options:
+              ports: 8080
+              start: java -jar build/libs/trade-crossing-ktor-all.jar
+              env:
+                - name: KAKAO_REST_API_KEY
+                  value: {}
+                - name: KAKAO_SECRET_KEY
+                  value: {}
+                - name: GOOGLE_CLIENT_ID
+                  value: {}
+                - name: GOOGLE_SECRET_KEY
+                  value: {}
+                - name: JWT_SECRET
+                  value: {}
+                - name: DEV_DB_HOST
+                  value: {}
+                - name: DEV_USER
+                  value: {}
+                - name: DEV_PW
+                  value: {}
+                - name: MODE
+                  value: dev
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}
