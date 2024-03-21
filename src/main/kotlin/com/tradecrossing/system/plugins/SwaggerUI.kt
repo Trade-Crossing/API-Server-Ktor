@@ -13,6 +13,7 @@ import kotlinx.serialization.json.JsonNamingStrategy
 import kotlinx.serialization.serializer
 
 
+@OptIn(ExperimentalSerializationApi::class)
 fun Application.configureSwaggerUI() {
   install(SwaggerUI) {
     info {
@@ -57,11 +58,17 @@ fun Application.configureSwaggerUI() {
       description = "JWT 인증 토큰"
     }
 
+    ignoredRouteSelectors = setOf(AuthRouter::class)
 
     // OAuth 태그
     tag("OAuth") { description = "OAuth 인증 관련 API" }
 
     // Auth 태그
-    tag("Auth") { description = "인증 관련 API" }
+    tag("인증/유저") { description = "인증 관련 API" }
+
+    // Trade 태그
+    tag("거래") { description = "거래 관련 API" }
+    tag("아이템 거래") { description = "아이템 거래 관련 API" }
+    tag("주민 거래") { description = "주민 거래 관련 API" }
   }
 }

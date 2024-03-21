@@ -30,11 +30,16 @@ fun Application.configureStatusPages() {
 
     // Request Validation
     exception<RequestValidationException> { call, e ->
-      call.respond(HttpStatusCode.BadRequest, ErrorResponse("bad_request", e.message ?: "Bad Request"))
+      call.respond(HttpStatusCode.BadRequest, ErrorResponse("bad_request", e.reasons.joinToString(", ")))
     }
 
     //
     exception<IllegalArgumentException> { call, e ->
+      call.respond(HttpStatusCode.BadRequest, ErrorResponse("bad_request", e.message ?: "Bad Request"))
+    }
+
+    // Bad Request
+    exception<BadRequestException> { call, e ->
       call.respond(HttpStatusCode.BadRequest, ErrorResponse("bad_request", e.message ?: "Bad Request"))
     }
   }

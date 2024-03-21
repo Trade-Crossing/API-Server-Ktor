@@ -15,13 +15,13 @@ oauth2:
   kakao:
     rest-api-key: $KAKAO_REST_API_KEY
     client-secret: $KAKAO_SECRET_KEY
-    redirect-url: $KAKAO_REDIRECT_URI
+  #    redirect-url: $KAKAO_REDIRECT_URI
   google:
     client-id: $GOOGLE_CLIENT_ID
     client-secret: $GOOGLE_SECRET_KEY
-    redirect-url: $GOOGLE_REDIRECT_URI
+#    redirect-url: $GOOGLE_REDIRECT_URI
 
 database:
-  url: $DEV_DB_HOST
+  url: "$DEV_DB_HOST:jdbc:postgresql://localhost:5432/trade_crossing"
   username: $DEV_USER
   password: $DEV_PW
