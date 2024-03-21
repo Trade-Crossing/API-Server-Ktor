@@ -17,4 +17,7 @@ abstract class BaseTradeEntity(id: EntityID<Long>) : LongEntity(id) {
   fun update() {
     updatedAt = LocalDateTime.now()
   }
+
+  override fun toString(): String =
+    "resident=$resident, closed=$closed, bellPrice=$bellPrice, milePrice=$milePrice, isDeleted=$isDeleted, createdAt=$createdAt, updatedAt=$updatedAt"
 }
