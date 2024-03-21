@@ -12,6 +12,6 @@ open class BaseTradeTable(tableName: String) : LongIdTable(tableName, "id") {
   val bellPrice = integer("bell_price").nullable()
   val milePrice = integer("mile_price").nullable()
   val isDeleted = bool("is_deleted").default(false)
-  val createdAt = datetime("created_at").default(LocalDateTime.now())
-  val updatedAt = datetime("updated_at").default(LocalDateTime.now())
+  val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
+  val updatedAt = datetime("updated_at").clientDefault { (LocalDateTime.now()) }
 }

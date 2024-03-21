@@ -1,7 +1,9 @@
 package com.tradecrossing.api.trade
 
+import com.tradecrossing.dto.request.trade.ItemTradeRequest
 import com.tradecrossing.dto.request.trade.TradeQuery.ItemTradeQuery
 import com.tradecrossing.service.TradeService
+import com.tradecrossing.system.plugins.getUserId
 import com.tradecrossing.system.plugins.withAuth
 import com.tradecrossing.types.TokenType
 import io.github.smiley4.ktorswaggerui.dsl.resources.delete
@@ -10,6 +12,7 @@ import io.github.smiley4.ktorswaggerui.dsl.resources.patch
 import io.github.smiley4.ktorswaggerui.dsl.resources.post
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
@@ -30,7 +33,13 @@ fun Route.itemTrades() {
   }
 
   withAuth(TokenType.ACCESS) {
-    post<ItemTrades>(ItemTrades.post) { }
+    post<ItemTrades>(ItemTrades.post) {
+      val userId = call.getUserId()
+      val body = call.receive<ItemTradeRequest>()
+      val response = tradeService.createItemTrade(body, userId)
+
+      call.respond(HttpStatusCode.Created, response)
+    }
     patch<ItemTrades.Id>(ItemTrades.Id.patch) { trade -> }
     delete<ItemTrades.Id>(ItemTrades.Id.delete) { trade -> }
   }

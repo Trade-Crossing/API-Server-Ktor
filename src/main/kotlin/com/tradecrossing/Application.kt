@@ -12,6 +12,7 @@ fun Application.module() {
   configureOAuth()
   configureSerialization()
   configureSwaggerUI()
+  configureRequestValidation()
   configureStatusPages()
   configureRouting()
 }
