@@ -8,6 +8,7 @@ import io.github.smiley4.ktorswaggerui.dsl.resources.delete
 import io.github.smiley4.ktorswaggerui.dsl.resources.get
 import io.github.smiley4.ktorswaggerui.dsl.resources.patch
 import io.github.smiley4.ktorswaggerui.dsl.resources.post
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -19,9 +20,13 @@ fun Route.villagerRouting() {
   get<VillagerTradeResource.List>(VillagerTradeResource.list) { queryParam ->
     val query = TradeQuery.VillagerTradeQuery(queryParam)
     val response = tradeService.findVillagerTradeList(query, queryParam.cursor, queryParam.size)
-    call.respondText("List, query: $response")
+
+    call.respond(HttpStatusCode.OK, response)
   }
-  get<VillagerTradeResource.Id>(VillagerTradeResource.detail) {}
+  get<VillagerTradeResource.Id>(VillagerTradeResource.detail) {
+    val response = tradeService.findVillagerTradeById(it.id)
+    call.respond(HttpStatusCode.OK, response)
+  }
 
   withAuth(TokenType.ACCESS) {
     post<VillagerTradeResource.Create>(VillagerTradeResource.create) {}

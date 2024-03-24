@@ -2,7 +2,7 @@ package com.tradecrossing.dto.request.trade
 
 import com.tradecrossing.api.trade.ItemTrades
 import com.tradecrossing.api.trade.VillagerTradeResource
-import com.tradecrossing.domain.tables.trade.ItemTradeTable.ItemTradeType
+import com.tradecrossing.domain.tables.trade.ItemTradeType
 import com.tradecrossing.domain.tables.trade.VillagerTradeTable.VillagerPurity
 import com.tradecrossing.domain.tables.trade.VillagerTradeTable.VillagerTradeType
 import com.tradecrossing.types.TradeCurrency

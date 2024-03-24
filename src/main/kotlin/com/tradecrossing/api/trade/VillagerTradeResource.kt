@@ -27,7 +27,7 @@ class VillagerTradeResource {
   class Create(val parent: VillagerTradeResource = VillagerTradeResource())
 
   @Resource("/{id}")
-  class Id(val parent: VillagerTradeResource = VillagerTradeResource(), val id: Int)
+  class Id(val parent: VillagerTradeResource = VillagerTradeResource(), val id: Long)
 
   companion object {
     val list: OpenApiRoute.() -> Unit = {
