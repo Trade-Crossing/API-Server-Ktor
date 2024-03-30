@@ -53,7 +53,7 @@ sealed class TradeQuery(
       require(minPrice >= 0) { "최고 금액은 0 이상이여야 합니다." }
     }
 
-    constructor(queryParam: VillagerTradeResource.List) :
+    constructor(queryParam: VillagerTradeResource.TradeList) :
         this(
           queryParam.name,
           queryParam.purity,

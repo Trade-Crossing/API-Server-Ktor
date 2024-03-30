@@ -206,10 +206,21 @@ class TradeService {
     val resident = ResidentInfoEntity.findById(userId) ?: throw NotFoundException("존재하지 않는 유저입니다.")
     val category = VillagerCategoryEntity.find { VillagerCategoryTable.name eq request.category }.firstOrNull()
       ?: throw NotFoundException("존재하지 않는 카테고리입니다.")
+
+    val newTrade = VillagerTradeEntity.new {
+      name = request.name
+      tradeType = request.tradeType
+      purity = request.purity
+      this.category = category
+      gender = request.gender
+      this.resident = resident
+    }
+
+    VillageTradeDto(newTrade)
   }
 
-  suspend fun updateVillagerTrade(id: Long, request: VillagerTradeRequest, userId: UUID) = dbQuery {
-    var category: VillagerCategoryEntity
+  suspend fun updateVillagerTrade(id: Long, userId: UUID, request: VillagerTradeRequest) = dbQuery {
+    val category: VillagerCategoryEntity
     val trade = VillagerTradeEntity.findById(id).let {
       if (it == null || it.isDeleted) throw NotFoundException("존재하지 않는 주민 거래입니다.")
       else if (it.isDeleted) throw NotFoundException("이미 삭제된 주민 거래입니다.")

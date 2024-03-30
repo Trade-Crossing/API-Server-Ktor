@@ -2,15 +2,19 @@ package com.tradecrossing.api.trade
 
 import com.tradecrossing.domain.tables.trade.VillagerTradeTable.VillagerPurity
 import com.tradecrossing.domain.tables.trade.VillagerTradeTable.VillagerTradeType
+import com.tradecrossing.dto.request.trade.VillagerTradeRequest
+import com.tradecrossing.dto.response.ErrorResponse
+import com.tradecrossing.dto.response.trade.VillageTradeDto
 import com.tradecrossing.types.TradeCurrency
 import io.github.smiley4.ktorswaggerui.dsl.OpenApiRoute
+import io.ktor.http.*
 import io.ktor.resources.*
 
 @Resource("/villagers")
 class VillagerTradeResource {
 
   @Resource("")
-  class List(
+  class TradeList(
     val parent: VillagerTradeResource = VillagerTradeResource(),
     val name: String,
     val tradeType: VillagerTradeType,
@@ -91,16 +95,93 @@ class VillagerTradeResource {
       }
     }
     val detail: OpenApiRoute.() -> Unit = {
+      summary = "주민 거래 상세 조회"
+      description = "주민 거래 상세 정보를 조회합니다."
       tags = listOf("거래", "주민 거래")
+      request {
+        pathParameter<Long>("id") {
+          description = "거래 ID"
+          required = true
+          example = 1
+        }
+      }
+      response {
+        HttpStatusCode.OK to {
+          body<VillageTradeDto>()
+        }
+      }
     }
     val create: OpenApiRoute.() -> Unit = {
+      summary = "주민 거래 생성"
+      description = "주민 거래를 생성합니다."
       tags = listOf("거래", "주민 거래")
+      securitySchemeName = "Jwt"
+      protected = true
+      request {
+        body<VillagerTradeRequest>()
+      }
+      response {
+        HttpStatusCode.Created to {
+          body<VillageTradeDto>()
+        }
+        HttpStatusCode.Unauthorized to {
+          body<ErrorResponse>()
+        }
+        HttpStatusCode.Forbidden to {
+          body<ErrorResponse>()
+        }
+      }
     }
     val update: OpenApiRoute.() -> Unit = {
+      summary = "주민 거래 수정"
+      description = "주민 거래를 수정합니다."
       tags = listOf("거래", "주민 거래")
+      securitySchemeName = "Jwt"
+      protected = true
+      request {
+        pathParameter<Long>("id") {
+          description = "거래 ID"
+          required = true
+          example = 1
+        }
+        body<VillagerTradeRequest>()
+      }
+      response {
+        HttpStatusCode.OK to {
+          body<VillageTradeDto>()
+        }
+        HttpStatusCode.Unauthorized to {
+          body<ErrorResponse>()
+        }
+        HttpStatusCode.Forbidden to {
+          body<ErrorResponse>()
+        }
+      }
     }
     val delete: OpenApiRoute.() -> Unit = {
+      summary = "주민 거래 삭제"
+      description = "주민 거래를 삭제합니다."
       tags = listOf("거래", "주민 거래")
+      securitySchemeName = "Jwt"
+      protected = true
+      request {
+        pathParameter<Long>("id") {
+          description = "거래 ID"
+          required = true
+          example = 1
+        }
+      }
+      response {
+        HttpStatusCode.OK to {
+          body<Unit>()
+        }
+        HttpStatusCode.Unauthorized to {
+          body<ErrorResponse>()
+        }
+        HttpStatusCode.Forbidden to {
+          body<ErrorResponse>()
+        }
+      }
     }
   }
 }
