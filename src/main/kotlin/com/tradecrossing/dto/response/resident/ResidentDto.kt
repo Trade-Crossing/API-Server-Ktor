@@ -20,6 +20,6 @@ data class ResidentDto(
     entity.email,
     entity.provider.name,
     entity.providerId,
-    entity.registered
+    entity.registered,
   )
 }

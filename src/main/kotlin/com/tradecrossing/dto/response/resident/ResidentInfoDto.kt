@@ -13,7 +13,8 @@ data class ResidentInfoDto(
   val islandName: String,
   val introduction: String,
   val profilePic: String?,
-  val defaultProfile: String?
+  val defaultProfile: String?,
+  val islandCode: String?
 ) {
 
   constructor(entity: ResidentInfoEntity) : this(
@@ -22,6 +23,7 @@ data class ResidentInfoDto(
     entity.islandName,
     entity.introduction,
     entity.profilePic,
-    entity.defaultProfile?.name
+    entity.defaultProfile?.name,
+    entity.islandCode
   )
 }
