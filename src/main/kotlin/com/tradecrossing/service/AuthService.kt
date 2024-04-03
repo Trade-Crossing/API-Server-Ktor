@@ -23,7 +23,6 @@ class AuthService(private val residentRepository: ResidentRepository) {
           username = request.username
           islandName = request.islandName
           introduction = request.introduction
-          defaultProfile = request.defaultProfile
         }
         println(residentInfo)
       } else {
