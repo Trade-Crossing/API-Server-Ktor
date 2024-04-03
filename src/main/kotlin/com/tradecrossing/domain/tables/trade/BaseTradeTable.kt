@@ -15,5 +15,8 @@ open class BaseTradeTable(tableName: String) : LongIdTable(tableName, "id") {
   val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
   val updatedAt = datetime("updated_at").clientDefault { (LocalDateTime.now()) }
   val availFrom = datetime("avail_from").clientDefault { LocalDateTime.now() }
-  val availTo = datetime("avail_to").clientDefault { LocalDateTime.now().plusHours(1) }
+  val availTo =
+    datetime("avail_to").clientDefault {
+      LocalDateTime.now().plusHours(1)
+    }
 }
