@@ -14,6 +14,7 @@ object ResidentInfoTable : IdTable<UUID>("resident_info") {
   val islandName = varchar("island_name", 255)
   val profilePic = text("profile_pic").nullable()
   val username = varchar("username", 255)
+  val islandCode = varchar("island_code", 255).nullable()
 
   override val primaryKey = PrimaryKey(id)
 }
