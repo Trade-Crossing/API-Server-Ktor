@@ -13,7 +13,8 @@ class AuthService(private val residentRepository: ResidentRepository) {
 
   suspend fun registerUser(id: UUID, request: RegisterRequest) {
     dbQuery {
-      residentRepository.findbyId(id) ?: throw NotFoundException("존재하지 않는 유저입니다.")
+
+      residentRepository.findbyId(id)?.apply { registered = true } ?: throw NotFoundException("존재하지 않는 유저입니다.")
 
       var residentInfo = ResidentInfoEntity.findById(id)
 
