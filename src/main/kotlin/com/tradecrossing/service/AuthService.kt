@@ -13,7 +13,8 @@ class AuthService(private val residentRepository: ResidentRepository) {
 
   suspend fun registerUser(id: UUID, request: RegisterRequest) {
     dbQuery {
-      residentRepository.findbyId(id) ?: throw NotFoundException("존재하지 않는 유저입니다.")
+
+      residentRepository.findbyId(id)?.apply { registered = true } ?: throw NotFoundException("존재하지 않는 유저입니다.")
 
       var residentInfo = ResidentInfoEntity.findById(id)
 
@@ -23,7 +24,6 @@ class AuthService(private val residentRepository: ResidentRepository) {
           username = request.username
           islandName = request.islandName
           introduction = request.introduction
-          defaultProfile = request.defaultProfile
         }
         println(residentInfo)
       } else {
@@ -37,5 +37,19 @@ class AuthService(private val residentRepository: ResidentRepository) {
       ResidentInfoEntity.findById(id) ?: throw NotFoundException("존재하지 않는 유저입니다.")
 
     ResidentInfoDto(residentInfo)
+  }
+
+  suspend fun getIslandCode(id: UUID) = dbQuery {
+    val residentInfo =
+      ResidentInfoEntity.findById(id) ?: throw NotFoundException("존재하지 않는 유저입니다.")
+
+    residentInfo.islandCode
+  }
+
+  suspend fun updateIslandCode(id: UUID, islandCode: String) = dbQuery {
+    val residentInfo =
+      ResidentInfoEntity.findById(id) ?: throw NotFoundException("존재하지 않는 유저입니다.")
+
+    residentInfo.islandCode = islandCode
   }
 }

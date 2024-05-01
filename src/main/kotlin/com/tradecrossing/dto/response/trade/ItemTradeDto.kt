@@ -1,7 +1,7 @@
 package com.tradecrossing.dto.response.trade
 
 import com.tradecrossing.domain.entity.trade.ItemTradeEntity
-import com.tradecrossing.domain.tables.trade.ItemTradeTable.ItemTradeType
+import com.tradecrossing.domain.tables.trade.ItemTradeType
 import com.tradecrossing.dto.response.resident.ResidentInfoDto
 import io.swagger.v3.oas.annotations.media.Schema
 import kotlinx.datetime.LocalDateTime

@@ -1,5 +1,9 @@
 package com.tradecrossing.domain.tables.trade
 
+enum class ItemTradeType {
+  buy, sell, manjijak
+}
+
 object ItemTradeTable : BaseTradeTable("item_trade") {
 
   val tradeType = enumerationByName<ItemTradeType>("trade_type", 10)
@@ -9,7 +13,5 @@ object ItemTradeTable : BaseTradeTable("item_trade") {
   val quantity = integer("quantity")
   val variationId = varchar("variation_id", 10).nullable()
 
-  enum class ItemTradeType {
-    buy, sell, manjijak
-  }
+
 }
