@@ -21,6 +21,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.isNull
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.andIfNotNull
+import org.jetbrains.exposed.sql.or
 import org.jetbrains.exposed.sql.selectAll
 import java.util.*
 
@@ -45,7 +46,7 @@ class TradeService {
       TradeCurrency.all -> ItemTradeTable.bellPrice.between(
         query.minPrice,
         query.maxPrice
-      ) and ItemTradeTable.milePrice.between(query.minPrice, query.maxPrice)
+      ) or ItemTradeTable.milePrice.between(query.minPrice, query.maxPrice)
 
       TradeCurrency.donate -> ItemTradeTable.bellPrice.isNull() and ItemTradeTable.milePrice.isNull()
     }
