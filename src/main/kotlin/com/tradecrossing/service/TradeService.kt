@@ -215,6 +215,16 @@ class TradeService {
       this.category = category
       gender = request.gender
       this.resident = resident
+      when (request.currency) {
+        TradeCurrency.bell -> bellPrice = request.price
+        TradeCurrency.mile -> milePrice = request.price
+        TradeCurrency.all -> {
+          bellPrice = request.price
+          milePrice = request.price
+        }
+
+        TradeCurrency.donate -> {}
+      }
     }
 
     VillageTradeDto(newTrade)
