@@ -1,7 +1,11 @@
 package com.tradecrossing.dto.request.trade
 
-import com.tradecrossing.domain.tables.trade.ItemTradeTable.ItemTradeType
+import com.tradecrossing.domain.tables.trade.ItemTradeType
+import com.tradecrossing.domain.tables.trade.VillagerTradeTable.VillagerGender
+import com.tradecrossing.domain.tables.trade.VillagerTradeTable.VillagerPurity
+import com.tradecrossing.domain.tables.trade.VillagerTradeTable.VillagerTradeType
 import com.tradecrossing.types.TradeCurrency
+import io.swagger.v3.oas.annotations.media.Schema
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -14,6 +18,7 @@ abstract class TradeRequest {
 @Serializable
 data class ItemTradeRequest(
   override val name: String,
+  @field:Schema(implementation = TradeCurrency::class)
   override val currency: TradeCurrency,
   override val price: Int?,
   val tradeType: ItemTradeType,
@@ -21,11 +26,16 @@ data class ItemTradeRequest(
   val quantity: Int,
   val itemCategory: String,
   val itemSource: String,
-) : TradeRequest() {
+) : TradeRequest()
 
-  //init {
-  //  require(quantity >= 0) { "수량은 0 이상이여야 합니다." }
-  //  if (currency == TradeCurrency.donate) require(price == null) { "나눔은 가격이 없어야 합니다." }
-  //  else require(price != null) { "가격은 필수입니다." }
-  //}
-}
+@Serializable
+data class VillagerTradeRequest(
+  override val name: String,
+  @field:Schema(implementation = TradeCurrency::class)
+  override val currency: TradeCurrency,
+  override val price: Int?,
+  val gender: VillagerGender,
+  val category: String,
+  val tradeType: VillagerTradeType,
+  val purity: VillagerPurity,
+) : TradeRequest()

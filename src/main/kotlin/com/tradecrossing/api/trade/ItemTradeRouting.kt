@@ -40,8 +40,23 @@ fun Route.itemTrades() {
 
       call.respond(HttpStatusCode.Created, response)
     }
-    patch<ItemTrades.Id>(ItemTrades.Id.patch) { trade -> }
-    delete<ItemTrades.Id>(ItemTrades.Id.delete) { trade -> }
+
+    patch<ItemTrades.Id>(ItemTrades.Id.patch) { trade ->
+      val body = call.receive<ItemTradeRequest>()
+      val userId = call.getUserId()
+
+      val result = tradeService.updateItemTrade(trade.id, body, userId)
+
+      call.respond(HttpStatusCode.OK, result)
+    }
+
+    delete<ItemTrades.Id>(ItemTrades.Id.delete) { trade ->
+      val userId = call.getUserId()
+ 
+      tradeService.deleteItemTrade(trade.id, userId)
+
+      call.respond(HttpStatusCode.OK)
+    }
   }
 }
 

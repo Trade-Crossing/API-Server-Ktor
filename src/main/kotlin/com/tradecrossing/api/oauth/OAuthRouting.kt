@@ -57,7 +57,7 @@ fun Route.oauth() {
     val body = call.receive<MobileLoginRequest>()
     val resident = service.mobileLogin(body)
     val token = application.generateJwtToken(resident.id)
-    val response = OAuthResponse(resident.registered, null, token.accessToken, token.refreshToken)
+    val response = OAuthResponse(resident.registered, body.profileUrl, token.accessToken, token.refreshToken)
 
     call.respond(HttpStatusCode.OK, response)
   }

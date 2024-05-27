@@ -1,6 +1,6 @@
 package com.tradecrossing.api.trade
 
-import com.tradecrossing.domain.tables.trade.ItemTradeTable.ItemTradeType
+import com.tradecrossing.domain.tables.trade.ItemTradeType
 import com.tradecrossing.dto.request.trade.ItemTradeRequest
 import com.tradecrossing.dto.response.ErrorResponse
 import com.tradecrossing.dto.response.trade.ItemTradeDto
@@ -88,7 +88,8 @@ class ItemTrades(
     }
     val post: OpenApiRoute.() -> Unit = {
       tags = listOf("거래", "아이템 거래")
-      securitySchemeNames = listOf("Jwt")
+      securitySchemeName = "Jwt"
+      protected = true
       summary = "아이템 거래 생성"
       description = "아이템 거래를 생성합니다."
       securitySchemeName = "Jwt"
@@ -100,37 +101,6 @@ class ItemTrades(
         }
         body<ItemTradeRequest> {
           mediaType(ContentType.Application.Json)
-          example(
-            "1",
-            ItemTradeRequest(
-              "물고기 떡밥",
-              TradeCurrency.bell,
-              1000,
-              ItemTradeType.sell,
-              "1_0",
-              1,
-              itemCategory = "Houseware",
-              itemSource = "Nook's Cranny",
-            )
-          )
-          example(
-            "2", ItemTradeRequest(
-              "물고기 떡밥",
-              TradeCurrency.bell,
-              1000,
-              ItemTradeType.sell,
-              null,
-              1,
-              itemCategory = "Houseware",
-              itemSource = "Nook's Cranny",
-            )
-          )
-          example(
-            "3", ItemTradeRequest(
-              "물고기 떡밥", TradeCurrency.donate, null, ItemTradeType.sell, null, 1, itemCategory = "Houseware",
-              itemSource = "Nook's Cranny",
-            )
-          )
         }
       }
     }
@@ -167,22 +137,26 @@ class ItemTrades(
       val patch: OpenApiRoute.() -> Unit = {
         tags = listOf("거래", "아이템 거래")
         securitySchemeNames = listOf("Jwt")
+        protected = true
         request {
-          headerParameter<String>("Authorization") {
-            description = "jwt 토큰"
-            required = true
-            example = "Bearer {token}"
+          body<ItemTradeType> {
+            mediaType(ContentType.Application.Json)
           }
+        }
+
+        response {
+          HttpStatusCode.OK to {}
         }
       }
       val delete: OpenApiRoute.() -> Unit = {
         tags = listOf("거래", "아이템 거래")
         securitySchemeName = "Jwt"
+        protected = true
         request {
-          headerParameter<String>("Authorization") {
-            description = "jwt 토큰"
+          pathParameter<Long>("id") {
+            description = "아이템 거래 id"
             required = true
-            example = "Bearer {token}"
+            example = 1
           }
         }
       }

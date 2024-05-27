@@ -17,5 +17,7 @@ data class MobileLoginRequest(
     example = "google",
     examples = ["google", "kakao", "apple"]
   )
-  val provider: OAuthProvider
+  val provider: OAuthProvider,
+  @field:Schema(name = "profile_url", description = "프로필 URL", example = "https://profile.com")
+  val profileUrl: String? = null
 )
