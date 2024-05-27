@@ -1,6 +1,7 @@
 package com.tradecrossing.api.auth
 
 
+import com.tradecrossing.dto.request.auth.IslandCodeRequest
 import com.tradecrossing.dto.request.auth.RegisterRequest
 import com.tradecrossing.service.AuthService
 import com.tradecrossing.system.plugins.getUserId
@@ -34,10 +35,27 @@ fun Route.auth() {
       call.respond(response)
     }
 
+    get<AuthResource.Info.IslandCode>(AuthResource.Info.IslandCode.get) {
+      val id = call.getUserId()
+      val response = authService.getIslandCode(id)
 
+      call.respondNullable(HttpStatusCode.OK, response)
+    }
+
+    post<AuthResource.Info.IslandCode>(AuthResource.Info.IslandCode.update) {
+      val id = call.getUserId()
+      val body = call.receive<IslandCodeRequest>()
+      authService.updateIslandCode(id, body.islandCode)
+
+      call.respond(HttpStatusCode.OK)
+    }
   }
 
   withAuth(TokenType.REFRESH) {
-    post<AuthResource.Refresh> {}
+    post<AuthResource.Refresh> {
+      val id = call.getUserId()
+
+      call.respondNullable(HttpStatusCode.OK)
+    }
   }
 }
