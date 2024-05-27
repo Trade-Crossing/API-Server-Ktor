@@ -57,11 +57,19 @@ class TradeService {
       null
     }
 
+    // 판매/구매 타입
+    val tradeTypeFilter = if (query.tradeType == ItemTradeType.sell) {
+      ItemTradeTable.tradeType eq ItemTradeType.sell
+    } else {
+      ItemTradeTable.tradeType eq ItemTradeType.buy
+    }
+
     val itemTradeList = ItemTradeEntity.find {
       (ItemTradeTable.id greater cursor) and
           (ItemTradeTable.itemName eq query.name) and
           (ItemTradeTable.tradeType eq query.tradeType) andIfNotNull
           variationFilter and
+          tradeTypeFilter and
           (ItemTradeTable.closed eq query.closed) and
           currencyFilter
     }.limit(size).with(ItemTradeEntity::resident, ItemTradeEntity::source, ItemTradeEntity::category)
