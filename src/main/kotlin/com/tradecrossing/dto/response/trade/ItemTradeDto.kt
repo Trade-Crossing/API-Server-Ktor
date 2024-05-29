@@ -29,8 +29,8 @@ data class ItemTradeDto(
   val source: SourceDto,
   val name: String,
   val quantity: Int,
-  @field:Schema(name = "variation_id")
-  val variationId: String?
+  @field:Schema(name = "variation_index")
+  val variationIndex: Int?
 ) {
   constructor(itemTrade: ItemTradeEntity) : this(
     id = itemTrade.id.value,
@@ -46,6 +46,6 @@ data class ItemTradeDto(
     source = SourceDto(itemTrade.source),
     name = itemTrade.name,
     quantity = itemTrade.quantity,
-    variationId = itemTrade.variationId
+    variationIndex = itemTrade.variationIndex
   )
 }

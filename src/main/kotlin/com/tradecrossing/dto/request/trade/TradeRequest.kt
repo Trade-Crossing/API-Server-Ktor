@@ -22,7 +22,7 @@ data class ItemTradeRequest(
   override val currency: TradeCurrency,
   override val price: Int?,
   val tradeType: ItemTradeType,
-  val variationId: String?,
+  val variationIndex: Int?,
   val quantity: Int,
   val itemCategory: String,
   val itemSource: String,
