@@ -51,8 +51,8 @@ class TradeService {
       TradeCurrency.donate -> ItemTradeTable.bellPrice.isNull() and ItemTradeTable.milePrice.isNull()
     }
 
-    val variationFilter = if (query.variationId != null) {
-      ItemTradeTable.variationId eq query.variationId
+    val variationFilter = if (query.variationIndex != null) {
+      ItemTradeTable.variationIndex eq query.variationIndex
     } else {
       null
     }
@@ -105,7 +105,7 @@ class TradeService {
       this.category = category
       this.source = source
       quantity = request.quantity
-      variationId = request.variationId
+      variationIndex = request.variationIndex
       this.resident = resident
       when (request.currency) {
         TradeCurrency.bell -> bellPrice = request.price
@@ -141,7 +141,7 @@ class TradeService {
       this.category = category
       this.source = source
       quantity = request.quantity
-      variationId = request.variationId
+      variationIndex = request.variationIndex
       this.resident = resident
       when (request.currency) {
         TradeCurrency.bell -> bellPrice = request.price

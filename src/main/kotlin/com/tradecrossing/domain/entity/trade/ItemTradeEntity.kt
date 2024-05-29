@@ -13,7 +13,7 @@ class ItemTradeEntity(id: EntityID<Long>) : BaseTradeEntity(id) {
   var category by ItemCategoryEntity referencedOn ItemTradeTable.itemCategory
   var source by SourceEntity referencedOn ItemTradeTable.itemSource
   var quantity by ItemTradeTable.quantity
-  var variationId by ItemTradeTable.variationId
+  var variationIndex by ItemTradeTable.variationIndex
   override var resident: ResidentInfoEntity by ResidentInfoEntity referencedOn ItemTradeTable.resident
   override var bellPrice: Int? by ItemTradeTable.bellPrice
   override var milePrice: Int? by ItemTradeTable.milePrice
@@ -24,18 +24,18 @@ class ItemTradeEntity(id: EntityID<Long>) : BaseTradeEntity(id) {
 
   companion object : LongEntityClass<ItemTradeEntity>(ItemTradeTable)
 
-  override fun toString(): String {
-    return "ItemTradeEntity(" +
-        "id=$id, " +
-        "resident=$resident, " +
-        "closed=$closed, " +
-        "bellPrice=$bellPrice, " +
-        "milePrice=$milePrice, " +
-        "isDeleted=$isDeleted, " +
-        "createdAt=$createdAt, " +
-        "updatedAt=$updatedAt, " +
-        "tradeType=$tradeType, " +
-        "category=$category, " +
-        "source=$source)"
-  }
+  override fun toString(): String = "ItemTradeEntity(id=$id, " +
+      "name=$name, " +
+      "tradeType=$tradeType, " +
+      "category=$category, " +
+      "source=$source, " +
+      "quantity=$quantity, " +
+      "variationIndex=$variationIndex, " +
+      "resident=$resident, " +
+      "bellPrice=$bellPrice, " +
+      "milePrice=$milePrice, " +
+      "closed=$closed, " +
+      "isDeleted=$isDeleted, " +
+      "createdAt=$createdAt, " +
+      "updatedAt=$updatedAt)"
 }
