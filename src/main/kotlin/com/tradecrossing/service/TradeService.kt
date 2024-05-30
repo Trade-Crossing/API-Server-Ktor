@@ -21,6 +21,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.isNull
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.andIfNotNull
+import org.jetbrains.exposed.sql.or
 import org.jetbrains.exposed.sql.selectAll
 import java.util.*
 
@@ -45,15 +46,22 @@ class TradeService {
       TradeCurrency.all -> ItemTradeTable.bellPrice.between(
         query.minPrice,
         query.maxPrice
-      ) and ItemTradeTable.milePrice.between(query.minPrice, query.maxPrice)
+      ) or ItemTradeTable.milePrice.between(query.minPrice, query.maxPrice)
 
       TradeCurrency.donate -> ItemTradeTable.bellPrice.isNull() and ItemTradeTable.milePrice.isNull()
     }
 
-    val variationFilter = if (query.variationId != null) {
-      ItemTradeTable.variationId eq query.variationId
+    val variationFilter = if (query.variationIndex != null) {
+      ItemTradeTable.variationIndex eq query.variationIndex
     } else {
       null
+    }
+
+    // 판매/구매 타입
+    val tradeTypeFilter = if (query.tradeType == ItemTradeType.sell) {
+      ItemTradeTable.tradeType eq ItemTradeType.sell
+    } else {
+      ItemTradeTable.tradeType eq ItemTradeType.buy
     }
 
     val itemTradeList = ItemTradeEntity.find {
@@ -61,6 +69,7 @@ class TradeService {
           (ItemTradeTable.itemName eq query.name) and
           (ItemTradeTable.tradeType eq query.tradeType) andIfNotNull
           variationFilter and
+          tradeTypeFilter and
           (ItemTradeTable.closed eq query.closed) and
           currencyFilter
     }.limit(size).with(ItemTradeEntity::resident, ItemTradeEntity::source, ItemTradeEntity::category)
@@ -96,7 +105,7 @@ class TradeService {
       this.category = category
       this.source = source
       quantity = request.quantity
-      variationId = request.variationId
+      variationIndex = request.variationIndex
       this.resident = resident
       when (request.currency) {
         TradeCurrency.bell -> bellPrice = request.price
@@ -132,7 +141,7 @@ class TradeService {
       this.category = category
       this.source = source
       quantity = request.quantity
-      variationId = request.variationId
+      variationIndex = request.variationIndex
       this.resident = resident
       when (request.currency) {
         TradeCurrency.bell -> bellPrice = request.price
@@ -214,6 +223,16 @@ class TradeService {
       this.category = category
       gender = request.gender
       this.resident = resident
+      when (request.currency) {
+        TradeCurrency.bell -> bellPrice = request.price
+        TradeCurrency.mile -> milePrice = request.price
+        TradeCurrency.all -> {
+          bellPrice = request.price
+          milePrice = request.price
+        }
+
+        TradeCurrency.donate -> {}
+      }
     }
 
     VillageTradeDto(newTrade)

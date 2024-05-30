@@ -11,7 +11,7 @@ object ItemTradeTable : BaseTradeTable("item_trade") {
   val itemSource = reference("source", SourceTable.id)
   val itemName = varchar("name", 255)
   val quantity = integer("quantity")
-  val variationId = varchar("variation_id", 10).nullable()
+  val variationIndex = integer("variation_index").nullable()
 
 
 }

@@ -15,7 +15,7 @@ class ItemTrades(
   val size: Int = 10,
   val name: String? = null,
   val tradeType: ItemTradeType = ItemTradeType.sell,
-  val variationId: String? = null,
+  val variationIndex: Int? = null,
   val isClosed: Boolean = false,
   val currency: TradeCurrency = TradeCurrency.all,
   val minPrice: Int = 0,

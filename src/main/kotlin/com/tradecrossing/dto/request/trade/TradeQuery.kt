@@ -17,7 +17,7 @@ sealed class TradeQuery(
   data class ItemTradeQuery(
     val name: String,
     val tradeType: ItemTradeType = ItemTradeType.sell,
-    val variationId: String?,
+    val variationIndex: Int?,
     override val closed: Boolean,
     override val currency: TradeCurrency,
     override val minPrice: Int = 0,
@@ -27,7 +27,7 @@ sealed class TradeQuery(
         this(
           queryParam.name!!,
           queryParam.tradeType,
-          queryParam.variationId,
+          queryParam.variationIndex,
           queryParam.isClosed,
           queryParam.currency,
           queryParam.minPrice,
