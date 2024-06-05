@@ -7,7 +7,14 @@ import io.ktor.resources.*
 class ChatResource {
 
   @Resource("/{id}")
-  class Id(val chat: ChatResource = ChatResource(), val id: String)
+  class Id(val chat: ChatResource = ChatResource(), val id: String) {
+
+    companion object {
+      val get: OpenApiRoute.() -> Unit = {}
+      val delete: OpenApiRoute.() -> Unit = {}
+    }
+  }
+
   companion object {
     val get: OpenApiRoute.() -> Unit = {}
     val post: OpenApiRoute.() -> Unit = {}
