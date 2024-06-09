@@ -27,8 +27,12 @@ jobs:
 
             options:
               ports: 8080
-              start: java -jar -Dspring.profiles.active=dev build/libs/trade-crossing-0.0.1.jar
+              start: java -jar -Dspring.profiles.active=dev build/libs/trade-crossing-ktor-all.jar
               env:
+                - name: DEV_USER
+                  value: ${{secrets.DEV_USER}}
+                - name: DEV_PW
+                  value: ${{secrets.DEV_PW}}
                 - name: KAKAO_REST_API_KEY
                   value: ${{secrets.KAKAO_REST_API_KEY}}
                 - name: KAKAO_SECRET_KEY
