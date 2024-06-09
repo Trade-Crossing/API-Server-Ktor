@@ -8,6 +8,6 @@ import java.util.UUID
 @Serializable
 data class CreateChatRequest(
   @Serializable(with = UUIDSerializer::class)
-  @field:Schema(implementation = UUID::class, description = "상대방 id")
+  @field:Schema(implementation = UUID::class, description = "상대방 id", name = "resident_id")
   val residentId:UUID
 )

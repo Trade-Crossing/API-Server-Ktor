@@ -1,5 +1,8 @@
 package com.tradecrossing.api.chat
 
+import com.tradecrossing.api.chat.ChatResource.Companion.get
+import com.tradecrossing.api.chat.ChatResource.Companion.post
+import com.tradecrossing.dto.request.chat.CreateChatRequest
 import com.tradecrossing.dto.response.ChatRoomResponse
 import com.tradecrossing.service.ChatService
 import com.tradecrossing.system.plugins.getUserId
@@ -10,6 +13,7 @@ import io.github.smiley4.ktorswaggerui.dsl.resources.get
 import io.github.smiley4.ktorswaggerui.dsl.resources.post
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
@@ -20,13 +24,16 @@ fun Route.chat() {
   val chatService: ChatService by inject()
 
   withAuth(TokenType.ACCESS) {
-    get<ChatResource>({}) {
+    get<ChatResource>(get) {
       val residentId:UUID = call.getUserId()
       val chatRooms: List<ChatRoomResponse> = chatService.findUserChats(residentId)
 
       call.respond(HttpStatusCode.OK, chatRooms)
     }
-    post<ChatResource>({}) {}
+    post<ChatResource>(post) {
+      val residentId:UUID = call.getUserId()
+      val body = call.receive<CreateChatRequest>()
+    }
     delete<ChatResource.Id>({}) {}
   }
 }
