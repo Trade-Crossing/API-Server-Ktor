@@ -29,6 +29,8 @@ jobs:
               ports: 8080
               start: java -jar -Dspring.profiles.active=dev build/libs/trade-crossing-ktor-all.jar
               env:
+                - name: MODE
+                  value: dev
                 - name: DEV_USER
                   value: ${{secrets.DEV_USER}}
                 - name: DEV_PW
