@@ -33,6 +33,10 @@ fun Route.chat() {
     post<ChatResource>(post) {
       val residentId:UUID = call.getUserId()
       val body = call.receive<CreateChatRequest>()
+
+      val newChatRoom = chatService.createNewChatRoom(residentId, body.residentId)
+
+      call.respond(HttpStatusCode.Created, newChatRoom)
     }
     delete<ChatResource.Id>({}) {}
   }

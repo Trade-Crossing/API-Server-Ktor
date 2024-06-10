@@ -47,6 +47,17 @@ class ChatResource {
       request {
         body<CreateChatRequest>()
       }
+
+      response {
+        HttpStatusCode.Created to {
+          body<ChatRoomResponse>()
+          description = "성공"
+        }
+        HttpStatusCode.Unauthorized to {
+          body<ErrorResponse>()
+          description = "인증에 실패했습니다."
+        }
+      }
     }
     val delete: OpenApiRoute.() -> Unit = {}
   }

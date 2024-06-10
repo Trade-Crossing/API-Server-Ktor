@@ -2,13 +2,11 @@ package com.tradecrossing.repository
 
 import com.tradecrossing.domain.entity.chat.ChatRoomEntity
 import com.tradecrossing.domain.entity.chat.ChatRoomResidentEntity
+import com.tradecrossing.domain.entity.resident.ResidentEntity
 import com.tradecrossing.domain.tables.chat.ChatRoomResidentTable
 import com.tradecrossing.domain.tables.chat.ChatRoomTable
-import com.tradecrossing.dto.response.ChatRoomResponse
-import com.tradecrossing.system.plugins.DatabaseFactory
-import com.tradecrossing.system.plugins.DatabaseFactory.dbQuery
+import io.ktor.server.plugins.*
 import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.sql.SizedIterable
 import org.jetbrains.exposed.sql.or
 import java.util.UUID
 
@@ -21,5 +19,19 @@ class ChatRepository {
         .map { it.id }
 
     return ChatRoomEntity.find { ChatRoomTable.participants inList result }.toList()
+  }
+
+  fun createChatRoom(sender: UUID, reciever: UUID): ChatRoomEntity {
+    val p1 = ResidentEntity.findById(sender) ?: throw NotFoundException("존재하지 않는 유저입니다.")
+    val p2 = ResidentEntity.findById(reciever) ?: throw NotFoundException("존재하지 않는 유저입니다.")
+
+    val chatRoom = ChatRoomEntity.new {
+      participants = ChatRoomResidentEntity.new {
+        participant1 = p1.id
+        participant2 = p2.id
+      }
+    }
+
+    return chatRoom
   }
 }
