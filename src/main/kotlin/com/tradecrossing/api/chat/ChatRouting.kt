@@ -40,7 +40,7 @@ fun Route.chat() {
     }
 
     get<ChatResource.Id>(ChatResource.Id.get) {
-      val chatRoomId = it.id
+      val chatRoomId = UUID.fromString(it.id)
       val cursor = it.cursor
       val size = it.size
       val chats = chatService.findChatsOfChatRoom(chatRoomId, cursor, size)
