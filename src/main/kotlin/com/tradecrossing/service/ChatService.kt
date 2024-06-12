@@ -21,7 +21,7 @@ class ChatService(private val chatRepository: ChatRepository) {
     return ChatRoomResponse(chatRoom)
   }
 
-  suspend fun findChatsOfChatRoom(chatRoomId: UUID): List<ChatMessageResponse> =
-    dbQuery { chatRepository.findChats(chatRoomId) }.map { ChatMessageResponse(it) }
+  suspend fun findChatsOfChatRoom(chatRoomId: UUID, cursor:Long?, size:Int): List<ChatMessageResponse> =
+    dbQuery { chatRepository.findChats(chatRoomId, cursor, size) }.map { ChatMessageResponse(it) }
 
 }

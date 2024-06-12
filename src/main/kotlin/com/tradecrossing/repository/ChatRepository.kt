@@ -7,9 +7,10 @@ import com.tradecrossing.domain.entity.resident.ResidentEntity
 import com.tradecrossing.domain.tables.chat.ChatRoomMessageTable
 import com.tradecrossing.domain.tables.chat.ChatRoomResidentTable
 import com.tradecrossing.domain.tables.chat.ChatRoomTable
+import com.tradecrossing.dto.response.chat.ChatMessageResponse
 import io.ktor.server.plugins.*
 import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.sql.or
+import org.jetbrains.exposed.sql.*
 import java.util.UUID
 
 class ChatRepository {
@@ -37,9 +38,14 @@ class ChatRepository {
     return chatRoom
   }
 
-  fun findChats(chatRoomId: UUID): List<ChatRoomMessageEntity> {
+  fun findChats(chatRoomId: UUID,cursor:Long?, size:Int): List<ChatRoomMessageEntity> {
     val chatRoom = ChatRoomEntity.findById(chatRoomId) ?: throw NotFoundException("존재하지 않는 채팅방입니다.")
-    val chats = ChatRoomMessageEntity.find { ChatRoomMessageTable.chatRoom eq chatRoom.id }.sortedBy { it.createdAt }
+
+    val chats = ChatRoomMessageTable.selectAll().where {
+      (ChatRoomMessageTable.chatRoom eq chatRoom.id) andIfNotNull if (cursor != null) {
+        ChatRoomMessageTable.id less cursor
+      } else null
+    }.orderBy(ChatRoomMessageTable.createdAt, order = SortOrder.DESC).fetchSize(size).map { ChatRoomMessageEntity.wrapRow(it) }
 
     return chats
   }
