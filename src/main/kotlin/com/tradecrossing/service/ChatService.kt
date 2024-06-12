@@ -6,6 +6,7 @@ import com.tradecrossing.dto.response.chat.ChatRoomResponse
 import com.tradecrossing.repository.ChatRepository
 import com.tradecrossing.system.plugins.DatabaseFactory.dbQuery
 import java.util.UUID
+import javax.swing.text.StyledEditorKit.BoldAction
 
 class ChatService(private val chatRepository: ChatRepository) {
 
@@ -24,4 +25,5 @@ class ChatService(private val chatRepository: ChatRepository) {
   suspend fun findChatsOfChatRoom(chatRoomId: UUID, cursor:Long?, size:Int): List<ChatMessageResponse> =
     dbQuery { chatRepository.findChats(chatRoomId, cursor, size) }.map { ChatMessageResponse(it) }
 
+  suspend fun findChatRoomExist(chatRoomId: UUID) : Boolean = dbQuery { chatRepository.findChatRoomExist(chatRoomId) }
 }

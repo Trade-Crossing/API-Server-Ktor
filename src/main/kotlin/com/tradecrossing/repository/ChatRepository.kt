@@ -49,4 +49,7 @@ class ChatRepository {
 
     return chats
   }
+
+  fun findChatRoomExist(chatRoomId: UUID): Boolean = ChatRoomEntity.findById(chatRoomId) != null
+
 }
