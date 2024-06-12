@@ -1,17 +1,18 @@
 package com.tradecrossing.api.chat
 
 import com.tradecrossing.dto.request.chat.CreateChatRequest
-import com.tradecrossing.dto.response.ChatRoomResponse
+import com.tradecrossing.dto.response.chat.ChatRoomResponse
 import com.tradecrossing.dto.response.ErrorResponse
 import io.github.smiley4.ktorswaggerui.dsl.OpenApiRoute
 import io.ktor.http.*
 import io.ktor.resources.*
+import java.util.*
 
 @Resource("/chat")
 class ChatResource {
 
   @Resource("/{id}")
-  class Id(val chat: ChatResource = ChatResource(), val id: String) {
+  class Id(val chat: ChatResource = ChatResource(), val id: UUID) {
 
     companion object {
       val get: OpenApiRoute.() -> Unit = {}

@@ -1,4 +1,4 @@
-package com.tradecrossing.dto.response
+package com.tradecrossing.dto.response.chat
 
 import com.tradecrossing.domain.entity.chat.ChatRoomEntity
 import com.tradecrossing.types.UUIDSerializer

@@ -3,7 +3,7 @@ package com.tradecrossing.api.chat
 import com.tradecrossing.api.chat.ChatResource.Companion.get
 import com.tradecrossing.api.chat.ChatResource.Companion.post
 import com.tradecrossing.dto.request.chat.CreateChatRequest
-import com.tradecrossing.dto.response.ChatRoomResponse
+import com.tradecrossing.dto.response.chat.ChatRoomResponse
 import com.tradecrossing.service.ChatService
 import com.tradecrossing.system.plugins.getUserId
 import com.tradecrossing.system.plugins.withAuth
@@ -38,6 +38,14 @@ fun Route.chat() {
 
       call.respond(HttpStatusCode.Created, newChatRoom)
     }
+
+    get<ChatResource.Id>({}) {
+      val chatRoomId = it.id
+      val chats = chatService.findChatsOfChatRoom(chatRoomId)
+
+      call.respond(HttpStatusCode.OK, chats)
+    }
+
     delete<ChatResource.Id>({}) {}
   }
 }

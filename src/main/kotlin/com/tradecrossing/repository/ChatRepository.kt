@@ -1,8 +1,10 @@
 package com.tradecrossing.repository
 
 import com.tradecrossing.domain.entity.chat.ChatRoomEntity
+import com.tradecrossing.domain.entity.chat.ChatRoomMessageEntity
 import com.tradecrossing.domain.entity.chat.ChatRoomResidentEntity
 import com.tradecrossing.domain.entity.resident.ResidentEntity
+import com.tradecrossing.domain.tables.chat.ChatRoomMessageTable
 import com.tradecrossing.domain.tables.chat.ChatRoomResidentTable
 import com.tradecrossing.domain.tables.chat.ChatRoomTable
 import io.ktor.server.plugins.*
@@ -33,5 +35,12 @@ class ChatRepository {
     }
 
     return chatRoom
+  }
+
+  fun findChats(chatRoomId: UUID): List<ChatRoomMessageEntity> {
+    val chatRoom = ChatRoomEntity.findById(chatRoomId) ?: throw NotFoundException("존재하지 않는 채팅방입니다.")
+    val chats = ChatRoomMessageEntity.find { ChatRoomMessageTable.chatRoom eq chatRoom.id }.sortedBy { it.createdAt }
+
+    return chats
   }
 }
