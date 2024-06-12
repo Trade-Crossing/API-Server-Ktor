@@ -3,10 +3,11 @@ package com.tradecrossing.dto.response.trade
 import com.tradecrossing.domain.entity.trade.ItemTradeEntity
 import com.tradecrossing.domain.tables.trade.ItemTradeType
 import com.tradecrossing.dto.response.resident.ResidentInfoDto
+import com.tradecrossing.types.LocalDateTimeSerializer
 import io.swagger.v3.oas.annotations.media.Schema
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.toKotlinLocalDateTime
+
 import kotlinx.serialization.Serializable
+import java.time.LocalDateTime
 
 @Serializable
 data class ItemTradeDto(
@@ -19,8 +20,10 @@ data class ItemTradeDto(
   val milePrice: Int?,
   @field:Schema(name = "is_deleted")
   val isDeleted: Boolean,
+  @Serializable(with = LocalDateTimeSerializer::class)
   @field:Schema(name = "created_at")
   val createdAt: LocalDateTime,
+  @Serializable(with = LocalDateTimeSerializer::class)
   @field:Schema(name = "updated_at")
   val updatedAt: LocalDateTime,
   @field:Schema(name = "trade_type")
@@ -39,8 +42,8 @@ data class ItemTradeDto(
     bellPrice = itemTrade.bellPrice,
     milePrice = itemTrade.milePrice,
     isDeleted = itemTrade.isDeleted,
-    createdAt = itemTrade.createdAt.toKotlinLocalDateTime(),
-    updatedAt = itemTrade.updatedAt.toKotlinLocalDateTime(),
+    createdAt = itemTrade.createdAt,
+    updatedAt = itemTrade.updatedAt,
     tradeType = itemTrade.tradeType,
     category = CategoryDto(itemTrade.category),
     source = SourceDto(itemTrade.source),
