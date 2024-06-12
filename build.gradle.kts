@@ -40,7 +40,8 @@ dependencies {
     "cors",
     "openapi",
     "request-validation",
-    "call-logging"
+    "call-logging",
+    "websockets"
   ).forEach {
     implementation("io.ktor:ktor-server-$it:$ktor_version")
   }

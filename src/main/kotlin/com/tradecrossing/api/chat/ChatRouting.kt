@@ -30,6 +30,7 @@ fun Route.chat() {
 
       call.respond(HttpStatusCode.OK, chatRooms)
     }
+
     post<ChatResource>(post) {
       val residentId:UUID = call.getUserId()
       val body = call.receive<CreateChatRequest>()
