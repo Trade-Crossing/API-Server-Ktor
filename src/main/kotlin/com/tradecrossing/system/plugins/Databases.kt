@@ -1,5 +1,8 @@
 package com.tradecrossing.system.plugins
 
+import com.tradecrossing.domain.tables.chat.ChatRoomMessageTable
+import com.tradecrossing.domain.tables.chat.ChatRoomResidentTable
+import com.tradecrossing.domain.tables.chat.ChatRoomTable
 import com.tradecrossing.domain.tables.resident.ResidentInfoTable
 import com.tradecrossing.domain.tables.resident.ResidentTable
 import com.tradecrossing.domain.tables.trade.*
@@ -52,7 +55,10 @@ object DatabaseFactory {
         ItemCategoryTable,
         SourceTable,
         VillagerTradeTable,
-        VillagerCategoryTable
+        VillagerCategoryTable,
+        ChatRoomTable,
+        ChatRoomResidentTable,
+        ChatRoomMessageTable
       )
     }
   }
