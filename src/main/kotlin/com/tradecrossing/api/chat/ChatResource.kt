@@ -15,7 +15,21 @@ class ChatResource {
   class Id(val chat: ChatResource = ChatResource(), val id: UUID, val cursor: Long? , val size:Int =10) {
 
     companion object {
-      val get: OpenApiRoute.() -> Unit = {}
+      val get: OpenApiRoute.() -> Unit = {
+        summary = "채팅방 조회"
+        description = "채팅방의 채팅 목록을 조회합니다."
+        tags = listOf("채팅")
+        securitySchemeName = "Jwt"
+        protected = true
+        request {
+          queryParameter("id", UUID::class)
+          queryParameter<Long?>("cursor")
+          queryParameter("size", Int::class) {
+            description = "한 번에 가져올 채팅 수"
+            example = 10
+          }
+        }
+      }
       val delete: OpenApiRoute.() -> Unit = {}
     }
   }

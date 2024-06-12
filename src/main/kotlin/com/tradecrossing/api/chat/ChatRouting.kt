@@ -39,7 +39,7 @@ fun Route.chat() {
       call.respond(HttpStatusCode.Created, newChatRoom)
     }
 
-    get<ChatResource.Id>({}) {
+    get<ChatResource.Id>(ChatResource.Id.get) {
       val chatRoomId = it.id
       val cursor = it.cursor
       val size = it.size
