@@ -5,6 +5,7 @@ import com.tradecrossing.domain.tables.trade.ItemTradeType
 import com.tradecrossing.dto.response.resident.ResidentInfoDto
 import com.tradecrossing.types.LocalDateTimeSerializer
 import io.swagger.v3.oas.annotations.media.Schema
+import kotlinx.serialization.Contextual
 
 import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
@@ -20,10 +21,10 @@ data class ItemTradeDto(
   val milePrice: Int?,
   @field:Schema(name = "is_deleted")
   val isDeleted: Boolean,
-  @Serializable(with = LocalDateTimeSerializer::class)
+  @Contextual
   @field:Schema(name = "created_at")
   val createdAt: LocalDateTime,
-  @Serializable(with = LocalDateTimeSerializer::class)
+  @Contextual
   @field:Schema(name = "updated_at")
   val updatedAt: LocalDateTime,
   @field:Schema(name = "trade_type")

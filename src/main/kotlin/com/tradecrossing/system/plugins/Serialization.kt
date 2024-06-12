@@ -1,5 +1,6 @@
 package com.tradecrossing.system.plugins
 
+import com.tradecrossing.types.LocalDateTimeSerializer
 import com.tradecrossing.types.UUIDSerializer
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
@@ -8,7 +9,15 @@ import io.ktor.server.plugins.contentnegotiation.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNamingStrategy.Builtins.SnakeCase
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.contextual
 import kotlinx.serialization.modules.serializersModuleOf
+
+
+private val serializerModules = SerializersModule {
+  contextual(UUIDSerializer())
+  contextual(LocalDateTimeSerializer())
+}
 
 @OptIn(ExperimentalSerializationApi::class)
 fun Application.configureSerialization() {
@@ -25,7 +34,7 @@ fun Application.configureSerialization() {
         ignoreUnknownKeys = true
         namingStrategy = SnakeCase
         encodeDefaults = true
-        serializersModuleOf(UUIDSerializer())
+        serializersModule = serializerModules
       },
       contentType = ContentType.Application.Json
     )

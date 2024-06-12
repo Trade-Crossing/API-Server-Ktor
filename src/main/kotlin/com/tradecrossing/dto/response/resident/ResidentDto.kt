@@ -2,12 +2,13 @@ package com.tradecrossing.dto.response.resident
 
 import com.tradecrossing.domain.entity.resident.ResidentEntity
 import com.tradecrossing.types.UUIDSerializer
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import java.util.*
 
 @Serializable
 data class ResidentDto(
-  @Serializable(with = UUIDSerializer::class)
+  @Contextual
   val id: UUID,
   val email: String,
   val provider: String,

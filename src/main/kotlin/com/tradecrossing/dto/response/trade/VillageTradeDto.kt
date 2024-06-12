@@ -5,6 +5,7 @@ import com.tradecrossing.domain.tables.trade.VillagerTradeTable.VillagerGender
 import com.tradecrossing.domain.tables.trade.VillagerTradeTable.VillagerTradeType
 import com.tradecrossing.dto.response.resident.ResidentInfoDto
 import com.tradecrossing.types.LocalDateTimeSerializer
+import kotlinx.serialization.Contextual
 
 import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
@@ -21,9 +22,9 @@ data class VillageTradeDto(
   val bellPrice: Int?,
   val milePrice: Int?,
   val isDeleted: Boolean,
-  @Serializable(with = LocalDateTimeSerializer::class)
+  @Contextual
   val createdAt: LocalDateTime,
-  @Serializable(with = LocalDateTimeSerializer::class)
+  @Contextual
   val updatedAt: LocalDateTime
 ) {
   constructor(entity: VillagerTradeEntity) : this(
