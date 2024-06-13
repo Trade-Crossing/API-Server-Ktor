@@ -1,8 +1,6 @@
 package com.tradecrossing.dto.response.chat
 
 import com.tradecrossing.domain.entity.chat.ChatRoomMessageEntity
-import com.tradecrossing.types.LocalDateTimeSerializer
-import com.tradecrossing.types.UUIDSerializer
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
@@ -17,7 +15,7 @@ data class ChatMessageResponse(
   val createdAt: LocalDateTime,
 ) {
 
-  constructor(entity: ChatRoomMessageEntity) :this (
+  constructor(entity: ChatRoomMessageEntity) : this(
     sender = entity.sender.id.value,
     message = entity.message,
     createdAt = entity.createdAt
