@@ -42,3 +42,6 @@ jobs:
           REMOTE_USER: ubuntu
           TARGET: /home/ubuntu/app
           SOURCE: build/libs/tradecrossing.jar
+          SCRIPT_BEFORE: |
+            whoami
+            ls -al
