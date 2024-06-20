@@ -1,0 +1,31 @@
+name: 'Deploy to Light Sail'
+on:
+  push:
+    branches:
+      - dev
+  workflow_dispatch:
+env:
+  AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}}
+  AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_KEY}}
+  AWS_REGION: 'ap-northeast-2'
+  SSH_KEY: ${{secrets.SSH_KEY}}
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+
+      - name: 권한 부여
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      
