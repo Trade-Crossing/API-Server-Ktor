@@ -8,7 +8,6 @@ env:
   AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}}
   AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_KEY}}
   AWS_REGION: 'ap-northeast-2'
-  SSH_KEY: ${{secrets.SSH_KEY}}
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -32,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Trade-Server
-          path: build/libs/tradecrossing.jar
+          path: build/libs/trade-crossing-ktor-all.jar
 
   deploy:
     needs: build
@@ -43,10 +42,28 @@ jobs:
         with:
           name: Trade-Server
           path: app
-      - name: Deploy to Light Sail
+      - name: Check the jar file
+        run: ls -al app
+
+      - name: Create SSH key
         run: |
-          echo "${{secrets.SSH_KEY}}" > ssh_key.pem
-          chmod 600 ssh_key.pem
-          scp -i ssh_key.pem -o StrictHostKeyChecking=no app/tradecrossing.jar ubuntu@${{secrets.REMOTE_HOST}}
-          ssh -i ssh_key.pem -o StrictHostKeyChecking=no ubuntu@${{secrets.REMOTE_HOST}} "pgrep java | xargs kill -9 nohup java -jar /home/ubuntu/app/tradecrossing.jar"
-          rm -f ssh_key.pem
+          echo "${{secrets.SSH_KEY}}" >> awsEc2.pem
+          chmod 400 awsEc2.pem
+
+      - name: Deploy to Light Sail
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{secrets.REMOTE_HOST}}
+          username: ubuntu
+          key: ${{secrets.SSH_KEY}}
+          source: ./app/trade-crossing-ktor-all.jar
+          target: /home/ubuntu
+
+      - name: Run the jar
+        run: |
+          ssh -i awsEc2.pem -o StrictHostKeyChecking=no ubuntu@${{secrets.REMOTE_HOST}} "cd /home/ubuntu/app;
+          sh deploy.sh"
+
+      - name: Clean
+        run: |
+          rm -f awsEc2.pem
