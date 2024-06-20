@@ -34,16 +34,11 @@ jobs:
       - name: Copy jar file
         run: cp build/libs/*.jar deploy/
 
-      - name: Make zip file
-        run: zip -r deploy.zip deploy/
-        shell: bash
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      - name: Deploy using ssh
+        uses: easingthemes/ssh-deploy@main
         with:
-          aws-region: ap-northeast-2
-          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY}}
-          aws-secret-access-key: ${{secrets.AWS_SECRET_KEY}}
-
-      - name: Upload to S3
-        run: aws s3 cp --region ap-northeast-2 deploy.zip s3://light-sail-deploy
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ubuntu
+          TARGET: /home/ubuntu/app
+          SOURCE: build/libs/tradecrossing.jar

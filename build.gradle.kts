@@ -11,6 +11,11 @@ plugins {
 
 group = "com.tradecrossing"
 version = "0.0.1"
+tasks.jar {
+  archiveFileName.set("tradecrossing.jar")
+}
+
+// how to change th jar name?
 
 application {
   mainClass.set("io.ktor.server.netty.EngineMain")
