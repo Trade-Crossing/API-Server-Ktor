@@ -10,7 +10,7 @@ env:
   AWS_REGION: 'ap-northeast-2'
   SSH_KEY: ${{secrets.SSH_KEY}}
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -28,20 +28,25 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Make Directory
-        run: mkdir -p deploy
-
-      - name: Copy jar file
-        run: cp build/libs/*.jar deploy/
-
-      - name: Deploy using ssh
-        uses: easingthemes/ssh-deploy@main
+      - name: Upload to artifact
+        uses: actions/upload-artifact@v2
         with:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ubuntu
-          TARGET: /home/ubuntu/app
-          SOURCE: build/libs/tradecrossing.jar
-          SCRIPT_BEFORE: |
-            whoami
-            ls -al
+          name: Trade-Server
+          path: build/libs/tradecrossing.jar
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: Trade-Server
+          path: app
+      - name: Deploy to Light Sail
+        run: |
+          echo "${{secrets.SSH_KEY}}" > ssh_key.pem
+          chmod 600 ssh_key.pem
+          scp -i ssh_key.pem -o StrictHostKeyChecking=no app/tradecrossing.jar ubuntu@${{secrets.REMOTE_HOST}}
+          ssh -i ssh_key.pem -o StrictHostKeyChecking=no ubuntu@${{secrets.REMOTE_HOST}} "pgrep java | xargs kill -9 nohup java -jar /home/ubuntu/app/tradecrossing.jar"
+          rm -f ssh_key.pem
