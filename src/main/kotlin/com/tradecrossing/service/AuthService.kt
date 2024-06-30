@@ -1,8 +1,8 @@
 package com.tradecrossing.service
 
-import com.tradecrossing.domain.entity.resident.ResidentInfoEntity
+import com.tradecrossing.domain.ResidentInfo
+import com.tradecrossing.domain.ResidentInfoDto
 import com.tradecrossing.dto.request.auth.RegisterRequest
-import com.tradecrossing.dto.response.resident.ResidentInfoDto
 import com.tradecrossing.repository.ResidentRepository
 import com.tradecrossing.system.exceptions.ConfictException
 import com.tradecrossing.system.plugins.DatabaseFactory.dbQuery
@@ -16,10 +16,10 @@ class AuthService(private val residentRepository: ResidentRepository) {
 
       residentRepository.findbyId(id)?.apply { registered = true } ?: throw NotFoundException("존재하지 않는 유저입니다.")
 
-      var residentInfo = ResidentInfoEntity.findById(id)
+      var residentInfo = ResidentInfo.findById(id)
 
       if (residentInfo == null) {
-        residentInfo = ResidentInfoEntity.new(id) {
+        residentInfo = ResidentInfo.new(id) {
           profilePic = request.profilePic
           username = request.username
           islandName = request.islandName
@@ -34,21 +34,21 @@ class AuthService(private val residentRepository: ResidentRepository) {
 
   suspend fun getResidentInfo(id: UUID) = dbQuery {
     val residentInfo =
-      ResidentInfoEntity.findById(id) ?: throw NotFoundException("존재하지 않는 유저입니다.")
+      ResidentInfo.findById(id) ?: throw NotFoundException("존재하지 않는 유저입니다.")
 
     ResidentInfoDto(residentInfo)
   }
 
   suspend fun getIslandCode(id: UUID) = dbQuery {
     val residentInfo =
-      ResidentInfoEntity.findById(id) ?: throw NotFoundException("존재하지 않는 유저입니다.")
+      ResidentInfo.findById(id) ?: throw NotFoundException("존재하지 않는 유저입니다.")
 
     residentInfo.islandCode
   }
 
   suspend fun updateIslandCode(id: UUID, islandCode: String) = dbQuery {
     val residentInfo =
-      ResidentInfoEntity.findById(id) ?: throw NotFoundException("존재하지 않는 유저입니다.")
+      ResidentInfo.findById(id) ?: throw NotFoundException("존재하지 않는 유저입니다.")
 
     residentInfo.islandCode = islandCode
   }

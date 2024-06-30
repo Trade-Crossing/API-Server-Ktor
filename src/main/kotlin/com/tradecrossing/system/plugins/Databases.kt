@@ -1,8 +1,6 @@
 package com.tradecrossing.system.plugins
 
-import com.tradecrossing.domain.tables.resident.ResidentInfoTable
-import com.tradecrossing.domain.tables.resident.ResidentTable
-import com.tradecrossing.domain.tables.trade.*
+import com.tradecrossing.domain.*
 import io.ktor.server.config.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
@@ -46,13 +44,13 @@ object DatabaseFactory {
     transaction {
       addLogger(StdOutSqlLogger)
       SchemaUtils.createMissingTablesAndColumns(
-        ResidentTable,
-        ResidentInfoTable,
-        ItemTradeTable,
-        ItemCategoryTable,
-        SourceTable,
-        VillagerTradeTable,
-        VillagerCategoryTable
+        Residents,
+        ResidentInfos,
+        ItemTrades,
+        ItemCategorys,
+        Sources,
+        VillagerTrades,
+        VillagerCategorys
       )
     }
   }

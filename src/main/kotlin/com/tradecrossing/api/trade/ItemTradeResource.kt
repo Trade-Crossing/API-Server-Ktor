@@ -1,9 +1,9 @@
 package com.tradecrossing.api.trade
 
-import com.tradecrossing.domain.tables.trade.ItemTradeType
+import com.tradecrossing.domain.ItemTradeDto
+import com.tradecrossing.domain.ItemTradeType
 import com.tradecrossing.dto.request.trade.ItemTradeRequest
 import com.tradecrossing.dto.response.ErrorResponse
-import com.tradecrossing.dto.response.trade.ItemTradeDto
 import com.tradecrossing.types.TradeCurrency
 import io.github.smiley4.ktorswaggerui.dsl.OpenApiRoute
 import io.ktor.http.*
