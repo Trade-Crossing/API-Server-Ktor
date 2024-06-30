@@ -1,7 +1,7 @@
 package com.tradecrossing.dto.response.trade
 
+import com.tradecrossing.domain.ItemTrade
 import com.tradecrossing.domain.ItemTradeType
-import com.tradecrossing.domain.entity.trade.ItemTradeEntity
 import com.tradecrossing.dto.response.resident.ResidentInfoDto
 import io.swagger.v3.oas.annotations.media.Schema
 import kotlinx.datetime.LocalDateTime
@@ -32,7 +32,7 @@ data class ItemTradeDto(
   @field:Schema(name = "variation_index")
   val variationIndex: Int?
 ) {
-  constructor(itemTrade: ItemTradeEntity) : this(
+  constructor(itemTrade: ItemTrade) : this(
     id = itemTrade.id.value,
     creator = ResidentInfoDto(itemTrade.resident),
     closed = itemTrade.closed,

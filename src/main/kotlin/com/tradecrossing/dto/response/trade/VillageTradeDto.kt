@@ -1,8 +1,8 @@
 package com.tradecrossing.dto.response.trade
 
+import com.tradecrossing.domain.VillagerTrade
 import com.tradecrossing.domain.VillagerTrades.VillagerGender
 import com.tradecrossing.domain.VillagerTrades.VillagerTradeType
-import com.tradecrossing.domain.entity.trade.VillagerTradeEntity
 import com.tradecrossing.dto.response.resident.ResidentInfoDto
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.toKotlinLocalDateTime
@@ -23,7 +23,7 @@ data class VillageTradeDto(
   val createdAt: LocalDateTime,
   val updatedAt: LocalDateTime
 ) {
-  constructor(entity: VillagerTradeEntity) : this(
+  constructor(entity: VillagerTrade) : this(
     entity.id.value,
     entity.name,
     entity.tradeType,

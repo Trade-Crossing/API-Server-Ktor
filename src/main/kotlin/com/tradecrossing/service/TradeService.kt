@@ -61,7 +61,7 @@ class TradeService {
       ItemTrades.tradeType eq ItemTradeType.buy
     }
 
-    val itemTradeList = ItemTradeEntity.find {
+    val itemTradeList = ItemTrade.find {
       (ItemTrades.id greater cursor) and
           (ItemTrades.itemName eq query.name) and
           (ItemTrades.tradeType eq query.tradeType) andIfNotNull
@@ -69,7 +69,7 @@ class TradeService {
           tradeTypeFilter and
           (ItemTrades.closed eq query.closed) and
           currencyFilter
-    }.limit(size).with(ItemTradeEntity::resident, ItemTradeEntity::source, ItemTradeEntity::category)
+    }.limit(size).with(ItemTrade::resident, ItemTrade::source, ItemTrade::category)
       .map { ItemTradeDto(it) }.toList()
 
     itemTradeList
@@ -82,7 +82,7 @@ class TradeService {
    */
   suspend fun findItemTradeById(id: Long) = dbQuery {
     val itemTrade =
-      ItemTradeEntity.findById(id)?.load(ItemTradeEntity::resident, ItemTradeEntity::source, ItemTradeEntity::category)
+      ItemTrade.findById(id)?.load(ItemTrade::resident, ItemTrade::source, ItemTrade::category)
         ?: throw NotFoundException("존재하지 않는 거래글입니다.")
 
     ItemTradeDto(itemTrade)
@@ -96,7 +96,7 @@ class TradeService {
     val category = ItemCategory.find { ItemCategorys.name eq request.itemCategory }.firstOrNull()
       ?: throw NotFoundException("존재하지 않는 카테고리입니다.")
 
-    val newItemTrade = ItemTradeEntity.new {
+    val newItemTrade = ItemTrade.new {
       name = request.name
       tradeType = request.tradeType
       this.category = category
@@ -124,7 +124,7 @@ class TradeService {
       ?: throw NotFoundException("존재하지 않는 출처입니다.")
     val category = ItemCategory.find { ItemCategorys.name eq request.itemCategory }.firstOrNull()
       ?: throw NotFoundException("존재하지 않는 카테고리입니다.")
-    val itemTrade = ItemTradeEntity.findById(id).let {
+    val itemTrade = ItemTrade.findById(id).let {
       if (it == null || it.isDeleted) throw NotFoundException("존재하지 않는 거래글입니다.")
       else if (it.isDeleted) throw NotFoundException("이미 삭제된 거래글입니다.")
       else if (it.resident.id.value != residentId) throw ForbiddenException("본인의 거래글만 수정할 수 있습니다.")
@@ -157,7 +157,7 @@ class TradeService {
   }
 
   suspend fun deleteItemTrade(id: Long, residentId: UUID) = dbQuery {
-    val itemTrade = ItemTradeEntity.findById(id).let {
+    val itemTrade = ItemTrade.findById(id).let {
       if (it == null) throw NotFoundException("존재하지 않는 거래글입니다.")
       else if (it.isDeleted) throw NotFoundException("이미 삭제된 거래글입니다.")
       else if (it.resident.id.value != residentId) throw ForbiddenException("본인의 거래글만 삭제할 수 있습니다.")

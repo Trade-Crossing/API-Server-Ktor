@@ -9,7 +9,7 @@ enum class ItemTradeType {
 }
 
 
-class ItemTradeEntity(id: EntityID<Long>) : BaseTrade(id) {
+class ItemTrade(id: EntityID<Long>) : BaseTrade(id) {
   // read
   var name by ItemTrades.itemName
   var tradeType by ItemTrades.tradeType
@@ -25,7 +25,7 @@ class ItemTradeEntity(id: EntityID<Long>) : BaseTrade(id) {
   override var createdAt: LocalDateTime by ItemTrades.createdAt
   override var updatedAt: LocalDateTime by ItemTrades.updatedAt
 
-  companion object : LongEntityClass<ItemTradeEntity>(ItemTrades)
+  companion object : LongEntityClass<ItemTrade>(ItemTrades)
 
   override fun toString(): String = "ItemTradeEntity(id=$id, " +
       "name=$name, " +
