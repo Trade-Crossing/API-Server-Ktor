@@ -1,5 +1,8 @@
 package com.tradecrossing.domain
 
+import com.tradecrossing.types.LocalDateTimeSerializer
+import io.swagger.v3.oas.annotations.media.Schema
+import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import java.time.LocalDateTime
@@ -53,5 +56,48 @@ object ItemTrades : BaseTrades("item_trade") {
   val quantity = integer("quantity")
   val variationIndex = integer("variation_index").nullable()
 
+}
 
+@Serializable
+data class ItemTradeDto(
+  val id: Long,
+  val creator: ResidentInfoDto,
+  val closed: Boolean,
+  @field:Schema(name = "bell_price")
+  val bellPrice: Int?,
+  @field:Schema(name = "mile_price")
+  val milePrice: Int?,
+  @field:Schema(name = "is_deleted")
+  val isDeleted: Boolean,
+  @field:Schema(name = "created_at")
+  @Serializable(with = LocalDateTimeSerializer::class)
+  val createdAt: LocalDateTime,
+  @field:Schema(name = "updated_at")
+  @Serializable(with = LocalDateTimeSerializer::class)
+  val updatedAt: LocalDateTime,
+  @field:Schema(name = "trade_type")
+  val tradeType: ItemTradeType,
+  val category: ItemCategoryDto,
+  val source: SourceDto,
+  val name: String,
+  val quantity: Int,
+  @field:Schema(name = "variation_index")
+  val variationIndex: Int?
+) {
+  constructor(itemTrade: ItemTrade) : this(
+    id = itemTrade.id.value,
+    creator = ResidentInfoDto(itemTrade.resident),
+    closed = itemTrade.closed,
+    bellPrice = itemTrade.bellPrice,
+    milePrice = itemTrade.milePrice,
+    isDeleted = itemTrade.isDeleted,
+    createdAt = itemTrade.createdAt,
+    updatedAt = itemTrade.updatedAt,
+    tradeType = itemTrade.tradeType,
+    category = ItemCategoryDto(itemTrade.category),
+    source = SourceDto(itemTrade.source),
+    name = itemTrade.name,
+    quantity = itemTrade.quantity,
+    variationIndex = itemTrade.variationIndex
+  )
 }

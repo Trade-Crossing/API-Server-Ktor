@@ -1,12 +1,12 @@
 package com.tradecrossing.service
 
 import com.tradecrossing.domain.Resident
+import com.tradecrossing.domain.ResidentDto
 import com.tradecrossing.domain.Residents
 
 import com.tradecrossing.dto.request.oauth.MobileLoginRequest
 import com.tradecrossing.dto.response.oauth.GoogleResponse
 import com.tradecrossing.dto.response.oauth.KakaoResponse
-import com.tradecrossing.dto.response.resident.ResidentDto
 import com.tradecrossing.system.plugins.DatabaseFactory.dbQuery
 import com.tradecrossing.types.OAuthProvider
 import io.ktor.client.*

@@ -1,5 +1,6 @@
 package com.tradecrossing.domain
 
+import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -20,4 +21,9 @@ class ItemCategory(id: EntityID<Int>) : IntEntity(id) {
 object ItemCategorys : IntIdTable("item_category", "id") {
   val name = varchar("name", 255)
   val krName = varchar("kr_name", 255)
+}
+
+@Serializable
+data class ItemCategoryDto(val name: String, val krName: String) {
+  constructor(category: ItemCategory) : this(category.name, category.krName)
 }

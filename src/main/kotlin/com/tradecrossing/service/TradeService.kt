@@ -5,8 +5,6 @@ import com.tradecrossing.dto.request.trade.ItemTradeRequest
 import com.tradecrossing.dto.request.trade.TradeQuery.ItemTradeQuery
 import com.tradecrossing.dto.request.trade.TradeQuery.VillagerTradeQuery
 import com.tradecrossing.dto.request.trade.VillagerTradeRequest
-import com.tradecrossing.dto.response.trade.ItemTradeDto
-import com.tradecrossing.dto.response.trade.VillageTradeDto
 import com.tradecrossing.system.exceptions.ForbiddenException
 import com.tradecrossing.system.plugins.DatabaseFactory.dbQuery
 import com.tradecrossing.types.TradeCurrency
@@ -196,7 +194,7 @@ class TradeService {
             (VillagerTrades.closed eq query.closed) and
             priceFilter
       }.limit(size)
-      .map { VillageTradeDto(VillagerTrade.wrapRow(it)) }
+      .map { VillagerTradeDto(VillagerTrade.wrapRow(it)) }
       .toList()
 
     tradeList
@@ -205,7 +203,7 @@ class TradeService {
   suspend fun findVillagerTradeById(id: Long) = dbQuery {
     val trade = VillagerTrade.findById(id) ?: throw NotFoundException("존재하지 않는 주민 거래입니다.")
 
-    VillageTradeDto(trade)
+    VillagerTradeDto(trade)
   }
 
   suspend fun createVillagerTrade(userId: UUID, request: VillagerTradeRequest) = dbQuery {
@@ -232,7 +230,7 @@ class TradeService {
       }
     }
 
-    VillageTradeDto(newTrade)
+    VillagerTradeDto(newTrade)
   }
 
   suspend fun updateVillagerTrade(id: Long, userId: UUID, request: VillagerTradeRequest) = dbQuery {
