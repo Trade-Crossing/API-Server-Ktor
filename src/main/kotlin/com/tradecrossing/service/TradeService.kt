@@ -1,8 +1,8 @@
 package com.tradecrossing.service
 
-import com.tradecrossing.domain.entity.resident.ResidentInfoEntity
+import com.tradecrossing.domain.ResidentInfo
+import com.tradecrossing.domain.ResidentInfos
 import com.tradecrossing.domain.entity.trade.*
-import com.tradecrossing.domain.tables.resident.ResidentInfoTable
 import com.tradecrossing.domain.tables.trade.*
 import com.tradecrossing.dto.request.trade.ItemTradeRequest
 import com.tradecrossing.dto.request.trade.TradeQuery.ItemTradeQuery
@@ -93,7 +93,7 @@ class TradeService {
 
   suspend fun createItemTrade(request: ItemTradeRequest, residentId: UUID) = dbQuery {
 
-    val resident = ResidentInfoEntity.findById(residentId) ?: throw NotFoundException("존재하지 않는 유저입니다.")
+    val resident = ResidentInfo.findById(residentId) ?: throw NotFoundException("존재하지 않는 유저입니다.")
     val source = SourceEntity.find { SourceTable.name eq request.itemSource }.firstOrNull()
       ?: throw NotFoundException("존재하지 않는 출처입니다.")
     val category = ItemCategoryEntity.find { ItemCategoryTable.name eq request.itemCategory }.firstOrNull()
@@ -187,7 +187,7 @@ class TradeService {
     }
 
     val tradeList = VillagerTradeTable
-      .leftJoin(ResidentInfoTable)
+      .leftJoin(ResidentInfos)
       .leftJoin(VillagerCategoryTable)
       .selectAll()
       .where {
@@ -212,7 +212,7 @@ class TradeService {
   }
 
   suspend fun createVillagerTrade(userId: UUID, request: VillagerTradeRequest) = dbQuery {
-    val resident = ResidentInfoEntity.findById(userId) ?: throw NotFoundException("존재하지 않는 유저입니다.")
+    val resident = ResidentInfo.findById(userId) ?: throw NotFoundException("존재하지 않는 유저입니다.")
     val category = VillagerCategoryEntity.find { VillagerCategoryTable.name eq request.category }.firstOrNull()
       ?: throw NotFoundException("존재하지 않는 카테고리입니다.")
 

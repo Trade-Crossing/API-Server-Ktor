@@ -1,7 +1,8 @@
 package com.tradecrossing.service
 
-import com.tradecrossing.domain.entity.resident.ResidentEntity
-import com.tradecrossing.domain.tables.resident.ResidentTable
+import com.tradecrossing.domain.Resident
+import com.tradecrossing.domain.Residents
+
 import com.tradecrossing.dto.request.oauth.MobileLoginRequest
 import com.tradecrossing.dto.response.oauth.GoogleResponse
 import com.tradecrossing.dto.response.oauth.KakaoResponse
@@ -53,14 +54,14 @@ class OAuthService {
 
   suspend fun findOrRegisterUser(email: String, providerId: String, provider: OAuthProvider): ResidentDto {
     return dbQuery {
-      var resident = ResidentEntity.find {
-        (ResidentTable.email eq email) and
-            (ResidentTable.providerId eq providerId) and
-            (ResidentTable.provider eq provider)
+      var resident = Resident.find {
+        (Residents.email eq email) and
+            (Residents.providerId eq providerId) and
+            (Residents.provider eq provider)
       }.firstOrNull()
 
       if (resident == null) {
-        resident = ResidentEntity.new {
+        resident = Resident.new {
           this.email = email
           this.provider = provider
           this.providerId = providerId
@@ -73,14 +74,14 @@ class OAuthService {
 
   suspend fun mobileLogin(request: MobileLoginRequest): ResidentDto {
     return dbQuery {
-      var resident = ResidentEntity.find {
-        (ResidentTable.providerId eq request.providerId) and
-            (ResidentTable.provider eq request.provider) and
-            (ResidentTable.email eq request.email)
+      var resident = Resident.find {
+        (Residents.providerId eq request.providerId) and
+            (Residents.provider eq request.provider) and
+            (Residents.email eq request.email)
       }.firstOrNull()
 
       if (resident == null) {
-        resident = ResidentEntity.new {
+        resident = Resident.new {
           this.email = request.email
           this.provider = request.provider
           this.providerId = request.providerId
