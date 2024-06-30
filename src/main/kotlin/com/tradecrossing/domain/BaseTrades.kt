@@ -1,7 +1,5 @@
-package com.tradecrossing.domain.tables.trade
+package com.tradecrossing.domain
 
-import com.tradecrossing.domain.ResidentInfo
-import com.tradecrossing.domain.ResidentInfos
 import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable

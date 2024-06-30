@@ -1,8 +1,5 @@
-package com.tradecrossing.domain.tables.trade
+package com.tradecrossing.domain
 
-import com.tradecrossing.domain.ResidentInfo
-import com.tradecrossing.domain.entity.trade.ItemCategoryEntity
-import com.tradecrossing.domain.entity.trade.SourceEntity
 import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import java.time.LocalDateTime
@@ -16,8 +13,8 @@ class ItemTradeEntity(id: EntityID<Long>) : BaseTrade(id) {
   // read
   var name by ItemTrades.itemName
   var tradeType by ItemTrades.tradeType
-  var category by ItemCategoryEntity referencedOn ItemTrades.itemCategory
-  var source by SourceEntity referencedOn ItemTrades.itemSource
+  var category by ItemCategory referencedOn ItemTrades.itemCategory
+  var source by Source referencedOn ItemTrades.itemSource
   var quantity by ItemTrades.quantity
   var variationIndex by ItemTrades.variationIndex
   override var resident: ResidentInfo by ResidentInfo referencedOn ItemTrades.resident
@@ -50,8 +47,8 @@ class ItemTradeEntity(id: EntityID<Long>) : BaseTrade(id) {
 object ItemTrades : BaseTrades("item_trade") {
 
   val tradeType = enumerationByName<ItemTradeType>("trade_type", 10)
-  val itemCategory = reference("item_category", ItemCategoryTable.id)
-  val itemSource = reference("source", SourceTable.id)
+  val itemCategory = reference("item_category", ItemCategorys.id)
+  val itemSource = reference("source", Sources.id)
   val itemName = varchar("name", 255)
   val quantity = integer("quantity")
   val variationIndex = integer("variation_index").nullable()

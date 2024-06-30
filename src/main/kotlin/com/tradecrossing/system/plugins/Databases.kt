@@ -1,8 +1,6 @@
 package com.tradecrossing.system.plugins
 
-import com.tradecrossing.domain.ResidentInfos
-import com.tradecrossing.domain.Residents
-import com.tradecrossing.domain.tables.trade.*
+import com.tradecrossing.domain.*
 import io.ktor.server.config.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
@@ -49,10 +47,10 @@ object DatabaseFactory {
         Residents,
         ResidentInfos,
         ItemTrades,
-        ItemCategoryTable,
-        SourceTable,
+        ItemCategorys,
+        Sources,
         VillagerTrades,
-        VillagerCategoryTable
+        VillagerCategorys
       )
     }
   }

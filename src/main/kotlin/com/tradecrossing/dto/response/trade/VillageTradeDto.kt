@@ -1,8 +1,8 @@
 package com.tradecrossing.dto.response.trade
 
+import com.tradecrossing.domain.VillagerTrades.VillagerGender
+import com.tradecrossing.domain.VillagerTrades.VillagerTradeType
 import com.tradecrossing.domain.entity.trade.VillagerTradeEntity
-import com.tradecrossing.domain.tables.trade.VillagerTrades.VillagerGender
-import com.tradecrossing.domain.tables.trade.VillagerTrades.VillagerTradeType
 import com.tradecrossing.dto.response.resident.ResidentInfoDto
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.toKotlinLocalDateTime

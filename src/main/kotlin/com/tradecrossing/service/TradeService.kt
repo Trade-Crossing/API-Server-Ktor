@@ -1,9 +1,6 @@
 package com.tradecrossing.service
 
-import com.tradecrossing.domain.ResidentInfo
-import com.tradecrossing.domain.ResidentInfos
-import com.tradecrossing.domain.entity.trade.*
-import com.tradecrossing.domain.tables.trade.*
+import com.tradecrossing.domain.*
 import com.tradecrossing.dto.request.trade.ItemTradeRequest
 import com.tradecrossing.dto.request.trade.TradeQuery.ItemTradeQuery
 import com.tradecrossing.dto.request.trade.TradeQuery.VillagerTradeQuery
@@ -94,9 +91,9 @@ class TradeService {
   suspend fun createItemTrade(request: ItemTradeRequest, residentId: UUID) = dbQuery {
 
     val resident = ResidentInfo.findById(residentId) ?: throw NotFoundException("존재하지 않는 유저입니다.")
-    val source = SourceEntity.find { SourceTable.name eq request.itemSource }.firstOrNull()
+    val source = Source.find { Sources.name eq request.itemSource }.firstOrNull()
       ?: throw NotFoundException("존재하지 않는 출처입니다.")
-    val category = ItemCategoryEntity.find { ItemCategoryTable.name eq request.itemCategory }.firstOrNull()
+    val category = ItemCategory.find { ItemCategorys.name eq request.itemCategory }.firstOrNull()
       ?: throw NotFoundException("존재하지 않는 카테고리입니다.")
 
     val newItemTrade = ItemTradeEntity.new {
@@ -123,9 +120,9 @@ class TradeService {
   }
 
   suspend fun updateItemTrade(id: Long, request: ItemTradeRequest, residentId: UUID) = dbQuery {
-    val source = SourceEntity.find { SourceTable.name eq request.itemSource }.firstOrNull()
+    val source = Source.find { Sources.name eq request.itemSource }.firstOrNull()
       ?: throw NotFoundException("존재하지 않는 출처입니다.")
-    val category = ItemCategoryEntity.find { ItemCategoryTable.name eq request.itemCategory }.firstOrNull()
+    val category = ItemCategory.find { ItemCategorys.name eq request.itemCategory }.firstOrNull()
       ?: throw NotFoundException("존재하지 않는 카테고리입니다.")
     val itemTrade = ItemTradeEntity.findById(id).let {
       if (it == null || it.isDeleted) throw NotFoundException("존재하지 않는 거래글입니다.")
@@ -188,35 +185,35 @@ class TradeService {
 
     val tradeList = VillagerTrades
       .leftJoin(ResidentInfos)
-      .leftJoin(VillagerCategoryTable)
+      .leftJoin(VillagerCategorys)
       .selectAll()
       .where {
         (VillagerTrades.id greater cursor) and
             (VillagerTrades.name eq query.name) and
             (VillagerTrades.purity eq query.purity) and
             (VillagerTrades.tradeType eq query.tradeType) and
-            (VillagerCategoryTable.name eq query.category) and
+            (VillagerCategorys.name eq query.category) and
             (VillagerTrades.closed eq query.closed) and
             priceFilter
       }.limit(size)
-      .map { VillageTradeDto(VillagerTradeEntity.wrapRow(it)) }
+      .map { VillageTradeDto(VillagerTrade.wrapRow(it)) }
       .toList()
 
     tradeList
   }
 
   suspend fun findVillagerTradeById(id: Long) = dbQuery {
-    val trade = VillagerTradeEntity.findById(id) ?: throw NotFoundException("존재하지 않는 주민 거래입니다.")
+    val trade = VillagerTrade.findById(id) ?: throw NotFoundException("존재하지 않는 주민 거래입니다.")
 
     VillageTradeDto(trade)
   }
 
   suspend fun createVillagerTrade(userId: UUID, request: VillagerTradeRequest) = dbQuery {
     val resident = ResidentInfo.findById(userId) ?: throw NotFoundException("존재하지 않는 유저입니다.")
-    val category = VillagerCategoryEntity.find { VillagerCategoryTable.name eq request.category }.firstOrNull()
+    val category = VillagerCategory.find { VillagerCategorys.name eq request.category }.firstOrNull()
       ?: throw NotFoundException("존재하지 않는 카테고리입니다.")
 
-    val newTrade = VillagerTradeEntity.new {
+    val newTrade = VillagerTrade.new {
       name = request.name
       tradeType = request.tradeType
       purity = request.purity
@@ -239,15 +236,15 @@ class TradeService {
   }
 
   suspend fun updateVillagerTrade(id: Long, userId: UUID, request: VillagerTradeRequest) = dbQuery {
-    val category: VillagerCategoryEntity
-    val trade = VillagerTradeEntity.findById(id).let {
+    val category: VillagerCategory
+    val trade = VillagerTrade.findById(id).let {
       if (it == null || it.isDeleted) throw NotFoundException("존재하지 않는 주민 거래입니다.")
       else if (it.isDeleted) throw NotFoundException("이미 삭제된 주민 거래입니다.")
       else if (it.resident.id.value != userId) throw ForbiddenException("본인의 주민 거래만 수정할 수 있습니다.")
 
       it
     }
-    category = VillagerCategoryEntity.find { VillagerCategoryTable.name eq request.category }.firstOrNull()
+    category = VillagerCategory.find { VillagerCategorys.name eq request.category }.firstOrNull()
       ?: throw NotFoundException("존재하지 않는 카테고리입니다.")
 
     trade.apply {

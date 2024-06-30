@@ -1,6 +1,6 @@
 package com.tradecrossing.api.trade
 
-import com.tradecrossing.domain.tables.trade.ItemTradeType
+import com.tradecrossing.domain.ItemTradeType
 import com.tradecrossing.dto.request.trade.ItemTradeRequest
 import com.tradecrossing.dto.response.ErrorResponse
 import com.tradecrossing.dto.response.trade.ItemTradeDto
