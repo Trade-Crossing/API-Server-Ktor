@@ -61,8 +61,7 @@ jobs:
 
       - name: Run the jar
         run: |
-          ssh -i awsEc2.pem -o StrictHostKeyChecking=no ubuntu@${{secrets.REMOTE_HOST}} "cd /home/ubuntu/app;
-          sh deploy.sh"
+          ssh -i awsEc2.pem -o StrictHostKeyChecking=no ubuntu@${{secrets.REMOTE_HOST}} "cd /home/ubuntu/app; sh deploy.sh"
 
       - name: Clean
         run: |
