@@ -1,9 +1,9 @@
 package com.tradecrossing.dto.request.trade
 
 import com.tradecrossing.domain.tables.trade.ItemTradeType
-import com.tradecrossing.domain.tables.trade.VillagerTradeTable.VillagerGender
-import com.tradecrossing.domain.tables.trade.VillagerTradeTable.VillagerPurity
-import com.tradecrossing.domain.tables.trade.VillagerTradeTable.VillagerTradeType
+import com.tradecrossing.domain.tables.trade.VillagerTrades.VillagerGender
+import com.tradecrossing.domain.tables.trade.VillagerTrades.VillagerPurity
+import com.tradecrossing.domain.tables.trade.VillagerTrades.VillagerTradeType
 import com.tradecrossing.types.TradeCurrency
 import io.swagger.v3.oas.annotations.media.Schema
 import kotlinx.serialization.Serializable

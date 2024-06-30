@@ -1,11 +1,31 @@
 package com.tradecrossing.domain.tables.trade
 
+import com.tradecrossing.domain.ResidentInfo
 import com.tradecrossing.domain.ResidentInfos
+import org.jetbrains.exposed.dao.LongEntity
+import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.sql.javatime.datetime
 import java.time.LocalDateTime
 
-open class BaseTradeTable(tableName: String) : LongIdTable(tableName, "id") {
+abstract class BaseTrade(id: EntityID<Long>) : LongEntity(id) {
+  abstract var resident: ResidentInfo
+  abstract var closed: Boolean
+  abstract var bellPrice: Int?
+  abstract var milePrice: Int?
+  abstract var isDeleted: Boolean
+  abstract var createdAt: LocalDateTime
+  abstract var updatedAt: LocalDateTime
+
+  fun update() {
+    updatedAt = LocalDateTime.now()
+  }
+
+  override fun toString(): String =
+    "resident=$resident, closed=$closed, bellPrice=$bellPrice, milePrice=$milePrice, isDeleted=$isDeleted, createdAt=$createdAt, updatedAt=$updatedAt"
+}
+
+open class BaseTrades(tableName: String) : LongIdTable(tableName, "id") {
 
   val resident = reference("resident", ResidentInfos.id)
   val closed = bool("closed").default(false)

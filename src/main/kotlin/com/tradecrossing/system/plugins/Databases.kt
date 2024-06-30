@@ -48,10 +48,10 @@ object DatabaseFactory {
       SchemaUtils.createMissingTablesAndColumns(
         Residents,
         ResidentInfos,
-        ItemTradeTable,
+        ItemTrades,
         ItemCategoryTable,
         SourceTable,
-        VillagerTradeTable,
+        VillagerTrades,
         VillagerCategoryTable
       )
     }

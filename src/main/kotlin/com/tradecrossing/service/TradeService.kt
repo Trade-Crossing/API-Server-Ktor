@@ -39,38 +39,38 @@ class TradeService {
   suspend fun findItemTradeList(query: ItemTradeQuery, cursor: Long, size: Int) = dbQuery {
     val currencyFilter = when (query.currency) {
       TradeCurrency.bell ->
-        ItemTradeTable.bellPrice.between(query.minPrice, query.maxPrice)
+        ItemTrades.bellPrice.between(query.minPrice, query.maxPrice)
 
-      TradeCurrency.mile -> ItemTradeTable.milePrice.between(query.minPrice, query.maxPrice)
+      TradeCurrency.mile -> ItemTrades.milePrice.between(query.minPrice, query.maxPrice)
 
-      TradeCurrency.all -> ItemTradeTable.bellPrice.between(
+      TradeCurrency.all -> ItemTrades.bellPrice.between(
         query.minPrice,
         query.maxPrice
-      ) or ItemTradeTable.milePrice.between(query.minPrice, query.maxPrice)
+      ) or ItemTrades.milePrice.between(query.minPrice, query.maxPrice)
 
-      TradeCurrency.donate -> ItemTradeTable.bellPrice.isNull() and ItemTradeTable.milePrice.isNull()
+      TradeCurrency.donate -> ItemTrades.bellPrice.isNull() and ItemTrades.milePrice.isNull()
     }
 
     val variationFilter = if (query.variationIndex != null) {
-      ItemTradeTable.variationIndex eq query.variationIndex
+      ItemTrades.variationIndex eq query.variationIndex
     } else {
       null
     }
 
     // 판매/구매 타입
     val tradeTypeFilter = if (query.tradeType == ItemTradeType.sell) {
-      ItemTradeTable.tradeType eq ItemTradeType.sell
+      ItemTrades.tradeType eq ItemTradeType.sell
     } else {
-      ItemTradeTable.tradeType eq ItemTradeType.buy
+      ItemTrades.tradeType eq ItemTradeType.buy
     }
 
     val itemTradeList = ItemTradeEntity.find {
-      (ItemTradeTable.id greater cursor) and
-          (ItemTradeTable.itemName eq query.name) and
-          (ItemTradeTable.tradeType eq query.tradeType) andIfNotNull
+      (ItemTrades.id greater cursor) and
+          (ItemTrades.itemName eq query.name) and
+          (ItemTrades.tradeType eq query.tradeType) andIfNotNull
           variationFilter and
           tradeTypeFilter and
-          (ItemTradeTable.closed eq query.closed) and
+          (ItemTrades.closed eq query.closed) and
           currencyFilter
     }.limit(size).with(ItemTradeEntity::resident, ItemTradeEntity::source, ItemTradeEntity::category)
       .map { ItemTradeDto(it) }.toList()
@@ -176,27 +176,27 @@ class TradeService {
   suspend fun findVillagerTradeList(query: VillagerTradeQuery, cursor: Long, size: Int) = dbQuery {
 
     val priceFilter = when (query.currency) {
-      TradeCurrency.bell -> VillagerTradeTable.bellPrice.between(query.minPrice, query.maxPrice)
-      TradeCurrency.mile -> VillagerTradeTable.milePrice.between(query.minPrice, query.maxPrice)
-      TradeCurrency.all -> VillagerTradeTable.bellPrice.between(
+      TradeCurrency.bell -> VillagerTrades.bellPrice.between(query.minPrice, query.maxPrice)
+      TradeCurrency.mile -> VillagerTrades.milePrice.between(query.minPrice, query.maxPrice)
+      TradeCurrency.all -> VillagerTrades.bellPrice.between(
         query.minPrice,
         query.maxPrice
-      ) and VillagerTradeTable.milePrice.between(query.minPrice, query.maxPrice)
+      ) and VillagerTrades.milePrice.between(query.minPrice, query.maxPrice)
 
-      TradeCurrency.donate -> VillagerTradeTable.bellPrice.isNull() and VillagerTradeTable.milePrice.isNull()
+      TradeCurrency.donate -> VillagerTrades.bellPrice.isNull() and VillagerTrades.milePrice.isNull()
     }
 
-    val tradeList = VillagerTradeTable
+    val tradeList = VillagerTrades
       .leftJoin(ResidentInfos)
       .leftJoin(VillagerCategoryTable)
       .selectAll()
       .where {
-        (VillagerTradeTable.id greater cursor) and
-            (VillagerTradeTable.name eq query.name) and
-            (VillagerTradeTable.purity eq query.purity) and
-            (VillagerTradeTable.tradeType eq query.tradeType) and
+        (VillagerTrades.id greater cursor) and
+            (VillagerTrades.name eq query.name) and
+            (VillagerTrades.purity eq query.purity) and
+            (VillagerTrades.tradeType eq query.tradeType) and
             (VillagerCategoryTable.name eq query.category) and
-            (VillagerTradeTable.closed eq query.closed) and
+            (VillagerTrades.closed eq query.closed) and
             priceFilter
       }.limit(size)
       .map { VillageTradeDto(VillagerTradeEntity.wrapRow(it)) }

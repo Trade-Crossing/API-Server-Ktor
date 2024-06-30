@@ -1,7 +1,7 @@
 package com.tradecrossing.api.trade
 
-import com.tradecrossing.domain.tables.trade.VillagerTradeTable.VillagerPurity
-import com.tradecrossing.domain.tables.trade.VillagerTradeTable.VillagerTradeType
+import com.tradecrossing.domain.tables.trade.VillagerTrades.VillagerPurity
+import com.tradecrossing.domain.tables.trade.VillagerTrades.VillagerTradeType
 import com.tradecrossing.dto.request.trade.VillagerTradeRequest
 import com.tradecrossing.dto.response.ErrorResponse
 import com.tradecrossing.dto.response.trade.VillageTradeDto

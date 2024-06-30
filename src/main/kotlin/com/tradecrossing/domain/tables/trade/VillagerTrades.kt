@@ -1,6 +1,6 @@
 package com.tradecrossing.domain.tables.trade
 
-object VillagerTradeTable : BaseTradeTable("villager_trades") {
+object VillagerTrades : BaseTrades("villager_trades") {
 
   val name = varchar("name", 255)
   val tradeType = enumerationByName<VillagerTradeType>("trade_type", 10)
