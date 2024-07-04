@@ -1,10 +1,10 @@
 package com.tradecrossing.api.trade
 
-import com.tradecrossing.domain.tables.trade.VillagerTradeTable.VillagerPurity
-import com.tradecrossing.domain.tables.trade.VillagerTradeTable.VillagerTradeType
+import com.tradecrossing.domain.VillagerTradeDto
+import com.tradecrossing.domain.VillagerTrades.VillagerPurity
+import com.tradecrossing.domain.VillagerTrades.VillagerTradeType
 import com.tradecrossing.dto.request.trade.VillagerTradeRequest
 import com.tradecrossing.dto.response.ErrorResponse
-import com.tradecrossing.dto.response.trade.VillageTradeDto
 import com.tradecrossing.types.TradeCurrency
 import io.github.smiley4.ktorswaggerui.dsl.OpenApiRoute
 import io.ktor.http.*
@@ -107,7 +107,7 @@ class VillagerTradeResource {
       }
       response {
         HttpStatusCode.OK to {
-          body<VillageTradeDto>()
+          body<VillagerTradeDto>()
         }
       }
     }
@@ -122,7 +122,7 @@ class VillagerTradeResource {
       }
       response {
         HttpStatusCode.Created to {
-          body<VillageTradeDto>()
+          body<VillagerTradeDto>()
         }
         HttpStatusCode.Unauthorized to {
           body<ErrorResponse>()
@@ -148,7 +148,7 @@ class VillagerTradeResource {
       }
       response {
         HttpStatusCode.OK to {
-          body<VillageTradeDto>()
+          body<VillagerTradeDto>()
         }
         HttpStatusCode.Unauthorized to {
           body<ErrorResponse>()

@@ -1,9 +1,9 @@
 package com.tradecrossing.api.auth
 
+import com.tradecrossing.domain.ResidentInfoDto
 import com.tradecrossing.dto.request.auth.IslandCodeRequest
 import com.tradecrossing.dto.request.auth.RegisterRequest
 import com.tradecrossing.dto.response.ErrorResponse
-import com.tradecrossing.dto.response.resident.ResidentInfoDto
 import io.github.smiley4.ktorswaggerui.dsl.OpenApiRoute
 import io.ktor.http.*
 import io.ktor.resources.*

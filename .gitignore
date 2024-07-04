@@ -37,3 +37,4 @@ out/
 
 ### environment ###
 .env
+deploy.sh
