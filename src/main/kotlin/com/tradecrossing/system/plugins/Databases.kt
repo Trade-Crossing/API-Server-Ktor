@@ -50,7 +50,10 @@ object DatabaseFactory {
         ItemCategorys,
         Sources,
         VillagerTrades,
-        VillagerCategorys
+        VillagerCategorys,
+        ChatRooms,
+        ChatMessages,
+        ChatRoomParticipants
       )
     }
   }

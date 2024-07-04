@@ -1,9 +1,7 @@
 package com.tradecrossing.api.chat
 
 import com.tradecrossing.dto.request.chat.CreateChatRequest
-import com.tradecrossing.dto.response.chat.ChatRoomResponse
 import com.tradecrossing.dto.response.ErrorResponse
-import com.tradecrossing.dto.response.chat.ChatMessageResponse
 import io.github.smiley4.ktorswaggerui.dsl.OpenApiRoute
 import io.ktor.http.*
 import io.ktor.resources.*
@@ -13,7 +11,7 @@ import java.util.*
 class ChatResource {
 
   @Resource("/{id}")
-  class Id(val chat: ChatResource = ChatResource(), val id: String, val cursor: Long? , val size:Int =10) {
+  class Id(val chat: ChatResource = ChatResource(), val id: String, val cursor: Long?, val size: Int = 10) {
 
     companion object {
       val get: OpenApiRoute.() -> Unit = {
@@ -32,18 +30,15 @@ class ChatResource {
         }
 
         response {
-          HttpStatusCode.OK to {
-            body<List<ChatMessageResponse>>()
-            description = "성공"
-          }
+
 
           HttpStatusCode.Unauthorized to {
             body<ErrorResponse>()
             description = "인증에 실패했습니다."
+          }
         }
+        val delete: OpenApiRoute.() -> Unit = {}
       }
-      val delete: OpenApiRoute.() -> Unit = {}
-    }
     }
   }
 
@@ -55,10 +50,7 @@ class ChatResource {
       securitySchemeName = "Jwt"
       protected = true
       response {
-        HttpStatusCode.OK to {
-          body<List<ChatRoomResponse>>()
-          description = "성공"
-        }
+
 
         HttpStatusCode.Unauthorized to {
           body<ErrorResponse>()
@@ -77,10 +69,7 @@ class ChatResource {
       }
 
       response {
-        HttpStatusCode.Created to {
-          body<ChatRoomResponse>()
-          description = "성공"
-        }
+
         HttpStatusCode.Unauthorized to {
           body<ErrorResponse>()
           description = "인증에 실패했습니다."

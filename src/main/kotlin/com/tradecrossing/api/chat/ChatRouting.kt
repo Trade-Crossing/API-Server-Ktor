@@ -2,13 +2,6 @@ package com.tradecrossing.api.chat
 
 import com.tradecrossing.api.chat.ChatResource.Companion.get
 import com.tradecrossing.api.chat.ChatResource.Companion.post
-import com.tradecrossing.dto.request.chat.CreateChatRequest
-import com.tradecrossing.dto.response.ErrorResponse
-import com.tradecrossing.dto.response.chat.ChatRoomResponse
-import com.tradecrossing.repository.ChatRepository
-import com.tradecrossing.service.ChatService
-import com.tradecrossing.system.plugins.DatabaseFactory.dbQuery
-import com.tradecrossing.system.plugins.getUserId
 import com.tradecrossing.system.plugins.withAuth
 import com.tradecrossing.types.TokenType
 import io.github.smiley4.ktorswaggerui.dsl.resources.delete
@@ -16,62 +9,35 @@ import io.github.smiley4.ktorswaggerui.dsl.resources.get
 import io.github.smiley4.ktorswaggerui.dsl.resources.post
 import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.engine.internal.*
-import io.ktor.server.plugins.*
-import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.util.*
 import io.ktor.server.websocket.*
-import io.ktor.websocket.*
-import kotlinx.coroutines.channels.ClosedReceiveChannelException
-import org.koin.ktor.ext.inject
-import java.util.UUID
 
 fun Route.chat() {
 
-  val chatService: ChatService by inject()
-  val chatRepository: ChatRepository by inject()
 
   withAuth(TokenType.ACCESS) {
     get<ChatResource>(get) {
-      val residentId:UUID = call.getUserId()
-      val chatRooms: List<ChatRoomResponse> = chatService.findUserChats(residentId)
 
-      call.respond(HttpStatusCode.OK, chatRooms)
+      call.respond(HttpStatusCode.OK)
     }
 
     post<ChatResource>(post) {
-      val residentId:UUID = call.getUserId()
-      val body = call.receive<CreateChatRequest>()
 
-      val newChatRoom = chatService.createNewChatRoom(residentId, body.residentId)
 
-      call.respond(HttpStatusCode.Created, newChatRoom)
+      call.respond(HttpStatusCode.Created)
     }
 
     get<ChatResource.Id>(ChatResource.Id.get) {
-      val chatRoomId = UUID.fromString(it.id)
-      val cursor = it.cursor
-      val size = it.size
-      val chats = chatService.findChatsOfChatRoom(chatRoomId, cursor, size)
 
-      call.respond(HttpStatusCode.OK, chats)
+
+      call.respond(HttpStatusCode.OK)
     }
 
     delete<ChatResource.Id>({}) {}
 
   }
 
-  webSocket("/chat/{chatRoomId}"){
-    // 채팅방 id 추출
-    val chatRoomId = call.parameters["chatRoomId"] ?: throw IllegalArgumentException("chatRoomId is required")
-
-    // 채팅방 존재 여부 확인
-    val chatRoomExist =  chatService.findChatRoomExist(UUID.fromString(chatRoomId))
-    // 존재 하지 않으면 소켓 연결 종료
-    if (!chatRoomExist) {
-      outgoing.send(Frame.Text("Chat Room not found"))
-    }
+  webSocket("/chat/{chatRoomId}") {
   }
 }
