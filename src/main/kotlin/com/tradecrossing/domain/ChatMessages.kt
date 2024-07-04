@@ -18,7 +18,7 @@ class ChatMessage(id: EntityID<Long>) : LongEntity(id) {
   companion object : LongEntityClass<ChatMessage>(ChatMessages)
 
   var sender by Resident referencedOn ChatMessages.sender
-  var chatRoom by ChatRoom referencedOn ChatMessages.chatRoom
+  val senderId by ChatMessages.sender
   var message by ChatMessages.message
   var sendAt by ChatMessages.sendAt
 }
