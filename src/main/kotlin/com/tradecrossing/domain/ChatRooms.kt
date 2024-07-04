@@ -5,10 +5,14 @@ import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
 
-object ChatRooms : LongIdTable("chat_room")
+object ChatRooms : LongIdTable("chat_room") {
+  val receiver = reference("receiver", Residents).nullable()
+}
 
 class ChatRoom(id: EntityID<Long>) : LongEntity(id) {
   companion object : LongEntityClass<ChatRoom>(ChatRooms)
 
+  val receiver by Resident optionalReferencedOn ChatRooms.receiver
+  val receiverId by ChatRooms.receiver
   val messages by ChatMessage referrersOn ChatMessages.chatRoom
 }

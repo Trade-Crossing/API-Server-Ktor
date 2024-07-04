@@ -15,6 +15,7 @@ fun Application.configureRouting() {
   install(CORS) {
     allowHost("localhost:8080")
   }
+  
   routing {
     //openAPI(path = "openapi")
     //swaggerUI(path = "swagger-ui", swaggerFile = "openapi/documentation.yaml")
@@ -30,6 +31,7 @@ fun Application.configureRouting() {
       itemTrades()
       villagerRouting()
     }
-  }
 
+
+  }
 }

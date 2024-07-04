@@ -10,6 +10,10 @@ import java.util.*
 class ChatService : KoinComponent {
   private val chatRepository by inject<ChatRepository>()
 
+  suspend fun findAllChatRooms(userId: UUID) = dbQuery {
+    chatRepository.findAllChatRooms(userId).map { ChatRoomResponse(it) }
+  }
+
   suspend fun findChatRoom(id: Long) = dbQuery { chatRepository.findChatRoom(id).let { ChatRoomResponse(it) } }
 
   suspend fun createChatRoom(userId: UUID) =

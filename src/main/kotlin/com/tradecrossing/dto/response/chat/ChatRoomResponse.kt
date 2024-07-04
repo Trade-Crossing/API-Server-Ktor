@@ -1,14 +1,18 @@
 package com.tradecrossing.dto.response.chat
 
-import ChatMessageResponse
 import com.tradecrossing.domain.ChatRoom
+import com.tradecrossing.types.UUIDSerializer
+import kotlinx.serialization.Serializable
+import java.util.*
 
+@Serializable
 data class ChatRoomResponse(
   val id: Long,
-  val messages: List<ChatMessageResponse>
+  @Serializable(with = UUIDSerializer::class)
+  val receiver: UUID?,
 ) {
   constructor(chatRoom: ChatRoom) : this(
     chatRoom.id.value,
-    kotlin.runCatching { chatRoom.messages.map { ChatMessageResponse(it) } }.getOrDefault(emptyList())
+    chatRoom.receiverId?.value,
   )
 }
