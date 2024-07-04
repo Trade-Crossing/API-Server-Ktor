@@ -4,12 +4,12 @@ package com.tradecrossing.repository
 import com.tradecrossing.domain.*
 import com.tradecrossing.domain.ChatRoom.Companion.reload
 import io.ktor.server.plugins.*
+import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.and
 import java.util.*
 
 class ChatRepository {
-
 
   fun findChatRoom(id: Long): ChatRoom = ChatRoom.findById(id) ?: throw NotFoundException("Chat room not found")
 
@@ -29,6 +29,14 @@ class ChatRepository {
     ChatRoom.findById(id)?.delete() ?: throw NotFoundException("Chat room not found")
   }
 
+  fun addMessage(id: Long, userId: UUID, message: String) {
+    ChatMessage.new {
+      this.senderId = EntityID(userId, Residents)
+      this.chatRoomId = EntityID(id, ChatRooms)
+      this.message = message
+    }
+  }
+
   fun findMessages(id: Long, messageId: Long? = null): List<ChatMessage> {
     val messages =
       (ChatMessages leftJoin Residents).select(
@@ -46,6 +54,11 @@ class ChatRepository {
         .map { ChatMessage.wrapRow(it) }
 
     return messages
+  }
+
+  fun findIsParticipant(chatRoomId: Long, userId: UUID): Boolean {
+    return ChatRoomParticipant.find { (ChatRoomParticipants.chatRoom eq chatRoomId) and (ChatRoomParticipants.resident eq userId) }
+      .count() > 0
   }
 
 
