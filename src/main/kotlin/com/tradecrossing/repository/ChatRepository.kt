@@ -19,7 +19,7 @@ class ChatRepository {
     return chatRooms
   }
 
-  fun findChatRoom(id: Long): ChatRoom = ChatRoom.findById(id) ?: throw NotFoundException("Chat room not found")
+  fun findChatRoomExist(id: Long): Boolean = ChatRoom.findById(id) != null
 
   fun createChatRoom(userId: UUID): ChatRoom {
     val resident = Resident.findById(userId) ?: throw NotFoundException("Resident not found")
