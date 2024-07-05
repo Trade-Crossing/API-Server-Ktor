@@ -1,5 +1,6 @@
 package com.tradecrossing.api.chat
 
+import ChatMessageResponse
 import com.tradecrossing.api.chat.ChatResource.Companion.post
 import com.tradecrossing.service.ChatService
 import com.tradecrossing.system.plugins.getUserId
@@ -24,21 +25,24 @@ fun Route.chat() {
   withAuth(TokenType.ACCESS) {
     get<ChatResource> {
       val userId = call.getUserId()
-
       val chatRooms = chatService.findAllChatRooms(userId)
+
       call.respond(chatRooms)
     }
 
     post<ChatResource>(post) {
+      val userId = call.getUserId()
+      val newChatRoom = chatService.createChatRoom(userId)
 
-
-      call.respond(HttpStatusCode.Created)
+      call.respond(HttpStatusCode.Created, newChatRoom)
     }
 
-    get<ChatResource.Id>(ChatResource.Id.get) {
+    get<ChatResource.Id>(ChatResource.Id.get) { chatRoom ->
+      val userId = call.getUserId()
 
+      val messages: List<ChatMessageResponse> = chatService.findAllMessages(chatRoom.id, userId, chatRoom.cursor)
 
-      call.respond(HttpStatusCode.OK)
+      call.respond(HttpStatusCode.OK, messages)
     }
 
     delete<ChatResource.Id>({}) {}

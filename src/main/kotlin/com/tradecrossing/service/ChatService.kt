@@ -1,5 +1,7 @@
 package com.tradecrossing.service
 
+import ChatMessageResponse
+import com.tradecrossing.domain.ChatMessage
 import com.tradecrossing.dto.response.chat.ChatRoomResponse
 import com.tradecrossing.repository.ChatRepository
 import com.tradecrossing.system.plugins.DatabaseFactory.dbQuery
@@ -10,17 +12,15 @@ import java.util.*
 class ChatService : KoinComponent {
   private val chatRepository by inject<ChatRepository>()
 
-  suspend fun findAllChatRooms(userId: UUID) = dbQuery {
+  suspend fun findAllChatRooms(userId: UUID): List<ChatRoomResponse> = dbQuery {
     chatRepository.findAllChatRooms(userId).map { ChatRoomResponse(it) }
   }
 
-  suspend fun findChatRoom(id: Long) = dbQuery { chatRepository.findChatRoom(id).let { ChatRoomResponse(it) } }
-
-  suspend fun createChatRoom(userId: UUID) =
+  suspend fun createChatRoom(userId: UUID): ChatRoomResponse =
     dbQuery { chatRepository.createChatRoom(userId).let { ChatRoomResponse(it) } }
 
   suspend fun deleteChatRoom(id: Long, userId: UUID) = dbQuery {
-    val isParticipant = chatRepository.findIsParticipant(id, userId)
+    val isParticipant: Boolean = chatRepository.findIsParticipant(id, userId)
 
     if (isParticipant) {
       chatRepository.deleteChatRoom(id)
@@ -29,8 +29,20 @@ class ChatService : KoinComponent {
     }
   }
 
+  suspend fun findAllMessages(id: Long, userId: UUID, cursor: Long? = null): List<ChatMessageResponse> {
+    val isParticipant: Boolean = dbQuery { chatRepository.findIsParticipant(id, userId) }
+
+    if (!isParticipant) {
+      throw Exception("You are not a participant of this chat room")
+    }
+
+    val messages: List<ChatMessage> = dbQuery { chatRepository.findMessages(id, cursor) }
+
+    return messages.map { ChatMessageResponse(it) }
+  }
+
   suspend fun addMessage(id: Long, userId: UUID, message: String) = dbQuery {
-    val isParticipant = chatRepository.findIsParticipant(id, userId)
+    val isParticipant: Boolean = chatRepository.findIsParticipant(id, userId)
 
     if (isParticipant) {
       chatRepository.addMessage(id, userId, message)

@@ -5,25 +5,16 @@ import com.tradecrossing.domain.*
 import com.tradecrossing.domain.ChatRoom.Companion.reload
 import io.ktor.server.plugins.*
 import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.sql.JoinType
 import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.and
 import java.util.*
 
+
 class ChatRepository {
 
   fun findAllChatRooms(userId: UUID): List<ChatRoom> {
-    val chatRooms =
-      ChatRoomParticipants.join(
-        ChatRooms,
-        joinType = JoinType.LEFT,
-        onColumn = ChatRoomParticipants.chatRoom,
-        otherColumn = ChatRooms.id
-      )
-        .select(ChatRooms.columns)
-        .where {
-          ChatRoomParticipants.resident eq userId
-        }.map { ChatRoom.wrapRow(it) }
+    val chatRooms = ChatRooms.leftJoin(ChatRoomParticipants).select(ChatRooms.columns)
+      .where { ChatRoomParticipants.resident eq userId }.map { ChatRoom.wrapRow(it) }
 
     return chatRooms
   }
@@ -55,7 +46,7 @@ class ChatRepository {
   }
 
   fun findMessages(id: Long, messageId: Long? = null): List<ChatMessage> {
-    val messages =
+    val messages: List<ChatMessage> =
       (ChatMessages leftJoin Residents).select(
         ChatMessages.columns + Residents.columns
       )

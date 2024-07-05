@@ -4,12 +4,13 @@ import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
+import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.javatime.datetime
 import java.time.LocalDateTime
 
 object ChatMessages : LongIdTable("chat_message") {
-  val sender = reference("sender", Residents)
-  val chatRoom = reference("chat_room", ChatRooms)
+  val sender = reference("sender", Residents, onDelete = ReferenceOption.SET_NULL)
+  val chatRoom = reference("chat_room", ChatRooms, onDelete = ReferenceOption.SET_NULL)
   val message = text("message")
   val sendAt = datetime("send_at").clientDefault { LocalDateTime.now() }
 }
