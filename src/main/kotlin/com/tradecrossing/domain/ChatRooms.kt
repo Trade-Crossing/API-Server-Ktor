@@ -12,7 +12,7 @@ object ChatRooms : LongIdTable("chat_room") {
 class ChatRoom(id: EntityID<Long>) : LongEntity(id) {
   companion object : LongEntityClass<ChatRoom>(ChatRooms)
 
-  val receiver by Resident optionalReferencedOn ChatRooms.receiver
-  val receiverId by ChatRooms.receiver
+  var receiver by Resident optionalReferencedOn ChatRooms.receiver
+  var receiverId by ChatRooms.receiver
   val messages by ChatMessage referrersOn ChatMessages.chatRoom
 }

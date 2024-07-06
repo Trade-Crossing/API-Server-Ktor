@@ -1,7 +1,10 @@
 package com.tradecrossing.api.chat
 
 import ChatMessageResponse
+import com.tradecrossing.api.chat.ChatResource.Companion.get
 import com.tradecrossing.api.chat.ChatResource.Companion.post
+import com.tradecrossing.api.chat.ChatResource.Id.Companion.delete
+import com.tradecrossing.dto.request.chat.CreateChatRequest
 import com.tradecrossing.service.ChatService
 import com.tradecrossing.system.plugins.getUserId
 import com.tradecrossing.system.plugins.json
@@ -13,6 +16,7 @@ import io.github.smiley4.ktorswaggerui.dsl.resources.get
 import io.github.smiley4.ktorswaggerui.dsl.resources.post
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
@@ -28,7 +32,7 @@ fun Route.chat() {
 
 
   withAuth(TokenType.ACCESS) {
-    get<ChatResource> {
+    get<ChatResource>(get) {
       val userId = call.getUserId()
       val chatRooms = chatService.findAllChatRooms(userId)
 
@@ -37,6 +41,7 @@ fun Route.chat() {
 
     post<ChatResource>(post) {
       val userId = call.getUserId()
+      val body = call.receive<CreateChatRequest>()
       val newChatRoom = chatService.createChatRoom(userId)
 
       call.respond(HttpStatusCode.Created, newChatRoom)
@@ -49,12 +54,15 @@ fun Route.chat() {
       call.respond(HttpStatusCode.OK, messages)
     }
 
-    delete<ChatResource.Id>({}) {}
+    delete<ChatResource.Id>(delete) {}
 
   }
 
   val sessions = Collections.synchronizedMap(mutableMapOf<Long, MutableSet<WebSocketSession>>())
-  webSocket("/chat/{chatId}") {
+
+
+  /// chatId에 해당하는 채팅방의 웹소켓을 처리하는 라우트
+  webSocket("/chats/{chatId}") {
     val userId: UUID = call.getUserId()
 
     // chatId가 null이거나 숫자가 아닌 경우 close

@@ -2,7 +2,6 @@ package com.tradecrossing.repository
 
 
 import com.tradecrossing.domain.*
-import com.tradecrossing.domain.ChatRoom.Companion.reload
 import io.ktor.server.plugins.*
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.SortOrder
@@ -21,16 +20,24 @@ class ChatRepository {
 
   fun findChatRoomExist(id: Long): Boolean = ChatRoom.findById(id) != null
 
-  fun createChatRoom(userId: UUID): ChatRoom {
+  fun createChatRoom(userId: UUID, receiverId: UUID): ChatRoom {
     val resident = Resident.findById(userId) ?: throw NotFoundException("Resident not found")
-    val chatRoom = ChatRoom.new { }
+    val receiver = Resident.findById(receiverId) ?: throw NotFoundException("Receiver not found")
+    val chatRoom = ChatRoom.new {
+      this.receiver = receiver
+    }
 
-    ChatRoomParticipant.new {
+    val me = ChatRoomParticipant.new {
       this.chatRoom = chatRoom
       this.resident = resident
     }
 
-    return reload(chatRoom, true)!!
+    val you = ChatRoomParticipant.new {
+      this.chatRoom = chatRoom
+      this.resident = receiver
+    }
+
+    return chatRoom // reload(chatRoom, true)!!
   }
 
   fun deleteChatRoom(id: Long) {

@@ -24,6 +24,8 @@ fun Application.configureSwaggerUI() {
 
     swagger {
       swaggerUrl = "swagger-ui"
+      forwardRoot = true
+      showTagFilterInput = true
     }
 
     encoding {
@@ -70,5 +72,8 @@ fun Application.configureSwaggerUI() {
     tag("거래") { description = "거래 관련 API" }
     tag("아이템 거래") { description = "아이템 거래 관련 API" }
     tag("주민 거래") { description = "주민 거래 관련 API" }
+
+    // Chat 태그
+    tag("채팅") { description = "채팅 관련 API" }
   }
 }
