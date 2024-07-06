@@ -20,8 +20,8 @@ class ChatService : KoinComponent {
     chatRepository.findAllChatRooms(userId).map { ChatRoomResponse(it) }
   }
 
-  suspend fun createChatRoom(userId: UUID): ChatRoomResponse =
-    dbQuery { chatRepository.createChatRoom(userId).let { ChatRoomResponse(it) } }
+  suspend fun createChatRoom(userId: UUID, receiverId: UUID): ChatRoomResponse =
+    dbQuery { chatRepository.createChatRoom(userId, receiverId).let { ChatRoomResponse(it) } }
 
   suspend fun deleteChatRoom(id: Long, userId: UUID) = dbQuery {
     val isParticipant: Boolean = chatRepository.findIsParticipant(id, userId)

@@ -42,7 +42,7 @@ fun Route.chat() {
     post<ChatResource>(post) {
       val userId = call.getUserId()
       val body = call.receive<CreateChatRequest>()
-      val newChatRoom = chatService.createChatRoom(userId)
+      val newChatRoom = chatService.createChatRoom(userId, body.receiver)
 
       call.respond(HttpStatusCode.Created, newChatRoom)
     }
