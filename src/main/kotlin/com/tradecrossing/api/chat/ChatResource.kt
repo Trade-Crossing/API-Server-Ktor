@@ -7,7 +7,6 @@ import com.tradecrossing.dto.response.chat.ChatRoomResponse
 import io.github.smiley4.ktorswaggerui.dsl.OpenApiRoute
 import io.ktor.http.*
 import io.ktor.resources.*
-import java.util.*
 
 @Resource("/chats")
 class ChatResource {
@@ -70,7 +69,6 @@ class ChatResource {
         securitySchemeName = "Jwt"
         protected = true
         request {
-          queryParameter("id", UUID::class)
           queryParameter<Long?>("cursor")
           queryParameter("size", Int::class) {
             description = "한 번에 가져올 채팅 수"

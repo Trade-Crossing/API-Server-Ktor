@@ -56,72 +56,72 @@ fun Route.chat() {
 
     delete<ChatResource.Id>(delete) {}
 
-  }
 
-  val sessions = Collections.synchronizedMap(mutableMapOf<Long, MutableSet<WebSocketSession>>())
+    val sessions = Collections.synchronizedMap(mutableMapOf<Long, MutableSet<WebSocketSession>>())
 
+    /// chatId에 해당하는 채팅방의 웹소켓을 처리하는 라우트
+    webSocket("/chats/{chatId}") {
+      val userId: UUID = call.getUserId()
 
-  /// chatId에 해당하는 채팅방의 웹소켓을 처리하는 라우트
-  webSocket("/chats/{chatId}") {
-    val userId: UUID = call.getUserId()
-
-    // chatId가 null이거나 숫자가 아닌 경우 close
-    val chatId = call.parameters["chatId"]?.toLongOrNull() ?: return@webSocket close(
-      CloseReason(
-        CloseReason.Codes.CANNOT_ACCEPT,
-        "Invalid chatId"
+      // chatId가 null이거나 숫자가 아닌 경우 close
+      val chatId = call.parameters["chatId"]?.toLongOrNull() ?: return@webSocket close(
+        CloseReason(
+          CloseReason.Codes.CANNOT_ACCEPT,
+          "Invalid chatId"
+        )
       )
-    )
 
-    // chatRoom이 존재하지 않거나 참가자가 아닌 경우 close
-    val chatRoomExists: Boolean = chatService.findChatRoomExist(chatId)
-    val isParticipant: Boolean = chatService.findIsParticipant(chatId, userId)
+      // chatRoom이 존재하지 않거나 참가자가 아닌 경우 close
+      val chatRoomExists: Boolean = chatService.findChatRoomExist(chatId)
+      val isParticipant: Boolean = chatService.findIsParticipant(chatId, userId)
 
-    if (!chatRoomExists || !isParticipant) {
-      close(CloseReason(CloseReason.Codes.CANNOT_ACCEPT, "Chat room not found or you are not a participant"))
-    }
-
-    // chatId에 해당하는 세션을 sessions에 추가
-    if (sessions.containsKey(chatId)) {
-      sessions[chatId]!!.add(this)
-    } else {
-      setOf(this)
-    }
-
-    try {
-
-      for (frame in incoming) {
-        when (frame) {
-          is Frame.Ping -> {
-            send(Frame.Pong("Pong".toByteArray()))
-          }
-
-          is Frame.Pong -> {
-            send(Frame.Ping("Ping".toByteArray()))
-          }
-
-          is Frame.Close -> {
-            sessions[chatId]?.remove(this)
-            close(CloseReason(CloseReason.Codes.NORMAL, "Session closed"))
-          }
-
-          is Frame.Text -> {
-            val string = frame.readText()
-            val message = json.decodeFromString<WebSocketMessage>(string)
-
-            chatService.addMessage(chatId, userId, message.message)
-
-            // 메시지를 chatId에 해당하는 세션들에게 전송
-            sessions[chatId]!!.filter { it != this }.forEach { sessions ->
-              sessions.send(frame)
-            }
-          }
-
-          else -> {}
-        }
+      if (!chatRoomExists || !isParticipant) {
+        close(CloseReason(CloseReason.Codes.CANNOT_ACCEPT, "Chat room not found or you are not a participant"))
       }
-    } catch (e: ClosedReceiveChannelException) {
-      sessions[chatId]?.remove(this)
+
+      // chatId에 해당하는 세션을 sessions에 추가
+      if (sessions.containsKey(chatId)) {
+        sessions[chatId]!!.add(this)
+      } else {
+        setOf(this)
+      }
+
+      send(Frame.Text("Connected"))
+
+      try {
+        for (frame in incoming) {
+          when (frame) {
+            is Frame.Ping -> {
+              send(Frame.Pong("Pong".toByteArray()))
+            }
+
+            is Frame.Pong -> {
+              send(Frame.Ping("Ping".toByteArray()))
+            }
+
+            is Frame.Close -> {
+              sessions[chatId]?.remove(this)
+              close(CloseReason(CloseReason.Codes.NORMAL, "Session closed"))
+            }
+
+            is Frame.Text -> {
+              val string = frame.readText()
+              val message = json.decodeFromString<WebSocketMessage>(string)
+
+              chatService.addMessage(chatId, userId, message.message)
+
+              // 메시지를 chatId에 해당하는 세션들에게 전송
+              sessions[chatId]!!.filter { it != this }.forEach { sessions ->
+                sessions.send(frame)
+              }
+            }
+
+            else -> {}
+          }
+        }
+      } catch (e: ClosedReceiveChannelException) {
+        sessions[chatId]?.remove(this)
+      }
     }
   }
 }
