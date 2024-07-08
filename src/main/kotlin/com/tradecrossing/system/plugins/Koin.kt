@@ -16,18 +16,19 @@ import org.koin.logger.slf4jLogger
 fun Application.configureKoin() {
   install(Koin) {
     slf4jLogger(level = DEBUG)
-    val services = module {
-      single { OAuthService() }
-      single { AuthService(get()) }
-      single { TradeService() }
-      single { ChatService() }
-    }
-
     val repositories = module {
-      single { ResidentRepository() }
+      singleOf(::ResidentRepository)
       singleOf(::ChatRepository)
     }
 
-    modules(services, repositories)
+    val services = module {
+      singleOf(::OAuthService)
+      singleOf(::AuthService)
+      singleOf(::TradeService)
+      singleOf(::ChatService)
+    }
+
+
+    modules(repositories, services)
   }
 }
