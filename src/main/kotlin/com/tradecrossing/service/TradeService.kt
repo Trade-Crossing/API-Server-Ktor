@@ -5,12 +5,13 @@ import com.tradecrossing.dto.request.trade.ItemTradeRequest
 import com.tradecrossing.dto.request.trade.TradeQuery.ItemTradeQuery
 import com.tradecrossing.dto.request.trade.TradeQuery.VillagerTradeQuery
 import com.tradecrossing.dto.request.trade.VillagerTradeRequest
+import com.tradecrossing.repository.ReportRepository
 import com.tradecrossing.system.exceptions.ForbiddenException
 import com.tradecrossing.system.plugins.DatabaseFactory.dbQuery
+import com.tradecrossing.types.TradeCategory
 import com.tradecrossing.types.TradeCurrency
 import io.ktor.server.plugins.*
 import org.jetbrains.exposed.dao.load
-import org.jetbrains.exposed.dao.with
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.between
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.isNull
@@ -18,9 +19,13 @@ import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.andIfNotNull
 import org.jetbrains.exposed.sql.or
 import org.jetbrains.exposed.sql.selectAll
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.util.*
 
-class TradeService {
+class TradeService : KoinComponent {
+
+  private val reportRepository by inject<ReportRepository>()
 
   // =============================== 1. 아이템 거래 ===============================
 
@@ -32,6 +37,8 @@ class TradeService {
    * @return 조회된 거래 목록
    */
   suspend fun findItemTradeList(query: ItemTradeQuery, cursor: Long, size: Int) = dbQuery {
+
+
     val currencyFilter = when (query.currency) {
       TradeCurrency.bell ->
         ItemTrades.bellPrice.between(query.minPrice, query.maxPrice)
@@ -59,18 +66,29 @@ class TradeService {
       ItemTrades.tradeType eq ItemTradeType.buy
     }
 
-    val itemTradeList = ItemTrade.find {
-      (ItemTrades.id greater cursor) and
-          (ItemTrades.itemName eq query.name) and
-          (ItemTrades.tradeType eq query.tradeType) andIfNotNull
-          variationFilter and
-          tradeTypeFilter and
-          (ItemTrades.closed eq query.closed) and
-          currencyFilter
-    }.limit(size).with(ItemTrade::resident, ItemTrade::source, ItemTrade::category)
-      .map { ItemTradeDto(it) }.toList()
+    //val itemTradeList = ItemTrade.find {
+    //  (ItemTrades.id greater cursor) and
+    //      (ItemTrades.itemName eq query.name) and
+    //      (ItemTrades.tradeType eq query.tradeType) andIfNotNull
+    //      variationFilter and
+    //      tradeTypeFilter and
+    //      (ItemTrades.closed eq query.closed) and
+    //      currencyFilter
+    //}.limit(size).with(ItemTrade::resident, ItemTrade::source, ItemTrade::category)
+    //  .map { ItemTradeDto(it) }.toList()
 
-    itemTradeList
+
+    val result =
+      ItemTrades.leftJoin(ResidentInfos).leftJoin(Sources).leftJoin(ItemCategorys).select(ItemTrades.columns).where {
+        (ItemTrades.id greater cursor) and
+            (ItemTrades.id notInSubQuery (Reports.select(Reports.tradeId)
+              .where { Reports.tradeCategory eq TradeCategory.item })) and
+            (ItemTrades.itemName eq query.name) and
+            (ItemTrades.tradeType eq query.tradeType) andIfNotNull variationFilter and tradeTypeFilter and
+            (ItemTrades.closed eq query.closed) and currencyFilter
+      }.limit(size).map { ItemTradeDto(ItemTrade.wrapRow(it)) }.toList()
+
+    result
   }
 
   /**
@@ -79,6 +97,11 @@ class TradeService {
    * @return 조회된 거래
    */
   suspend fun findItemTradeById(id: Long) = dbQuery {
+
+    reportRepository.checkIfReported(TradeCategory.item, id).also {
+      if (it) throw ForbiddenException("신고된 거래글은 조회할 수 없습니다.")
+    }
+
     val itemTrade =
       ItemTrade.findById(id)?.load(ItemTrade::resident, ItemTrade::source, ItemTrade::category)
         ?: throw NotFoundException("존재하지 않는 거래글입니다.")

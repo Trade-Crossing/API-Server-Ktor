@@ -1,6 +1,7 @@
 package com.tradecrossing.system.plugins
 
 import com.tradecrossing.repository.ChatRepository
+import com.tradecrossing.repository.ReportRepository
 import com.tradecrossing.repository.ResidentRepository
 import com.tradecrossing.service.AuthService
 import com.tradecrossing.service.ChatService
@@ -19,6 +20,7 @@ fun Application.configureKoin() {
     val repositories = module {
       singleOf(::ResidentRepository)
       singleOf(::ChatRepository)
+      singleOf(::ReportRepository)
     }
 
     val services = module {
