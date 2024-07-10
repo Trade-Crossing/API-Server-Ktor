@@ -42,5 +42,15 @@ fun Application.configureStatusPages() {
     exception<BadRequestException> { call, e ->
       call.respond(HttpStatusCode.BadRequest, ErrorResponse("bad_request", e.message ?: "Bad Request"))
     }
+
+    // Missing Query Parameter
+    exception<MissingRequestParameterException> {call , e ->
+      call.respond(HttpStatusCode.BadRequest, ErrorResponse("bad_request", "Missing Query Parameter: ${e.parameterName}"))
+    }
+
+    // Missing Path Parameter
+    exception<IllegalArgumentException> {call , e ->
+      call.respond(HttpStatusCode.BadRequest, ErrorResponse("bad_request", e.message ?: "Bad Request"))
+    }
   }
 }

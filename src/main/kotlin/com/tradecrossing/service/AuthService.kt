@@ -7,9 +7,13 @@ import com.tradecrossing.repository.ResidentRepository
 import com.tradecrossing.system.exceptions.ConfictException
 import com.tradecrossing.system.plugins.DatabaseFactory.dbQuery
 import io.ktor.server.plugins.*
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.util.*
 
-class AuthService(private val residentRepository: ResidentRepository) {
+class AuthService : KoinComponent {
+
+  private val residentRepository by inject<ResidentRepository>()
 
   suspend fun registerUser(id: UUID, request: RegisterRequest) {
     dbQuery {

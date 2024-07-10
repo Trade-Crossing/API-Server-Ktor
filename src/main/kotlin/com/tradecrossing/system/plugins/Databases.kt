@@ -44,13 +44,16 @@ object DatabaseFactory {
     transaction {
       addLogger(StdOutSqlLogger)
       SchemaUtils.createMissingTablesAndColumns(
-        ResidentTable,
-        ResidentInfoTable,
-        ItemTradeTable,
-        ItemCategoryTable,
-        SourceTable,
-        VillagerTradeTable,
-        VillagerCategoryTable,
+        Residents,
+        ResidentInfos,
+        ItemTrades,
+        ItemCategorys,
+        Sources,
+        VillagerTrades,
+        VillagerCategorys,
+        ChatRooms,
+        ChatMessages,
+        ChatRoomParticipants,
         Reports
       )
     }

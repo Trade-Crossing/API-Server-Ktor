@@ -1,6 +1,7 @@
 package com.tradecrossing.api.auth
 
 
+import com.tradecrossing.api.auth.AuthResource.Refresh.Companion.post
 import com.tradecrossing.dto.request.auth.IslandCodeRequest
 import com.tradecrossing.dto.request.auth.RegisterRequest
 import com.tradecrossing.service.AuthService
@@ -52,7 +53,7 @@ fun Route.auth() {
   }
 
   withAuth(TokenType.REFRESH) {
-    post<AuthResource.Refresh> {
+    post<AuthResource.Refresh>(post) {
       val id = call.getUserId()
 
       call.respondNullable(HttpStatusCode.OK)

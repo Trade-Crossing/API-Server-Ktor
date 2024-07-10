@@ -136,5 +136,26 @@ class AuthResource {
   }
 
   @Resource("/refresh")
-  class Refresh(val parent: AuthResource = AuthResource())
+  class Refresh(val parent: AuthResource = AuthResource()) {
+    companion object {
+      val post: OpenApiRoute.() -> Unit = {
+        tags = listOf("인증/유저")
+        summary = "토큰 갱신"
+        description = "토큰을 갱신합니다."
+        securitySchemeName = "Jwt"
+        protected = true
+        response {
+          HttpStatusCode.OK to {
+            body<String>()
+            description = "성공"
+          }
+
+          HttpStatusCode.Unauthorized to {
+            body<ErrorResponse>()
+            description = "인증에 실패했습니다."
+          }
+        }
+      }
+    }
+  }
 }
