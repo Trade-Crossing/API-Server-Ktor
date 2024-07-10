@@ -11,7 +11,6 @@ import io.ktor.server.routing.*
 
 fun Route.report() {
 
-
   withAuth(TokenType.ACCESS) {
     post<ReportResource>(ReportResource.post) {
       val userId = call.getUserId()
