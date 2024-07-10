@@ -75,5 +75,7 @@ fun Application.configureSwaggerUI() {
 
     // Chat 태그
     tag("채팅") { description = "채팅 관련 API" }
+    // Report 태그
+    tag("신고") { description = "신고 관련 API" }
   }
 }

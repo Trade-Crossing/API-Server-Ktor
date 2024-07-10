@@ -10,7 +10,7 @@ class ReportResource {
 
   companion object {
     val post: OpenApiRoute.() -> Unit = {
-      tags = listOf("Report")
+      tags = listOf("신고")
       summary = "신고하기"
       securitySchemeName = "Jwt"
       protected = true
