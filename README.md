@@ -7,34 +7,35 @@ Trade Crossing은 기존 동물의 숲 유저들에게 소통의 장이 될수 �
 
 ### 개발 기간
 
-2024.02 ~ 2024.05 (MVP)
+- Sprint 1: 2024.02 ~ 2024.07 (MVP)
+- Sprint 2: 2024.08 ~ 2024.12 (추가 기능)
 
 ## 프로젝트 기능
 
-- 유저간 거래 기능
+- 유저간 아이템,주민, 무 거래 기능
 - 채팅 기능
-- 자유 게시판 기능
-
-이 프로젝트의 MVP로 채택된 기능은 크게 2가지 입니다. 유저간 거래하는 기능과 거래를 위해 채팅을 할수 있는 기능입니다. 이 두가지 기능을 통해 유저들은 서로 소통하고 거래를 할수 있습니다.
+- 자유 게시판
 
 ### 멤버 구성
 
-- 양세연님 : 기획
+- ~~양세연님 : 기획~~
 - 조이님: 모바일, 웹 디자인
 - 원동혁님: 안드로이드 앱 개발
-- 김부길님: Flutter (iOS) 앱 개발
+- ~~김부길님: Flutter (iOS) 앱 개발~~
+- 김지환님: Flutter (iOS) 앱 개발
 - 송대현: 백엔드 개발
 
 ### 개발 환경
 
-- `Java 21`
-- JDK: `Azul Zulu 21`
+- `Java 17`
+- JDK: `Azul Zulu 217
 - IDE: `IntelliJ IDEA`
 - Framework: `Ktor 2.3.8`
 - Database: `PostgreSQL 16.2`
 - CI/CD: GitHub Actions
 - Server: `Netty`
 - ORM: `Exposed`
+- 배포: `EC2`
 
 ### 기능 설명
 
@@ -53,3 +54,13 @@ MVP이 성공적으로 개발 된다면, 시세 기능등의 기능을 추가할
 
 </details>
 
+<details>
+	<summary>채팅</summary>
+
+거래를 위한 채팅 기능을 제공합니다. 유저들은 거래를 위해 채팅을 시작할수 있습니다. 채팅방은 1:1 채팅방으로 제공됩니다.
+
+</details>
+
+## API 명세
+
+Swagger: http://ec2-3-35-19-122.ap-northeast-2.compute.amazonaws.com:8080/api/swagger-ui/index.html#/
