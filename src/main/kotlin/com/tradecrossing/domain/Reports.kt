@@ -49,10 +49,14 @@ class Report(id: EntityID<Long>) : LongEntity(id) {
     @Serializable(with = UUIDSerializer::class)
     @field:Schema(description = "신고자", required = true)
     val reporterId: UUID,
+
+    @Serializable(with = UUIDSerializer::class)
     @field:Schema(description = "신고 대장 유저 ID", required = true)
-    val offenderId: Long,
+    val offenderId: UUID,
+
     @field:Schema(description = "신고 대상 거래 카테고리", required = true, defaultValue = "item")
     val tradeCategory: TradeCategory,
+
     @field:Schema(description = "신고 사유", required = true)
     val reason: String
   )
