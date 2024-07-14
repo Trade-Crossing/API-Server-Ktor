@@ -19,20 +19,28 @@ import org.koin.ktor.ext.inject
 
 fun Route.itemTrades() {
   val tradeService by inject<TradeService>()
+
+  // 아이템 거래 목록 조회
   get<ItemTrades>(ItemTrades.get) { query ->
     require(query.name != null) { "이름은 필수입니다." }
+
+    val residentId = runCatching { call.getUserId() }.getOrNull()
     val queryParam = ItemTradeQuery(query)
-    val response = tradeService.findItemTradeList(queryParam, query.cursor, query.size)
+    val response = tradeService.findItemTradeList(queryParam, query.cursor, query.size, residentId)
 
     call.respond(HttpStatusCode.OK, response)
   }
+
+  // 아이템 거래 상세 조회
   get<ItemTrades.Id>(ItemTrades.Id.get) { trade ->
     val response = tradeService.findItemTradeById(trade.id)
 
     call.respond(HttpStatusCode.OK, response)
   }
 
+
   withAuth(TokenType.ACCESS) {
+    // 아이템 거래 생성
     post<ItemTrades>(ItemTrades.post) {
       val userId = call.getUserId()
       val body = call.receive<ItemTradeRequest>()
@@ -41,6 +49,7 @@ fun Route.itemTrades() {
       call.respond(HttpStatusCode.Created, response)
     }
 
+    // 아이템 거래 수정
     patch<ItemTrades.Id>(ItemTrades.Id.patch) { trade ->
       val body = call.receive<ItemTradeRequest>()
       val userId = call.getUserId()
@@ -50,9 +59,13 @@ fun Route.itemTrades() {
       call.respond(HttpStatusCode.OK, result)
     }
 
+    // 아이템 거래 마감하기
+
+
+    // 아이템 거래 삭제
     delete<ItemTrades.Id>(ItemTrades.Id.delete) { trade ->
       val userId = call.getUserId()
- 
+
       tradeService.deleteItemTrade(trade.id, userId)
 
       call.respond(HttpStatusCode.OK)
