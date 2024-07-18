@@ -64,3 +64,16 @@ MVP이 성공적으로 개발 된다면, 시세 기능등의 기능을 추가할
 ## API 명세
 
 Swagger: http://ec2-3-35-19-122.ap-northeast-2.compute.amazonaws.com:8080/api/swagger-ui/index.html#/
+
+### 요구 사항
+
+2024.7.18
+
+- [ ] 섬코드 없애기
+- [ ] 문의 하기 기능 추가
+    - [ ] 문의하기 API
+    - [ ] 문의 내역 확인하기
+- [ ] 공지사항 API 추가
+- [ ] 내 판매 내역 API 추가
+- [ ] 내 구매 내역 API 추가
+- [ ]

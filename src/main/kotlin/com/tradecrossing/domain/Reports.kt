@@ -15,9 +15,8 @@ import java.util.*
 
 
 object Reports : LongIdTable("reports") {
-  val reporterId = reference("reporter_id", Residents.id)
-  val tradeId = long("trade_id")
-  val tradeCategory = enumeration<TradeCategory>("trade_category")
+  val reporterId = reference("reporter_id", Residents.id) // 신고자
+  val offenderId = reference("offender_id", Residents.id) // 신고 대상
   val reason = text("reason")
   val reportDate = datetime("report_date").clientDefault { LocalDateTime.now() }
   val resolvedTime = datetime("resolved_time").nullable()
@@ -27,13 +26,20 @@ object Reports : LongIdTable("reports") {
 class Report(id: EntityID<Long>) : LongEntity(id) {
   companion object : LongEntityClass<Report>(Reports)
 
+  // 신고자
   var reporter by Resident referencedOn Reports.reporterId
   var repoterId by Reports.reporterId
-  var tradeId by Reports.tradeId
-  var tradeCategory by Reports.tradeCategory
+
+  // 신고 대상
+  var offender by Resident referencedOn Reports.offenderId
+  var offenderId by Reports.offenderId
+
   var reason by Reports.reason
+
   val reportDate by Reports.reportDate
+
   var resolvedTime by Reports.resolvedTime
+
   var status by Reports.status
 
 
@@ -43,10 +49,14 @@ class Report(id: EntityID<Long>) : LongEntity(id) {
     @Serializable(with = UUIDSerializer::class)
     @field:Schema(description = "신고자", required = true)
     val reporterId: UUID,
-    @field:Schema(description = "신고 대상 거래 ID", required = true)
-    val tradeId: Long,
+
+    @Serializable(with = UUIDSerializer::class)
+    @field:Schema(description = "신고 대장 유저 ID", required = true)
+    val offenderId: UUID,
+
     @field:Schema(description = "신고 대상 거래 카테고리", required = true, defaultValue = "item")
     val tradeCategory: TradeCategory,
+
     @field:Schema(description = "신고 사유", required = true)
     val reason: String
   )
