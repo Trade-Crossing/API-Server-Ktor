@@ -42,18 +42,4 @@ class AuthService : KoinComponent {
 
     ResidentInfoDto(residentInfo)
   }
-
-  suspend fun getIslandCode(id: UUID) = dbQuery {
-    val residentInfo =
-      ResidentInfo.findById(id) ?: throw NotFoundException("존재하지 않는 유저입니다.")
-
-    residentInfo.islandCode
-  }
-
-  suspend fun updateIslandCode(id: UUID, islandCode: String) = dbQuery {
-    val residentInfo =
-      ResidentInfo.findById(id) ?: throw NotFoundException("존재하지 않는 유저입니다.")
-
-    residentInfo.islandCode = islandCode
-  }
 }

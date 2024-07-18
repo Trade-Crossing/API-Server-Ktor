@@ -69,7 +69,7 @@ Swagger: http://ec2-3-35-19-122.ap-northeast-2.compute.amazonaws.com:8080/api/sw
 
 2024.7.18
 
-- [ ] 섬코드 없애기
+- [x] 섬코드 없애기
 - [ ] 문의 하기 기능 추가
     - [ ] 문의하기 API
     - [ ] 문의 내역 확인하기

@@ -1,7 +1,6 @@
 package com.tradecrossing.api.auth
 
 import com.tradecrossing.domain.ResidentInfoDto
-import com.tradecrossing.dto.request.auth.IslandCodeRequest
 import com.tradecrossing.dto.request.auth.RegisterRequest
 import com.tradecrossing.dto.response.ErrorResponse
 import io.github.smiley4.ktorswaggerui.dsl.OpenApiRoute
@@ -14,61 +13,6 @@ class AuthResource {
 
   @Resource("/info")
   class Info(val parent: AuthResource = AuthResource()) {
-
-    @Resource("/island-code")
-    class IslandCode(val parent: Info = Info()) {
-      companion object {
-        val get: OpenApiRoute.() -> Unit = {
-          tags = listOf("인증/유저")
-          summary = "섬 코드"
-          description = "유저의 섬 코드를 가져옵니다."
-          securitySchemeName = "Jwt"
-          protected = true
-          response {
-            HttpStatusCode.OK to {
-              body<String>()
-              description = "성공"
-            }
-
-            HttpStatusCode.NotFound to {
-              body<ErrorResponse>()
-              description = "존재하지 않는 유저입니다."
-            }
-
-            HttpStatusCode.Unauthorized to {
-              body<ErrorResponse>()
-              description = "인증에 실패했습니다."
-            }
-          }
-        }
-
-        val update: OpenApiRoute.() -> Unit = {
-          tags = listOf("인증/유저")
-          summary = "섬 코드 수정"
-          description = "유저의 섬 코드를 수정합니다."
-          securitySchemeName = "Jwt"
-          protected = true
-          request {
-            body<IslandCodeRequest>()
-          }
-          response {
-            HttpStatusCode.OK to {
-              description = "성공"
-            }
-
-            HttpStatusCode.NotFound to {
-              body<ErrorResponse>()
-              description = "존재하지 않는 유저입니다."
-            }
-
-            HttpStatusCode.Unauthorized to {
-              body<ErrorResponse>()
-              description = "인증에 실패했습니다."
-            }
-          }
-        }
-      }
-    }
 
     companion object {
       val get: OpenApiRoute.() -> Unit = {

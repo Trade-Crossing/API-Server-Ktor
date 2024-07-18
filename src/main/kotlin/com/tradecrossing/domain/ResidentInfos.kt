@@ -17,7 +17,6 @@ class ResidentInfo(id: EntityID<UUID>) : Entity<UUID>(id) {
   var profilePic by ResidentInfos.profilePic
   var username by ResidentInfos.username
   val resident by Resident referencedOn ResidentInfos.id
-  var islandCode by ResidentInfos.islandCode
 
   override fun toString(): String {
     return "ResidentInfoEntity(id=$id, introduction=$introduction, islandName=$islandName, profilePic=$profilePic, username=$username)"
@@ -32,7 +31,6 @@ object ResidentInfos : IdTable<UUID>("resident_info") {
   val islandName = varchar("island_name", 255)
   val profilePic = text("profile_pic").nullable()
   val username = varchar("username", 255)
-  val islandCode = varchar("island_code", 255).nullable()
 
   override val primaryKey = PrimaryKey(id)
 }
@@ -45,7 +43,6 @@ data class ResidentInfoDto(
   val islandName: String,
   val introduction: String,
   val profilePic: String?,
-  val islandCode: String?
 ) {
   constructor(residentInfo: ResidentInfo) : this(
     residentInfo.id.value,
@@ -53,7 +50,6 @@ data class ResidentInfoDto(
     residentInfo.islandName,
     residentInfo.introduction,
     residentInfo.profilePic,
-    residentInfo.islandCode
   )
 
 }
