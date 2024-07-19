@@ -1,5 +1,7 @@
 package com.tradecrossing.domain
 
+import org.jetbrains.exposed.dao.EntityChangeType
+import org.jetbrains.exposed.dao.EntityHook
 import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
@@ -14,8 +16,19 @@ abstract class BaseTrade(id: EntityID<Long>) : LongEntity(id) {
   abstract var isDeleted: Boolean
   abstract var createdAt: LocalDateTime
   abstract var updatedAt: LocalDateTime
+  abstract var availFrom: LocalDateTime
+  abstract var availTo: LocalDateTime
 
-  fun update() {
+  // hook to update updatedAt when entity is updated
+  init {
+    EntityHook.subscribe { action ->
+      if (action.changeType == EntityChangeType.Updated) {
+        update()
+      }
+    }
+  }
+
+  private fun update() {
     updatedAt = LocalDateTime.now()
   }
 
@@ -31,7 +44,7 @@ open class BaseTrades(tableName: String) : LongIdTable(tableName, "id") {
   val milePrice = integer("mile_price").nullable()
   val isDeleted = bool("is_deleted").default(false)
   val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
-  val updatedAt = datetime("updated_at").clientDefault { (LocalDateTime.now()) }
+  val updatedAt = datetime("updated_at").clientDefault { LocalDateTime.now() }
   val availFrom = datetime("avail_from").clientDefault { LocalDateTime.now() }
   val availTo =
     datetime("avail_to").clientDefault {

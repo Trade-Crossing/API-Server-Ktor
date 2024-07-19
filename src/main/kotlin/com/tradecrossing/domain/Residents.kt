@@ -17,6 +17,7 @@ class Resident(id: EntityID<UUID>) : UUIDEntity(id) {
   var provider by Residents.provider
   var providerId by Residents.providerId
   var registered by Residents.registered
+  val info by ResidentInfo referencedOn Residents.id
 
 
   override fun toString(): String {

@@ -27,6 +27,8 @@ class ItemTrade(id: EntityID<Long>) : BaseTrade(id) {
   override var isDeleted: Boolean by ItemTrades.isDeleted
   override var createdAt: LocalDateTime by ItemTrades.createdAt
   override var updatedAt: LocalDateTime by ItemTrades.updatedAt
+  override var availFrom: LocalDateTime by ItemTrades.availFrom
+  override var availTo: LocalDateTime by ItemTrades.availTo
 
   companion object : LongEntityClass<ItemTrade>(ItemTrades)
 

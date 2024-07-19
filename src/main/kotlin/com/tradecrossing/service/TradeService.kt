@@ -269,7 +269,6 @@ class TradeService : KoinComponent {
           milePrice = null
         }
       }
-      update()
     }
   }
 

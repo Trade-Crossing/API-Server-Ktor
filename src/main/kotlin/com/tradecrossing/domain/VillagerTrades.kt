@@ -24,6 +24,8 @@ class VillagerTrade(id: EntityID<Long>) : BaseTrade(id) {
   override var isDeleted: Boolean by VillagerTrades.isDeleted
   override var createdAt: LocalDateTime by VillagerTrades.createdAt
   override var updatedAt: LocalDateTime by VillagerTrades.updatedAt
+  override var availFrom: LocalDateTime by VillagerTrades.availFrom
+  override var availTo: LocalDateTime by VillagerTrades.availTo
 
 
   override fun toString(): String =
