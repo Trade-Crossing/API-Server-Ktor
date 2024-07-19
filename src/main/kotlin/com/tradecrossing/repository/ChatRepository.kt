@@ -12,8 +12,11 @@ import java.util.*
 class ChatRepository {
 
   fun findAllChatRooms(userId: UUID): List<ChatRoom> {
-    val chatRooms = ChatRooms.leftJoin(ChatRoomParticipants).select(ChatRooms.columns)
-      .where { ChatRoomParticipants.resident eq userId }.map { ChatRoom.wrapRow(it) }
+    val query =
+      ChatRooms.leftJoin(ChatRoomParticipants).leftJoin(ResidentInfos).select(ChatRooms.columns + ResidentInfos.columns)
+        .where { ChatRoomParticipants.resident eq userId }
+
+    val chatRooms = ChatRoom.wrapRows(query).toList()
 
     return chatRooms
   }
@@ -24,7 +27,7 @@ class ChatRepository {
     val resident = Resident.findById(userId) ?: throw NotFoundException("Resident not found")
     val receiver = Resident.findById(receiverId) ?: throw NotFoundException("Receiver not found")
     val chatRoom = ChatRoom.new {
-      this.receiver = receiver
+      this.receiver = receiver.info
     }
 
     val me = ChatRoomParticipant.new {
