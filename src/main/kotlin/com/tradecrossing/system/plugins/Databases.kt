@@ -54,7 +54,8 @@ object DatabaseFactory {
         ChatRooms,
         ChatMessages,
         ChatRoomParticipants,
-        Reports
+        Reports,
+        Inquiries
       )
     }
   }

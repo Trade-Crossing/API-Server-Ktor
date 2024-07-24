@@ -1,6 +1,7 @@
 package com.tradecrossing.domain
 
 import org.jetbrains.exposed.dao.LongEntity
+import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.sql.javatime.datetime
@@ -13,6 +14,8 @@ class Inquiry(id: EntityID<Long>) : LongEntity(id) {
   var resolvedAt by Inquiries.resolvedAt
 
   var creatorId by Inquiries.createdBy
+
+  companion object : LongEntityClass<Inquiry>(Inquiries)
 }
 
 object Inquiries : LongIdTable("inquiry") {
