@@ -28,7 +28,8 @@ class ResidentInfo(id: EntityID<UUID>) : Entity<UUID>(id) {
 object ResidentInfos : IdTable<UUID>("resident_info") {
 
   override val id: Column<EntityID<UUID>> =
-    uuid("id").entityId().references(Residents.id, onDelete = ReferenceOption.CASCADE)
+    uuid("id").entityId()
+      .references(Residents.id, onDelete = ReferenceOption.CASCADE, onUpdate = ReferenceOption.NO_ACTION)
   val introduction = text("introduction")
   val islandName = varchar("island_name", 255)
   val profilePic = text("profile_pic").nullable()

@@ -4,6 +4,7 @@ package com.tradecrossing.repository
 import com.tradecrossing.domain.*
 import io.ktor.server.plugins.*
 import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.dao.load
 import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.and
 import java.util.*
@@ -25,9 +26,10 @@ class ChatRepository {
 
   fun createChatRoom(userId: UUID, receiverId: UUID): ChatRoom {
     val resident = Resident.findById(userId) ?: throw NotFoundException("Resident not found")
-    val receiver = Resident.findById(receiverId) ?: throw NotFoundException("Receiver not found")
+    val receiver =
+      ResidentInfo.findById(receiverId)!!.load(ResidentInfo::resident)
     val chatRoom = ChatRoom.new {
-      this.receiver = receiver.info
+      this.receiver = receiver
     }
 
     val me = ChatRoomParticipant.new {
@@ -37,7 +39,7 @@ class ChatRepository {
 
     val you = ChatRoomParticipant.new {
       this.chatRoom = chatRoom
-      this.resident = receiver
+      this.resident = receiver.resident
     }
 
     return chatRoom // reload(chatRoom, true)!!
