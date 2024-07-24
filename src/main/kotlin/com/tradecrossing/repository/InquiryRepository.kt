@@ -1,0 +1,3 @@
+package com.tradecrossing.repository
+
+class InquiryRepository
