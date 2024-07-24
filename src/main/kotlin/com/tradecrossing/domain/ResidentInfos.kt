@@ -7,6 +7,7 @@ import org.jetbrains.exposed.dao.EntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IdTable
 import org.jetbrains.exposed.sql.Column
+import org.jetbrains.exposed.sql.ReferenceOption
 import java.util.*
 
 class ResidentInfo(id: EntityID<UUID>) : Entity<UUID>(id) {
@@ -26,7 +27,8 @@ class ResidentInfo(id: EntityID<UUID>) : Entity<UUID>(id) {
 
 object ResidentInfos : IdTable<UUID>("resident_info") {
 
-  override val id: Column<EntityID<UUID>> = uuid("id").entityId().references(Residents.id)
+  override val id: Column<EntityID<UUID>> =
+    uuid("id").entityId().references(Residents.id, onDelete = ReferenceOption.CASCADE)
   val introduction = text("introduction")
   val islandName = varchar("island_name", 255)
   val profilePic = text("profile_pic").nullable()
