@@ -2,6 +2,7 @@ package com.tradecrossing.system.plugins
 
 import com.tradecrossing.api.auth.auth
 import com.tradecrossing.api.chat.chat
+import com.tradecrossing.api.inquiry.inquiryRouting
 import com.tradecrossing.api.oauth.oauth
 import com.tradecrossing.api.report.report
 import com.tradecrossing.api.trade.itemTrades
@@ -34,5 +35,7 @@ fun Application.configureRouting() {
     }
     // 신고
     report()
+    // 문의
+    inquiryRouting()
   }
 }
