@@ -21,6 +21,9 @@ fun Route.inquiryRouting() {
   withAuth(TokenType.ACCESS) {
     get<InquiryResource>(InquiryResource.getList) {
       val userId = call.getUserId()
+      val inquiries = inquiryService.getInquiries(userId)
+
+      call.respond(HttpStatusCode.OK, inquiries)
     }
     post<InquiryResource>(InquiryResource.post) {
       val userId = call.getUserId()

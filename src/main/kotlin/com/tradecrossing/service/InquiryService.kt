@@ -21,4 +21,10 @@ class InquiryService : KoinComponent {
 
     newInquiry.let(InquiryResponse::InquiryInfo)
   }
+
+  suspend fun getInquiries(userId: UUID): List<InquiryResponse.InquiryInfo> = dbQuery {
+    val inquiries = inquiryRepository.findInquiriesByResidentId(userId)
+
+    inquiries.map(InquiryResponse::InquiryInfo)
+  }
 }
