@@ -9,7 +9,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 object DatabaseFactory {
 
-  const val driver = "org.postgresql.Driver"
+  val driver = org.postgresql.Driver::class.java.name //"org.postgresql.Driver"
   private lateinit var database: Database
 
   fun init(config: ApplicationConfig) {
