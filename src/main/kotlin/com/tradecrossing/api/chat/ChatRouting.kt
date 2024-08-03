@@ -14,7 +14,7 @@ import org.koin.ktor.ext.inject
 fun Route.chat() {
 
   val chatService by inject<ChatService>()
-  
+
   withAuth(TokenType.ACCESS) {
     get<ChatResource>(get) {
       val userId = call.getUserId()

@@ -11,7 +11,7 @@ class ChatService : KoinComponent {
   private val chatRepository by inject<ChatRepository>()
 
   suspend fun findResidentChatRooms(userId: UUID) = dbQuery {
-    val result = chatRepository.findAllChatRooms(userId).map(::ChatRoomResponse)
+    chatRepository.findAllChatRooms(userId).map(::ChatRoomResponse)
   }
 
 }

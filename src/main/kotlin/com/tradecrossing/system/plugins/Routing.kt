@@ -15,7 +15,8 @@ import io.ktor.server.routing.*
 fun Application.configureRouting() {
   install(Resources)
   install(CORS) {
-    allowHost("localhost:8080")
+    //allowHost("localhost:8080")
+    anyHost()
   }
 
   routing {
