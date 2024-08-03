@@ -1,9 +1,6 @@
 package com.tradecrossing.system.plugins
 
-import com.tradecrossing.repository.ChatRepository
-import com.tradecrossing.repository.InquiryRepository
-import com.tradecrossing.repository.ReportRepository
-import com.tradecrossing.repository.ResidentRepository
+import com.tradecrossing.repository.*
 import com.tradecrossing.service.*
 import io.ktor.server.application.*
 import org.koin.core.logger.Level.DEBUG
@@ -20,6 +17,7 @@ fun Application.configureKoin() {
       singleOf(::ChatRepository)
       singleOf(::ReportRepository)
       singleOf(::InquiryRepository)
+      singleOf(::TradeRepository)
     }
 
     val services = module {

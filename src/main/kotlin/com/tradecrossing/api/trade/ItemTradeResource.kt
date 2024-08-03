@@ -48,10 +48,10 @@ class ItemTrades(
           required = false
           example = ItemTradeType.sell
         }
-        queryParameter<String?>("variationId") {
-          description = "아이템 색상(리폼) id"
+        queryParameter<String?>("variationIndex") {
+          description = "아이템 색상(리폼) 인덱스"
           required = false
-          example = "1_0"
+          example = "0"
         }
         queryParameter<Boolean>("isClosed") {
           description = "거래중인 거래만 조회"
