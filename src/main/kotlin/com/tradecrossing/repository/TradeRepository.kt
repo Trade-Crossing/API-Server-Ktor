@@ -51,21 +51,19 @@ class TradeRepository {
 
   }
 
-  fun findItemTradeById(id: Long): ItemTradeDto {
-    val result = ItemTrade.findById(id)?.load(ItemTrade::resident, ItemTrade::source, ItemTrade::category)
+  fun findItemTradeById(id: Long): ItemTrade {
+    return ItemTrade.findById(id)?.load(ItemTrade::resident, ItemTrade::source, ItemTrade::category)
       ?: throw Exception("ItemTrade not found")
-
-    return ItemTradeDto(result)
   }
 
-  fun createItemTrade(request: ItemTradeRequest, residentId: UUID): ItemTradeDto {
+  fun createItemTrade(request: ItemTradeRequest, residentId: UUID): ItemTrade {
     val resident = ResidentInfo.findById(residentId) ?: throw NotFoundException("존재하지 않는 유저입니다.")
     val source = Source.find { Sources.name eq request.itemSource }.firstOrNull()
       ?: throw NotFoundException("존재하지 않는 출처입니다.")
     val category = ItemCategory.find { ItemCategorys.name eq request.itemCategory }.firstOrNull()
       ?: throw NotFoundException("존재하지 않는 카테고리입니다.")
 
-    val newItemTrade = ItemTrade.new {
+    var newItemTrade = ItemTrade.new {
       name = request.name
       tradeType = request.tradeType
       this.category = category
@@ -87,8 +85,9 @@ class TradeRepository {
         }
       }
     }
+    newItemTrade.refresh(true)
 
-    return ItemTradeDto(newItemTrade)
+    return newItemTrade
   }
 
   fun updateItemTrade(id: Long, request: ItemTradeRequest, residentId: UUID) {

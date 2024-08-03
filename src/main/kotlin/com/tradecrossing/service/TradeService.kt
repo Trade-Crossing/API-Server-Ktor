@@ -34,7 +34,7 @@ class TradeService : KoinComponent {
    * @return 조회된 거래 목록
    */
   suspend fun findItemTradeList(query: ItemTradeQuery, cursor: Long, size: Int, residentId: UUID? = null) = dbQuery {
-    tradeRepository.findItemTradeList(query, cursor, size, residentId)
+    tradeRepository.findItemTradeList(query, cursor, size, residentId).map(::ItemTradeDto)
   }
 
   /**
@@ -43,11 +43,11 @@ class TradeService : KoinComponent {
    * @return 조회된 거래
    */
   suspend fun findItemTradeById(id: Long) = dbQuery {
-    tradeRepository.findItemTradeById(id)
+    tradeRepository.findItemTradeById(id).let(::ItemTradeDto)
   }
 
   suspend fun createItemTrade(request: ItemTradeRequest, residentId: UUID) = dbQuery {
-    tradeRepository.createItemTrade(request, residentId)
+    tradeRepository.createItemTrade(request, residentId).let(::ItemTradeDto)
   }
 
   suspend fun updateItemTrade(id: Long, request: ItemTradeRequest, residentId: UUID) = dbQuery {
