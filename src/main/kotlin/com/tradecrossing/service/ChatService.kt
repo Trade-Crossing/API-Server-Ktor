@@ -14,4 +14,8 @@ class ChatService : KoinComponent {
     chatRepository.findAllChatRooms(userId).map(::ChatRoomResponse)
   }
 
+  suspend fun createChatRoom(userId: UUID, receiverId: UUID) = dbQuery {
+    chatRepository.createChatRoom(userId, receiverId)
+  }
+
 }
