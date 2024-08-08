@@ -59,7 +59,7 @@ class ChatResource {
 
 
   @Resource("/{id}")
-  class Id(val chat: ChatResource = ChatResource(), val id: Long, val cursor: Long?, val size: Int = 10) {
+  class Id(val chat: ChatResource = ChatResource(), val id: Long, val cursor: Long?, val size: Int = 20) {
 
     companion object {
       val get: OpenApiRoute.() -> Unit = {

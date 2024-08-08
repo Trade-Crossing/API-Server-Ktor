@@ -34,4 +34,16 @@ class ChatRepository {
 
     return newChatRoom.id.value
   }
+
+  fun findChatRoomMessages(chatRoomId: Long, cursor: Long?, size: Int): List<ChatMessage> {
+    val chatRoom = ChatRoom.findById(chatRoomId) ?: throw NotFoundException("ChatRoom not found")
+    val messages = chatRoom.messages
+
+    if (cursor == null) {
+      val lastMessageId = ChatMessage.find { ChatMessages.chatRoom eq chatRoomId }.last().id.value
+      return messages.filter { it.id.value < lastMessageId }.sortedByDescending { it.sendAt }.take(size)
+    } else {
+      return messages.filter { it.id.value < cursor }.sortedByDescending { it.sendAt }.take(size)
+    }
+  }
 }

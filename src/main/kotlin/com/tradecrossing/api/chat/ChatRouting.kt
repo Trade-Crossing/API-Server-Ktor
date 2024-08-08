@@ -36,5 +36,12 @@ fun Route.chat() {
 
       call.respond(HttpStatusCode.Created, chatRoomId)
     }
+
+    get<ChatResource.Id>(ChatResource.Id.get) { chat ->
+      val userId = call.getUserId()
+      val result = chatService.findChatRoomMessages(chat.id, chat.cursor, chat.size)
+
+      call.respond(result)
+    }
   }
 }

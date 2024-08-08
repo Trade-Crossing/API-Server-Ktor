@@ -1,5 +1,6 @@
 package com.tradecrossing.service
 
+import ChatMessageResponse
 import com.tradecrossing.dto.response.chat.ChatRoomResponse
 import com.tradecrossing.repository.ChatRepository
 import com.tradecrossing.system.plugins.DatabaseFactory.dbQuery
@@ -18,4 +19,9 @@ class ChatService : KoinComponent {
     chatRepository.createChatRoom(userId, receiverId)
   }
 
+  suspend fun findChatRoomMessages(chatRoomId: Long, cursor: Long?, size: Int?) = dbQuery {
+    val messages = chatRepository.findChatRoomMessages(chatRoomId, cursor, size ?: 20)
+
+    messages.map(::ChatMessageResponse)
+  }
 }
