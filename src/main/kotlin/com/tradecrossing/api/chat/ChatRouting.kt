@@ -14,7 +14,10 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.server.websocket.*
+import io.ktor.websocket.*
 import org.koin.ktor.ext.inject
+import java.util.*
 
 fun Route.chat() {
 
@@ -37,11 +40,48 @@ fun Route.chat() {
       call.respond(HttpStatusCode.Created, chatRoomId)
     }
 
-    get<ChatResource.Id>(ChatResource.Id.get) { chat ->
-      val userId = call.getUserId()
-      val result = chatService.findChatRoomMessages(chat.id, chat.cursor, chat.size)
+  }
 
-      call.respond(result)
+  get<ChatResource.Id>(ChatResource.Id.get) { chat ->
+    val userId = call.getUserId()
+    val result = chatService.findChatRoomMessages(chat.id, chat.cursor, chat.size)
+
+    call.respond(result)
+  }
+
+
+  val sessions = Collections.synchronizedMap(mutableMapOf<Long, List<WebSocketSession>>())
+  webSocket("/chat/{id}") {
+    val id = call.parameters["id"]?.toLongOrNull() ?: return@webSocket close(
+      CloseReason(
+        CloseReason.Codes.CANNOT_ACCEPT,
+        "Invalid chat room id"
+      )
+    )
+    val chatRoomExist = chatService.checkChatRoomExist(id)
+
+    if (!chatRoomExist) {
+      close(CloseReason(CloseReason.Codes.CANNOT_ACCEPT, "Chat room not found"))
+      return@webSocket
+    }
+
+    if (sessions.containsKey(id)) {
+      sessions[id] = sessions[id]!! + this
+    } else {
+      sessions[id] = listOf(this)
+    }
+
+    try {
+      for (frame in incoming) {
+
+        if (frame is Frame.Text) {
+          val text = frame.readText()
+          sessions[id]!!.filter { it != this }.forEach { it.send(text) }
+        }
+
+      }
+    } catch (e: RuntimeException) {
+      sessions[id] = sessions[id]!! - this
     }
   }
 }

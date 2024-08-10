@@ -46,4 +46,9 @@ class ChatRepository {
       return messages.filter { it.id.value < cursor }.sortedByDescending { it.sendAt }.take(size)
     }
   }
+
+  fun checkChatRoomExist(chatRoomId: Long): Boolean {
+
+    return ChatRoom.findById(chatRoomId) != null
+  }
 }

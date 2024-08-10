@@ -24,4 +24,8 @@ class ChatService : KoinComponent {
 
     messages.map(::ChatMessageResponse)
   }
+
+  suspend fun checkChatRoomExist(chatRoomId: Long) = dbQuery {
+    chatRepository.checkChatRoomExist(chatRoomId)
+  }
 }
