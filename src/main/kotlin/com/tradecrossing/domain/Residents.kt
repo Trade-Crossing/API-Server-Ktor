@@ -17,13 +17,11 @@ class Resident(id: EntityID<UUID>) : UUIDEntity(id) {
   var provider by Residents.provider
   var providerId by Residents.providerId
   var registered by Residents.registered
-  var info by ResidentInfo referencedOn Residents.id
 
 
   override fun toString(): String {
     return "ResidentEntity(email='$email', provider=$provider, providerId='$providerId', registered=$registered)"
   }
-
 
 }
 

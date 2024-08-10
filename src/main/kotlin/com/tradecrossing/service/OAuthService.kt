@@ -76,7 +76,6 @@ class OAuthService {
     return dbQuery {
       var resident = Resident.find {
         (Residents.providerId eq request.providerId) and
-            (Residents.provider eq request.provider) and
             (Residents.email eq request.email)
       }.firstOrNull()
 
