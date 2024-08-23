@@ -51,7 +51,7 @@ class ItemTrades(
         queryParameter<String?>("variationIndex") {
           description = "아이템 색상(리폼) 인덱스"
           required = false
-          example = "0"
+          example = null
         }
         queryParameter<Boolean>("isClosed") {
           description = "거래중인 거래만 조회"

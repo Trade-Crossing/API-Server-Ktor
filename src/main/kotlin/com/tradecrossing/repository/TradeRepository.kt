@@ -13,6 +13,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.greater
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.isNull
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.notInSubQuery
 import org.jetbrains.exposed.sql.and
+import org.jetbrains.exposed.sql.andIfNotNull
 import org.jetbrains.exposed.sql.or
 import java.util.*
 
@@ -27,7 +28,8 @@ class TradeRepository {
     val cursorFilter = ItemTrades.id greater cursor
     val nameFilter = ItemTrades.itemName eq query.name
     val tradeTypeFilter = ItemTrades.tradeType eq query.tradeType
-    val variationIndexFilter = ItemTrades.variationIndex eq query.variationIndex
+    val variationIndexFilter =
+      if (query.variationIndex != null) ItemTrades.variationIndex eq query.variationIndex else null
     val closedFilter = ItemTrades.closed eq query.closed
     val deletedFilter = ItemTrades.isDeleted eq false
     val currencyFilter = when (query.currency) {
@@ -44,7 +46,14 @@ class TradeRepository {
       ItemTrades.resident notInSubQuery (Reports.select(Reports.offenderId).where { Reports.reporterId eq residentId })
 
     val result = ItemTrades.leftJoin(ItemCategorys).leftJoin(Sources).select(ItemTrades.columns).where {
-      cursorFilter and reportedResidentFilter and nameFilter and tradeTypeFilter and variationIndexFilter and closedFilter and currencyFilter and deletedFilter
+      cursorFilter and
+          reportedResidentFilter and
+          nameFilter and
+          tradeTypeFilter andIfNotNull
+          variationIndexFilter and
+          closedFilter and
+          currencyFilter and
+          deletedFilter
     }.limit(size)
 
     return ItemTrade.wrapRows(result).toList()
